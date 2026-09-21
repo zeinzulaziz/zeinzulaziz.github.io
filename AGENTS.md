@@ -14,7 +14,8 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 - `assets/img/` — screenshot preview proyek
 
 ## Komunikasi
-- Bahasa Indonesia
+- Bahasa Indonesia untuk komunikasi dengan user
+- Konten website (UI) menggunakan Bahasa Inggris
 
 ## Catatan
 - Jangan tambah library/framework tanpa konfirmasi

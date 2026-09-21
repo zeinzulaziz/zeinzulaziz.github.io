@@ -13,21 +13,21 @@
   const titles = {
     "record_your_money": "Record Your Money",
     "broken-link-checker": "Broken Link Checker",
-    "harga-pangan": "Harga Pangan",
+    "harga-pangan": "Food Prices",
     "convert-gold": "Convert Gold",
     "Kiro-Project": "Kiro Project",
-    "grafik-chart": "Grafik Chart",
+    "grafik-chart": "Chart Graph",
     "motorcycle-alarm-schematic": "Motorcycle Alarm Schematic",
   };
 
   const descriptions = {
-    "harga-pangan": "Dashboard harga produsen pangan Jawa Timur—data SISKAPERBAPO.",
-    "convert-gold": "Kalkulator harga emas buat hitung cepat sebelum transaksi.",
-    "record_your_money": "Aplikasi catatan keuangan harian, dibangun pakai Flutter.",
-    "broken-link-checker": "Cek link mati di situs mana pun, langsung dari browser.",
-    "Kiro-Project": "Eksperimen JavaScript yang nggak jelas arahnya, biarin.",
-    "grafik-chart": "Bikin grafik dan chart cepat, urusan data jadi enak dilihat.",
-    "motorcycle-alarm-schematic": "Skema rangkaian alarm sepeda motor (hardware).",
+    "harga-pangan": "Food producer price dashboard for East Java—SISKAPERBAPO data.",
+    "convert-gold": "Gold price calculator to run quick numbers before trading.",
+    "record_your_money": "A daily expense tracker, built with Flutter.",
+    "broken-link-checker": "Find dead links on any site, straight from the browser.",
+    "Kiro-Project": "A JavaScript experiment with no clear direction, let it be.",
+    "grafik-chart": "Make charts and graphs quickly, so data looks good.",
+    "motorcycle-alarm-schematic": "Motorcycle alarm circuit schematic (hardware).",
   };
 
   function lookUp(obj, name, fallback) {
@@ -78,7 +78,7 @@
       '<div class="project-preview">' + preview + badge + "</div>" +
       '<div class="project-body">' +
       '<h3 class="project-title"><a href="' + repoUrl(name) + '" target="_blank" rel="noopener">' + escapeHtml(langBadge(name)) + "</a></h3>" +
-      '<p class="project-desc">' + escapeHtml(lookUp(descriptions, name, repo.description || "Repositori publik tanpa deskripsi.")) + "</p>" +
+      '<p class="project-desc">' + escapeHtml(lookUp(descriptions, name, repo.description || "Public repository with no description.")) + "</p>" +
       '<div class="project-meta">' +
       '<span class="project-lang">' + escapeHtml(repo.language || "N/A") + "</span>" +
       "<span>★ " + (repo.stargazers_count || 0) + "</span>" +
@@ -93,7 +93,7 @@
     const grid = document.getElementById("projectsGrid");
     grid.innerHTML =
       '<div class="projects-loading">' + message + " " +
-      '<a href="' + repoUrl("") + '" target="_blank" rel="noopener">Lihat semua repositori di sini</a>.</div>';
+      '<a href="' + repoUrl("") + '" target="_blank" rel="noopener">See all repositories here</a>.</div>';
   }
 
   async function loadProjects() {
@@ -115,7 +115,7 @@
         });
 
       if (projects.length === 0) {
-        showError("Belum ada repositori publik yang ditemukan.");
+        showError("No public repositories found yet.");
         return;
       }
 
@@ -126,7 +126,7 @@
       });
       grid.appendChild(fragment);
     } catch (err) {
-      showError("Gagal memuat proyek. Coba muat ulang halaman,");
+      showError("Failed to load projects. Try reloading the page,");
     }
   }
 
