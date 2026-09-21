@@ -8,12 +8,12 @@
   <meta property="og:title" content="M. Zein Zulfanul Aziz — Portofolio">
   <meta property="og:description" content="Kumpulan proyek publik yang saya kerjakan.">
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23f5b301'/%3E%3Ctext x='32' y='45' font-family='monospace' font-size='36' font-weight='700' text-anchor='middle' fill='%230b0b0b'%3EZ%3C/text%3E%3C/svg%3E">
 </head>
 <body>
   <header class="site-header">
     <nav class="container nav">
-      <a href="#" class="nav-brand">&lt;zeinzulaziz /&gt;</a>
+      <a href="#" class="nav-brand">&lt;zeinzulaziz<span class="brand-dot">/&gt;</span></a>
       <div class="nav-links">
         <a href="#proyek">Proyek</a>
         <a href="#tentang">Tentang</a>
@@ -26,7 +26,7 @@
     <section class="hero">
       <div class="container hero-inner">
         <p class="hero-overline">Halo, saya</p>
-        <h1 class="hero-title">M. Zein Zulfanul Aziz</h1>
+        <h1 class="hero-title">M. Zein Zulfanul<span class="title-dot">.</span><br>Aziz<span class="title-dot">.</span></h1>
         <p class="hero-subtitle">Software Developer · "Life is a Game"</p>
         <p class="hero-desc">
           Membangun web app, dashboard data, dan tools sederhana yang berguna.
@@ -41,8 +41,11 @@
 
     <section class="projects" id="proyek">
       <div class="container">
-        <h2 class="section-title">Proyek Pilihan</h2>
-        <p class="section-sub">Diambil langsung dari repositori publik GitHub.</p>
+        <div class="section-head">
+          <span class="section-num">01</span>
+          <h2 class="section-title">Proyek</h2>
+        </div>
+        <p class="section-sub">Proyek publik yang ada di GitHub. Klik "Demo" kalau ada tautan langsung.</p>
         <div class="projects-grid" id="projectsGrid" aria-live="polite">
           <div class="projects-loading">Memuat proyek…</div>
         </div>
@@ -51,7 +54,10 @@
 
     <section class="about" id="tentang">
       <div class="container about-inner">
-        <h2 class="section-title">Tentang</h2>
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <h2 class="section-title">Tentang</h2>
+        </div>
         <p>
           Saya seorang developer yang suka bereksperimen dengan data, web scraping,
           dashboard, dan aplikasi cross-platform. Sebagian besar proyek saya
@@ -63,7 +69,10 @@
 
     <section class="contact" id="kontak">
       <div class="container contact-inner">
-        <h2 class="section-title">Kontak</h2>
+        <div class="section-head">
+          <span class="section-num">03</span>
+          <h2 class="section-title">Kontak</h2>
+        </div>
         <p>Terbuka untuk kolaborasi atau sekadar ngobrol soal teknologi.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">Hubungi via GitHub</a>

@@ -21,13 +21,13 @@
   };
 
   const descriptions = {
-    "harga-pangan": "Dashboard harga produsen pangan (SISKAPERBAPO) Jawa Timur.",
-    "convert-gold": "Konversi / kalkulator harga emas untuk trader.",
-    "record_your_money": "Aplikasi pencatat keuangan sederhana (Flutter)",
-    "broken-link-checker": "Tool online untuk memeriksa link yang rusak.",
-    "Kiro-Project": "Proyek JavaScript eksperimental.",
-    "grafik-chart": "Generator grafik / chart berbasis JavaScript.",
-    "motorcycle-alarm-schematic": "Skematik alarm sepeda motor.",
+    "harga-pangan": "Dashboard harga produsen pangan Jawa Timur—data SISKAPERBAPO.",
+    "convert-gold": "Kalkulator harga emas buat hitung cepat sebelum transaksi.",
+    "record_your_money": "Aplikasi catatan keuangan harian, dibangun pakai Flutter.",
+    "broken-link-checker": "Cek link mati di situs mana pun, langsung dari browser.",
+    "Kiro-Project": "Eksperimen JavaScript yang nggak jelas arahnya, biarin.",
+    "grafik-chart": "Bikin grafik dan chart cepat, urusan data jadi enak dilihat.",
+    "motorcycle-alarm-schematic": "Skema rangkaian alarm sepeda motor (hardware).",
   };
 
   function lookUp(obj, name, fallback) {
@@ -67,7 +67,7 @@
 
     const links =
       '<div class="project-links">' +
-      '<a href="' + repoUrl(name) + '" target="_blank" rel="noopener">Kode Sumber</a>' +
+      '<a href="' + repoUrl(name) + '" target="_blank" rel="noopener">Repo</a>' +
       (demo ? '<a href="' + demo + '" target="_blank" rel="noopener">Demo</a>' : "") +
       "</div>";
 
@@ -108,7 +108,7 @@
 
       const projects = repos
         .filter(function (r) {
-          return !r.fork;
+          return !r.fork && r.name !== GITHUB_USER + ".github.io";
         })
         .sort(function (a, b) {
           return b.stargazers_count - a.stargazers_count || b.pushed_at.localeCompare(a.pushed_at);
