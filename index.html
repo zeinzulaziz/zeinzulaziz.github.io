@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moh Zein Zulfanul Aziz — WordPress Developer</title>
   <meta name="description" content="Portfolio of Moh Zein Zulfanul Aziz — WordPress Developer at Fanaloka, East Java, Indonesia.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0c0c0e">
   <meta property="og:title" content="Moh Zein Zulfanul Aziz — WordPress Developer">
   <meta property="og:description" content="WordPress Developer at Fanaloka. Based in East Java, Indonesia.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://api.github.com" crossorigin>
+  <link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23f5b301'/%3E%3Ctext x='32' y='45' font-family='monospace' font-size='36' font-weight='700' text-anchor='middle' fill='%230b0b0b'%3EZ%3C/text%3E%3C/svg%3E">
 </head>
@@ -34,7 +39,7 @@
           experimenting with JavaScript, data, and dashboards. Here is a collection
           of my public projects on GitHub.
         </p>
-        <div class="hero-actions">
+        <div class="hero-actions reveal">
           <a class="btn btn-primary" href="#projects">View Projects</a>
           <a class="btn btn-ghost" href="blog.html">Read the blog</a>
           <a class="btn btn-ghost" href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">GitHub</a>
@@ -51,18 +56,35 @@
         </div>
         <p class="section-sub">Public projects on GitHub. Hit "Demo" whenever there's a live link.</p>
         <div class="projects-grid" id="projectsGrid" aria-live="polite">
-          <div class="projects-loading">Loading projects…</div>
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-preview"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-preview"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-preview"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="about" id="about">
       <div class="container about-inner">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="section-num">02</span>
           <h2 class="section-title">About</h2>
         </div>
-        <p>
+        <p class="reveal" style="--d:80ms">
           I'm Moh Zein Zulfanul Aziz, a WordPress Developer at Fanaloka based in
           East Java, Indonesia. I spend my days working on websites, and outside of
           that I enjoy experimenting with JavaScript, data, dashboards, and
@@ -74,12 +96,12 @@
 
     <section class="contact" id="contact">
       <div class="container contact-inner">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="section-num">03</span>
           <h2 class="section-title">Contact</h2>
         </div>
-        <p>Open to collaboration, or just talking about tech.</p>
-        <div class="hero-actions">
+        <p class="reveal" style="--d:80ms">Open to collaboration, or just talking about tech.</p>
+        <div class="hero-actions reveal" style="--d:140ms">
           <a class="btn btn-primary" href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">Reach me on GitHub</a>
         </div>
       </div>
@@ -93,6 +115,18 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js" defer></script>
+  <script>
+    // Safety net: if main.js failed to load, reveal sections instead of hiding them.
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        if (typeof window.observeReveals !== "function") {
+          document.querySelectorAll(".reveal").forEach(function (el) {
+            el.classList.add("is-in");
+          });
+        }
+      }, 2500);
+    });
+  </script>
 </body>
 </html>

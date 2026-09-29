@@ -265,7 +265,7 @@
 
   /* ---------- rendering ---------- */
 
-  function postCard(post) {
+  function postCard(post, index) {
     const meta =
       '<div class="post-meta">' +
       (post.date ? "<span>" + escapeHtml(formatDate(post.date)) + "</span>" : "") +
@@ -279,7 +279,8 @@
       : "";
 
     return (
-      '<article class="post-card' + (post.type === "note" ? " is-note" : "") + '">' +
+      '<article class="post-card reveal' + (post.type === "note" ? " is-note" : "") + '"' +
+      ' style="--d:' + Math.min(index * 60, 360) + 'ms">' +
       meta +
       '<h2 class="post-card-title"><a href="' + escapeHtml(post.url) + '">' + escapeHtml(post.title) + "</a></h2>" +
       (post.description ? '<p class="post-card-desc">' + escapeHtml(post.description) + "</p>" : "") +
@@ -307,11 +308,20 @@
       " · " + notes + (notes === 1 ? " note" : " notes");
 
     grid.innerHTML = posts
-      .map(function (post) {
+      .map(function (post, index) {
         if (!post.readingTime) post.readingTime = readingTime(post.body);
-        return postCard(post);
+        return postCard(post, index);
       })
       .join("");
+
+    if (typeof window.observeReveals === "function") {
+      window.observeReveals(grid.querySelectorAll(".reveal:not(.is-in)"));
+    } else {
+      // blog/post pages don't load main.js — show cards immediately.
+      grid.querySelectorAll(".reveal").forEach(function (el) {
+        el.classList.add("is-in");
+      });
+    }
   }
 
   function renderSingle(post) {
