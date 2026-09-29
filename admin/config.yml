@@ -1,0 +1,77 @@
+backend:
+  name: github
+  repo: zeinzulaziz/zeinzulaziz.github.io
+  branch: main
+  auth_methods: [token]
+
+media_folder: /assets/img/blog
+public_folder: /assets/img/blog
+
+site_url: https://zeinzulaziz.github.io
+display_url: https://zeinzulaziz.github.io
+publish_mode: simple
+
+collections:
+  - name: posts
+    label: Posts
+    label_singular: Post
+    description: Articles and short notes. Saved as Markdown files in content/posts.
+    folder: /content/posts
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{date}} · {{title}}"
+    preview_path: "post.html?slug={{slug}}"
+    view_filters:
+      - label: Draft
+        field: draft
+        pattern: true
+    view_groups:
+      - label: Year
+        field: date
+        pattern: \d{4}
+        order: DESC
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Slug
+        name: slug
+        widget: string
+        hint: "URL name — lowercase letters, numbers, and dashes. Example: my-first-post"
+        pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase letters, numbers, and dashes only"]
+      - label: Date
+        name: date
+        widget: datetime
+        type: date
+        default: "{{now}}"
+      - label: Type
+        name: type
+        widget: select
+        default: article
+        options:
+          - { label: Article, value: article }
+          - { label: Note, value: note }
+        hint: "Notes are short and get an accent bar on the blog list."
+      - label: Description
+        name: description
+        widget: text
+        required: false
+        hint: "One or two sentences. Shown on the blog list and used for SEO."
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        default: []
+        field: { label: Tag, name: tag, widget: string }
+      - label: Draft
+        name: draft
+        widget: boolean
+        default: false
+        required: false
+        hint: "Drafts stay hidden from visitors until you turn this off."
+      - label: Body
+        name: body
+        widget: markdown

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Moh Zein Zulfanul Aziz</title>
+  <meta name="description" content="Articles and notes on WordPress development, JavaScript, and other things I build.">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23f5b301'/%3E%3Ctext x='32' y='45' font-family='monospace' font-size='36' font-weight='700' text-anchor='middle' fill='%230b0b0b'%3EZ%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="container nav">
+      <a href="index.html" class="nav-brand">&lt;zeinzulaziz<span class="brand-dot">/&gt;</span></a>
+      <div class="nav-links">
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#about">About</a>
+        <a href="blog.html" class="is-active">Blog</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="blog-head">
+      <div class="container blog-head-inner">
+        <p class="hero-overline">Writing</p>
+        <h1 class="hero-title">Blog<span class="title-dot">.</span></h1>
+        <p class="hero-desc">
+          Notes and articles about WordPress development, JavaScript, and the
+          small things I learn along the way.
+        </p>
+        <p class="blog-count" id="blogCount"></p>
+      </div>
+    </section>
+
+    <section class="blog">
+      <div class="container">
+        <div class="blog-list" id="blogList" aria-live="polite">
+          <div class="projects-loading">Loading posts…</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Moh Zein Zulfanul Aziz · Built with plain HTML/CSS/JS.</p>
+      <p><a href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/zeinzulaziz/" target="_blank" rel="noopener">LinkedIn</a></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/markdown.js"></script>
+  <script src="assets/js/blog.js"></script>
+</body>
+</html>

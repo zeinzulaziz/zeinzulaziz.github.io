@@ -1,0 +1,32 @@
+{
+  "generated": "2026-09-29T02:20:05.603Z",
+  "posts": [
+    {
+      "slug": "cara-menulis-artikel-blog",
+      "title": "Cara Menulis Artikel Blog di Situs Ini",
+      "date": "2026-09-29",
+      "description": "Panduan singkat cara membuat artikel atau catatan baru lewat editor di /admin, tanpa perlu sentuh kode.",
+      "tags": [
+        "blog",
+        "guide",
+        "sveltia-cms"
+      ],
+      "type": "article",
+      "draft": false,
+      "readingTime": 1
+    },
+    {
+      "slug": "kenapa-tanpa-build-tool",
+      "title": "Catatan: Kenapa Tanpa Build Tool",
+      "date": "2026-09-29",
+      "description": "Catatan kecil soal kenapa blog ini sengaja dibuat sesederhana mungkin.",
+      "tags": [
+        "catatan",
+        "web"
+      ],
+      "type": "note",
+      "draft": false,
+      "readingTime": 1
+    }
+  ]
+}
