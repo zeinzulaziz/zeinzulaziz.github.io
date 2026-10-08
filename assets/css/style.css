@@ -945,6 +945,41 @@ section {
   border-bottom: 0;
 }
 
+/* ---------- Featured ---------- */
+.featured {
+  border-top: 1px solid var(--border);
+}
+
+.featured-card {
+  margin-top: 1.75rem;
+  max-width: 760px;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-soft);
+}
+
+.featured-tag {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.featured-title {
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.featured-desc {
+  color: var(--text-dim);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
 /* ---------- About / Contact ---------- */
 .about {
   border-top: 1px solid var(--border);
