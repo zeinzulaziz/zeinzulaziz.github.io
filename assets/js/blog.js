@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const CACHE_KEY = "blog.index.v1";
+  const CACHE_KEY = "blog.index.v2";
   const CACHE_TTL = 10 * 60 * 1000;
 
   const REPO = "zeinzulaziz/zeinzulaziz.github.io";
@@ -185,17 +185,30 @@
       loadManifest().catch(function () {
         return [];
       }),
-      listRemoteFiles().catch(function () {
-        return [];
-      }),
+      listRemoteFiles().then(
+        function (files) {
+          return { ok: true, files: files };
+        },
+        function () {
+          // Listing gagal (rate limit dll) — manifest dipakai penuh sebagai fallback.
+          return { ok: false, files: [] };
+        }
+      ),
     ])
       .then(function (results) {
         const manifest = results[0];
-        const remote = results[1];
+        const remoteState = results[1];
+        const remote = remoteState.files;
+        const remoteSlugs = {};
+        remote.forEach(function (file) {
+          remoteSlugs[file.slug] = true;
+        });
         const bySlug = {};
 
         manifest.forEach(function (entry) {
           if (!entry || !entry.slug) return;
+          // Saat daftar file tersedia, file yang sudah dihapus ikut terbuang.
+          if (remoteState.ok && !remoteSlugs[entry.slug]) return;
           bySlug[entry.slug] = {
             slug: entry.slug,
             title: entry.title || entry.slug,
