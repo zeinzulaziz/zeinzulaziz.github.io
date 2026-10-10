@@ -10,64 +10,64 @@ tags:
 draft: false
 ---
 
-**Versi baru (lebih longgar dan tahan lama)**
+# Versi Baru (Lebih Longgar dan Tahan Lama)
 
-**Prinsip utama 3-6 bulan ke depan:**
+## Prinsip Utama 3-6 Bulan ke Depan:
 
 **Bukan menghafal tools tertentu, tapi membangun kebiasaan yang tetap berguna meski AI berubah cepat.**
 
-**1. Terus latih kemampuan pakai AI sebagai tenaga kerja, bukan cuma asisten.**
+1. **Terus latih kemampuan pakai AI sebagai tenaga kerja, bukan cuma asisten.**
+Fokusnya: kasih tugas yang kompleks, evaluasi hasilnya dengan kritis, perbaiki, dan ulangi. Semakin AI pintar, semakin penting skill “ngontrol AI” ini.
+2. **Perdalam pemahaman masalah nyata di sekitar kamu (khususnya data harga pangan dan petani di Jawa Timur).**
+AI bisa bantu analisis dan coding, tapi keputusan mana yang penting dan berguna tetap dari kamu.
+3. **Biasakan siklus ship → dapat feedback → perbaiki.**
+Rilis sesuatu meski sederhana, lihat apakah dipakai orang, lalu iterasi. Ini yang paling sulit digantikan sepenuhnya oleh AI.
 
-**Fokusnya: kasih tugas yang kompleks, evaluasi hasilnya dengan kritis, perbaiki, dan ulangi. Semakin AI pintar, semakin penting skill “ngontrol AI” ini.**
+## Arah Praktis 3-6 Bulan (Bisa Berubah Sesuai Perkembangan):
 
-**2. Perdalam pemahaman masalah nyata di sekitar kamu (khususnya data harga pangan dan petani di Jawa Timur).**
+### Bulan 1-2
 
-**AI bisa bantu analisis dan coding, tapi keputusan mana yang penting dan berguna tetap dari kamu.**
+Perkuat cara kerja dengan AI agent terbaru yang ada saat itu.
 
-**3. Biasakan siklus ship → dapat feedback → perbaiki.**
+Fokus tingkatkan Harga Pangan: buat analisis lebih berguna, tampilan lebih jelas, dan dokumentasikan proses pembuatannya.
 
-**Rilis sesuatu meski sederhana, lihat apakah dipakai orang, lalu iterasi. Ini yang paling sulit digantikan sepenuhnya oleh AI.**
+Latihan setiap minggu minimal satu tugas besar yang dikerjakan bersama AI dari awal sampai selesai.
 
-**Arah praktis 3-6 bulan (bisa berubah sesuai perkembangan):**
+### Bulan 3-4
 
-**Bulan 1-2**
+Buat versi yang lebih mudah diakses orang (mobile atau PWA).
 
-**Perkuat cara kerja dengan AI agent terbaru yang ada saat itu.**
+Tambah 1-2 fitur yang benar-benar dibutuhkan berdasarkan feedback sederhana dari calon pengguna.
 
-**Fokus tingkatkan Harga Pangan: buat analisis lebih berguna, tampilan lebih jelas, dan dokumentasikan proses pembuatannya.**
+Mulai ukur pemakaian secukupnya (berapa orang buka, fitur mana yang dipakai).
 
-**Latihan setiap minggu minimal satu tugas besar yang dikerjakan bersama AI dari awal sampai selesai.**
+### Bulan 5-6
 
-**Bulan 3-4**
+Sebarkan produk ke komunitas yang relevan.
 
-**Buat versi yang lebih mudah diakses orang (mobile atau PWA).**
+Perbarui portfolio dengan menekankan proses AI + dampak nyata.
 
-**Tambah 1-2 fitur yang benar-benar dibutuhkan berdasarkan feedback sederhana dari calon pengguna.**
+Pilih satu arah pendalaman sesuai yang paling berjalan (AI workflow lebih advanced, data, atau integrasi dengan kerja WordPress).
 
-**Mulai ukur pemakaian secukupnya (berapa orang buka, fitur mana yang dipakai).**
+## Cara Biar Roadmap Ini Tidak Cepat Usang:
 
-**Bulan 5-6**
+Setiap akhir bulan luangkan 30-60 menit untuk review:
 
-**Sebarkan produk ke komunitas yang relevan.**
+- Tools atau cara kerja AI mana yang sudah terasa ketinggalan?
+- Apa yang baru muncul dan ternyata jauh lebih efektif?
+- Bagian mana dari Harga Pangan yang paling banyak dapat respons?
+- Apa yang perlu ditambah, dikurangi, atau diubah arahnya bulan depan?
 
-**Perbarui portfolio dengan menekankan proses AI + dampak nyata.**
+Catat hasil review-nya singkat, lalu sesuaikan fokus bulan berikutnya. Jangan kaku memegang rencana lama kalau situasinya sudah beda.
 
-**Pilih satu arah pendalaman sesuai yang paling berjalan (AI workflow lebih advanced, data, atau integrasi dengan kerja WordPress).**
+Intinya: bergerak dengan arah yang jelas, tapi selalu siap menyesuaikan. Yang kamu latih sebenarnya adalah kemampuan beradaptasi dan menghasilkan sesuatu yang berguna, bukan menguasai daftar skill yang pasti basi.
 
-**Cara biar roadmap ini tidak cepat usang:**
+Silakan dicopy. Kalau mau ditambahin bagian tertentu atau dibuat lebih ringkas lagi, bilang saja.
 
-**Setiap akhir bulan luangkan 30-60 menit untuk review:**
+Rate textGoodBad
 
-**- Tools atau cara kerja AI mana yang sudah terasa ketinggalan?**
+Thanks!
 
-**- Apa yang baru muncul dan ternyata jauh lebih efektif?**
+ExportTotal 7 minutes saved
 
-**- Bagian mana dari Harga Pangan yang paling banyak dapat respons?**
-
-**- Apa yang perlu ditambah, dikurangi, atau diubah arahnya bulan depan?**
-
-**Catat hasil review-nya singkat, lalu sesuaikan fokus bulan berikutnya. Jangan kaku memegang rencana lama kalau situasinya sudah beda.**
-
-**Intinya: bergerak dengan arah yang jelas, tapi selalu siap menyesuaikan. Yang kamu latih sebenarnya adalah kemampuan beradaptasi dan menghasilkan sesuatu yang berguna, bukan menguasai daftar skill yang pasti basi.**
-
-**Silakan dicopy. Kalau mau ditambahin bagian tertentu atau dibuat lebih ringkas lagi, bilang saja.**
+[Text formatter](https://textformatter.ai/)[Text beautifier](https://textformatter.ai/text-beautifier/)[AI document formatter](https://textformatter.ai/ai-document-formatter/)[Paragraph formatter](https://textformatter.ai/paragraph-formatter/)[About](https://textformatter.ai/about/)
