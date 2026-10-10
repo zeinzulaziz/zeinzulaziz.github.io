@@ -11,7 +11,7 @@ draft: false
 
 Farmers rarely control the price they receive for their harvest. But they can often control _when_ they sell. Food prices move in patterns throughout the year, and a farmer who knows which months usually bring higher prices can make a better decision about timing.
 
-That idea is behind [Harga Pangan](https://harga-pangan.built.my.id/), a website I'm building with Claude to make food price data in East Java easier to read and use.
+That idea is behind Harga Pangan, a website I'm building with Claude to make food price data in East Java easier to read and use.
 
 ## The problem
 
@@ -49,4 +49,4 @@ The analysis is based on historical patterns. It does not guarantee future price
 
 The project is still under development. Feedback from farmers, extension workers, and anyone familiar with local agricultural markets is very welcome, since they know best what is actually useful on the ground.
 
-You can try the site here: [harga-pangan.built.my.id](https://harga-pangan.built.my.id/)
+You can try the site here: [https://zeinzulaziz.github.io/harga-pangan/](https://zeinzulaziz.github.io/harga-pangan/)
