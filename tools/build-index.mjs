@@ -12,11 +12,28 @@ function parseFrontmatter(raw) {
   if (!match) return { data: {}, body: text };
 
   const data = {};
-  for (const line of match[1].split("\n")) {
-    const kv = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
+  const lines = match[1].split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const kv = lines[i].match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
     if (!kv) continue;
     const key = kv[1].toLowerCase();
     let value = kv[2].trim();
+
+    if (value === "") {
+      // List YAML multi-line (format output CMS): kumpulkan baris "- item".
+      const items = [];
+      let j = i + 1;
+      while (j < lines.length && /^\s*-\s+/.test(lines[j])) {
+        items.push(lines[j].replace(/^\s*-\s+/, "").trim().replace(/^["']|["']$/g, ""));
+        j++;
+      }
+      if (items.length) {
+        data[key] = items;
+        i = j - 1;
+        continue;
+      }
+    }
+
     if (/^".*"$|^'.*'$/.test(value)) value = value.slice(1, -1);
     if (value === "true") value = true;
     else if (value === "false") value = false;
@@ -58,7 +75,7 @@ const posts = [];
 for (const file of files) {
   const raw = await readFile(join(postsDir, file), "utf8");
   const { data, body } = parseFrontmatter(raw);
-  const slug = String(data.slug || file.replace(/\.md$/i, "")).trim();
+  const slug = file.replace(/\.md$/i, "");
   posts.push({
     slug,
     title: data.title || slug.replace(/-/g, " "),

@@ -1,8 +1,8 @@
 (function () {
   "use strict";
 
-  const CACHE_KEY = "blog.index.v2";
-  const CACHE_TTL = 10 * 60 * 1000;
+  const CACHE_KEY = "blog.index.v3";
+  const CACHE_TTL = 60 * 1000;
 
   const REPO = "zeinzulaziz/zeinzulaziz.github.io";
   const BRANCH = "main";
@@ -58,11 +58,27 @@
     if (!match) return { data: {}, body: text };
 
     const data = {};
-    match[1].split("\n").forEach(function (line) {
-      const kv = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
-      if (!kv) return;
+    const lines = match[1].split("\n");
+    for (let i = 0; i < lines.length; i++) {
+      const kv = lines[i].match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
+      if (!kv) continue;
       const key = kv[1].toLowerCase();
       let value = kv[2].trim();
+
+      if (value === "") {
+        // List YAML multi-line (format output CMS): kumpulkan baris "- item".
+        const items = [];
+        let j = i + 1;
+        while (j < lines.length && /^\s*-\s+/.test(lines[j])) {
+          items.push(lines[j].replace(/^\s*-\s+/, "").trim().replace(/^["']|["']$/g, ""));
+          j++;
+        }
+        if (items.length) {
+          data[key] = items;
+          i = j - 1;
+          continue;
+        }
+      }
 
       if (/^".*"$|^'.*'$/.test(value)) value = value.slice(1, -1);
       if (value === "true") value = true;
@@ -78,7 +94,7 @@
       }
 
       data[key] = value;
-    });
+    }
 
     return { data: data, body: text.slice(match[0].length) };
   }
@@ -177,9 +193,12 @@
     });
   }
 
-  function loadPosts() {
-    const cached = readCache();
-    if (cached) return Promise.resolve(cached);
+  function loadPosts(options) {
+    const skipCache = !!(options && options.skipCache);
+    if (!skipCache) {
+      const cached = readCache();
+      if (cached) return Promise.resolve(cached);
+    }
 
     return Promise.all([
       loadManifest().catch(function () {
@@ -230,7 +249,12 @@
           missing.map(function (file) {
             return fetchText(file.url)
               .then(function (raw) {
-                return normalize(raw, file.slug);
+                const post = normalize(raw, file.slug);
+                // Nama file adalah identitas yang benar-benar ada di repo —
+                // frontmatter slug yang beda tidak boleh dipakai sebagai URL.
+                post.slug = file.slug;
+                post.url = "post.html?slug=" + encodeURIComponent(file.slug);
+                return post;
               })
               .catch(function () {
                 return null;
@@ -259,6 +283,33 @@
       });
   }
 
+  function findByFrontmatterSlug(slug) {
+    return listRemoteFiles().then(function (files) {
+      return Promise.all(
+        files
+          .filter(function (file) {
+            return file.slug !== slug;
+          })
+          .map(function (file) {
+            return fetchText(file.url)
+              .then(function (raw) {
+                const parsed = parseFrontmatter(raw);
+                return String(parsed.data.slug || "").trim() === slug
+                  ? normalize(raw, file.slug)
+                  : null;
+              })
+              .catch(function () {
+                return null;
+              });
+          })
+      ).then(function (posts) {
+        const found = posts.filter(Boolean)[0];
+        if (!found) throw new Error("Artikel tidak ditemukan");
+        return found;
+      });
+    });
+  }
+
   function loadPost(slug) {
     if (!slug) return Promise.reject(new Error("Slug artikel tidak ditemukan"));
 
@@ -273,6 +324,14 @@
         const post = normalize(raw, slug);
         post.readingTime = readingTime(post.body);
         return post;
+      })
+      .catch(function () {
+        // File <slug>.md tidak ada — coba cocokkan lewat frontmatter slug
+        // (artikel lama yang nama file-nya beda dari slug).
+        return findByFrontmatterSlug(slug).then(function (post) {
+          post.readingTime = readingTime(post.body);
+          return post;
+        });
       });
   }
 
@@ -381,9 +440,16 @@
   function initList() {
     if (!document.getElementById("blogList")) return;
 
-    loadPosts()
+    // Tampilkan cache dulu bila ada, lalu revalidate di background
+    // supaya artikel baru dari CMS langsung terlihat tanpa menunggu TTL.
+    const cached = readCache();
+    const hasCache = !!(cached && cached.length);
+    if (hasCache) renderList(cached);
+
+    loadPosts({ skipCache: true })
       .then(renderList)
       .catch(function (err) {
+        if (hasCache) return; // cache basi masih lebih baik daripada error
         const grid = document.getElementById("blogList");
         grid.innerHTML =
           '<p class="blog-empty">Gagal memuat artikel (' + escapeHtml(err.message) +

@@ -1,12 +1,27 @@
 {
-  "generated": "2026-10-08T12:03:23.804Z",
+  "generated": "2026-10-10T08:42:24.536Z",
   "posts": [
+    {
+      "slug": "roadmap-grok",
+      "title": "Roadmap dari Grok",
+      "date": "2026-10-10",
+      "description": "Versi Baru (Lebih Longgar dan Tahan Lama) Prinsip Utama 3 6 Bulan ke Depan: Bukan menghafal tools tertentu, tapi membangun kebiasaan yang tetap berguna meski AI berubah cepat. 1.…",
+      "tags": [
+        "roadmap",
+        "grok"
+      ],
+      "type": "note",
+      "draft": false,
+      "readingTime": 2
+    },
     {
       "slug": "food-price-tracker",
       "title": "Helping East Java Farmers Know When to Sell: Building a Food Price Tracker",
       "date": "2026-10-08",
       "description": "A free, open tool that turns historical producer price data into practical guidance for farmers in East Java.",
-      "tags": [],
+      "tags": [
+        "blog"
+      ],
       "type": "article",
       "draft": false,
       "readingTime": 2

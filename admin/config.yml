@@ -21,7 +21,10 @@ collections:
     delete: true
     extension: md
     format: frontmatter
-    slug: "{{slug}}"
+    slug:
+      editable: [create]
+      hint: "URL & nama file artikel — huruf kecil, angka, dan strip. Terkunci setelah artikel dibuat."
+      pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase letters, numbers, and dashes only"]
     summary: "{{date}} · {{title}}"
     preview_path: "post.html?slug={{slug}}"
     view_filters:
@@ -37,11 +40,6 @@ collections:
       - label: Title
         name: title
         widget: string
-      - label: Slug
-        name: slug
-        widget: string
-        hint: "URL name — lowercase letters, numbers, and dashes. Example: my-first-post"
-        pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase letters, numbers, and dashes only"]
       - label: Date
         name: date
         widget: datetime

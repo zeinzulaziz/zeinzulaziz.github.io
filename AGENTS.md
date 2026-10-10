@@ -28,7 +28,6 @@ Artikel adalah file Markdown di `content/posts/` dengan frontmatter:
 ```markdown
 ---
 title: "Judul"
-slug: "judul-artikel"
 date: 2026-09-29
 type: article
 description: "Ringkasan singkat."
@@ -41,18 +40,21 @@ Isi artikel.
 
 - `type: article` untuk artikel, `type: note` untuk catatan singkat
 - `draft: true` menyembunyikan artikel dari pengunjung
-- Nama file wajib sama dengan `slug`
+- **Slug = nama file** (misal `judul-artikel.md` → `post.html?slug=judul-artikel`). Di CMS, slug diisi lewat Slug panel saat create dan terkunci setelahnya (`editable: [create]`). Frontmatter `slug` opsional — hanya dipakai sebagai fallback untuk link lama yang namanya beda dari file
 - Format markdown yang didukung: heading, tebal/miring, kode, list (termasuk bersarang & checklist), blockquote, tabel, tautan, gambar, horizontal rule
 
 ### Alur tulis
-1. **Paling mudah:** buka `/admin/`, login pakai GitHub Access Token, klik **New Post**, publish. GitHub Pages deploy otomatis.
+1. **Paling mudah:** buka `/admin/`, login pakai GitHub Access Token, klik **New Post**, isi slug di Slug panel, publish. `content/posts.json` di-regenerate otomatis oleh GitHub Actions (`.github/workflows/build-index.yml`), lalu GitHub Pages deploy.
 2. **Manual:** buat/edit file `.md`, jalankan `node tools/build-index.mjs`, lalu `git push`.
 
 ### Cara kerja data artikel
 `blog.js` memuat `content/posts.json` lebih dulu, lalu menggabungkan daftar
 `content/posts/` dari GitHub API untuk mengambil slug yang belum ada di manifest.
 Ini membuat artikel dari CMS tetap muncul tanpa harus menjalankan script.
-Cache disimpan di `localStorage` selama 10 menit (diabaikan di localhost).
+Daftar ditampilkan dari cache dulu lalu di-revalidate di background
+(stale-while-revalidate); cache `localStorage` 1 menit (diabaikan di localhost).
+`post.html` memuat file berdasarkan nama file; kalau tidak ada, fallback mencari
+lewat frontmatter slug via GitHub API.
 
 ### Penting
 - `.nojekyll` wajib ada, kalau tidak Jekyll akan mengubah file `.md` ber-frontmatter menjadi HTML dan file mentahnya tidak ter-deploy.
