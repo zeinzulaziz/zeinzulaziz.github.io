@@ -10,64 +10,64 @@ tags:
 draft: false
 ---
 
-**Roadmap Skill 3-6 Bulan ke Depan untuk Zein** Fokus utamanya: **naikkan kemampuan AI agentic + data + product shipping**, sambil tetap pakai WordPress sebagai pondasi penghasilan. Target akhir: Harga Pangan jadi produk yang lebih powerful & terpakai, plus skill yang bikin kamu lebih valuable sebagai solo AI builder.
+**Versi baru (lebih longgar dan tahan lama)**
 
-### Bulan 1–2: Agentic AI Mastery + Perkuat Fondasi Data
+**Prinsip utama 3-6 bulan ke depan:**
 
-**Tujuan:** Dari “pakai Claude biasa” → “AI yang bisa kerja multi-step sendiri di project kamu”.
+**Bukan menghafal tools tertentu, tapi membangun kebiasaan yang tetap berguna meski AI berubah cepat.**
 
-- Kuasai minimal 2 tools agentic:
-- Claude Code (karena kamu sudah pakai Claude)
-- Cursor atau Google Antigravity (gratis/preview bagus)
-- Latihan harian: kasih AI tugas full (refactor, tambah fitur, test, fix bug) di project nyata, bukan cuma generate code.
-- Skill data dasar yang relevan:
-- Pandas / JavaScript data processing
-- Visualisasi lebih bagus (Chart.js atau library modern)
-- Analisis tren sederhana (moving average, seasonality)
-- **Project wajib:** Update besar Harga Pangan
-- Perbaiki Analisa tab biar lebih akurat & mudah dipahami
-- Tambah filter, export data, atau insight otomatis
-- Dokumentasikan proses build pakai AI di README **Output bulan ke-2:** Harga Pangan versi lebih bagus + kamu nyaman kerja dengan AI agent.
+**1. Terus latih kemampuan pakai AI sebagai tenaga kerja, bukan cuma asisten.**
 
-### Bulan 3–4: Mobile + Product Thinking
+**Fokusnya: kasih tugas yang kompleks, evaluasi hasilnya dengan kritis, perbaiki, dan ulangi. Semakin AI pintar, semakin penting skill “ngontrol AI” ini.**
 
-**Tujuan:** Bikin produk bisa diakses petani lebih mudah + mulai pikirkan user nyata.
+**2. Perdalam pemahaman masalah nyata di sekitar kamu (khususnya data harga pangan dan petani di Jawa Timur).**
 
-Word document conversion
+**AI bisa bantu analisis dan coding, tapi keputusan mana yang penting dan berguna tetap dari kamu.**
 
-- Vertikal ke Flutter/Dart (kamu sudah main Dart):
-- Buat versi mobile Harga Pangan (atau PWA dulu kalau mau cepat)
-- Manfaatin Flutter AI Skills yang baru (ada support agentic)
-- Product skill:
-- Cara kumpulin feedback user (form sederhana, WhatsApp group petani, survey)
-- Metrics dasar: berapa orang pakai, fitur mana yang sering dibuka
-- Simple user interview (5-10 orang saja)
-- Tambah 1-2 fitur AI di produk:
-- Prediksi kasar bulan harga tinggi/rendah
-- Chatbot sederhana “tanya harga komoditas X”
-- Notifikasi (kalau memungkinkan) **Output bulan ke-4:** Ada versi mobile/PWA + ada data real pemakaian + 1-2 fitur AI baru.
+**3. Biasakan siklus ship → dapat feedback → perbaiki.**
 
-### Bulan 5–6: Distribution, Portfolio & Spesialisasi
+**Rilis sesuatu meski sederhana, lihat apakah dipakai orang, lalu iterasi. Ini yang paling sulit digantikan sepenuhnya oleh AI.**
 
-**Tujuan:** Biar kerjaan & produk kamu terlihat, dan skillnya bisa dijual.
+**Arah praktis 3-6 bulan (bisa berubah sesuai perkembangan):**
 
-- Distribution & impact:
-- Promosi Harga Pangan ke komunitas petani, kelompok tani, dinas, atau media lokal Jatim
-- Buat konten singkat (thread X, post LinkedIn, atau video pendek) tentang “cara AI bantu petani”
-- Portfolio & personal brand:
-- Update website: highlight proses AI + impact Harga Pangan
-- Tulis case study singkat “Dari data mentah → dashboard yang dipakai petani”
-- Skill lanjutan (pilih 1 yang paling cocok):
-- Advanced agentic workflow (multi-agent, evaluation output AI)
-- Atau WordPress + AI (custom plugin, otomasi client)
-- Atau data engineering ringan (otomatisasi ambil data harga) **Output bulan ke-6:**
-- Produk yang punya user nyata
-- Portfolio yang lebih selling
-- Skill yang jelas beda dari WordPress developer biasa
+**Bulan 1-2**
 
-### Tips Eksekusi
+**Perkuat cara kerja dengan AI agent terbaru yang ada saat itu.**
 
-- Luangkan **minimal 8–12 jam/minggu** (malam atau weekend).
-- Setiap bulan ada 1 project shippable (meski kecil).
-- Catat apa yang dikerjakan AI vs yang kamu decide sendiri — ini yang bikin skill judgment kamu naik.
-- Jangan belajar terlalu banyak tools. Pilih 2-3 lalu dalemin. Roadmap ini realistis buat yang masih kerja full-time. Kalau konsisten, dalam 6 bulan posisi kamu jauh lebih kuat: bukan lagi “WordPress dev yang coba AI”, tapi **AI Product Builder yang ngerti domain lokal + bisa ship**. Mau aku buatkan versi yang lebih detail (mingguan) untuk bulan pertama, atau prioritaskan salah satu bagian (misalnya cuma AI agentic atau cuma Flutter)?
+**Fokus tingkatkan Harga Pangan: buat analisis lebih berguna, tampilan lebih jelas, dan dokumentasikan proses pembuatannya.**
+
+**Latihan setiap minggu minimal satu tugas besar yang dikerjakan bersama AI dari awal sampai selesai.**
+
+**Bulan 3-4**
+
+**Buat versi yang lebih mudah diakses orang (mobile atau PWA).**
+
+**Tambah 1-2 fitur yang benar-benar dibutuhkan berdasarkan feedback sederhana dari calon pengguna.**
+
+**Mulai ukur pemakaian secukupnya (berapa orang buka, fitur mana yang dipakai).**
+
+**Bulan 5-6**
+
+**Sebarkan produk ke komunitas yang relevan.**
+
+**Perbarui portfolio dengan menekankan proses AI + dampak nyata.**
+
+**Pilih satu arah pendalaman sesuai yang paling berjalan (AI workflow lebih advanced, data, atau integrasi dengan kerja WordPress).**
+
+**Cara biar roadmap ini tidak cepat usang:**
+
+**Setiap akhir bulan luangkan 30-60 menit untuk review:**
+
+**- Tools atau cara kerja AI mana yang sudah terasa ketinggalan?**
+
+**- Apa yang baru muncul dan ternyata jauh lebih efektif?**
+
+**- Bagian mana dari Harga Pangan yang paling banyak dapat respons?**
+
+**- Apa yang perlu ditambah, dikurangi, atau diubah arahnya bulan depan?**
+
+**Catat hasil review-nya singkat, lalu sesuaikan fokus bulan berikutnya. Jangan kaku memegang rencana lama kalau situasinya sudah beda.**
+
+**Intinya: bergerak dengan arah yang jelas, tapi selalu siap menyesuaikan. Yang kamu latih sebenarnya adalah kemampuan beradaptasi dan menghasilkan sesuatu yang berguna, bukan menguasai daftar skill yang pasti basi.**
+
+**Silakan dicopy. Kalau mau ditambahin bagian tertentu atau dibuat lebih ringkas lagi, bilang saja.**
