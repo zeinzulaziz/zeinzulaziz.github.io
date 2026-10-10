@@ -1,6 +1,6 @@
 ---
 title: Roadmap dari Grok
-slug: roadmap-dari-grok
+slug: roadmap-grok
 date: 2026-10-10
 type: note
 description: ''
