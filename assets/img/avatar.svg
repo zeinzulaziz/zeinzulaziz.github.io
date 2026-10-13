@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 460" width="460" height="460" role="img" aria-label="Illustrated avatar of Moh Zein Zulfanul Aziz">
+  <title>Moh Zein Zulfanul Aziz</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#efe8d8"/>
+      <stop offset="1" stop-color="#ddd1b8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="460" height="460" fill="url(#bg)"/>
+  <circle cx="230" cy="212" r="150" fill="#f5efe1" opacity="0.55"/>
+
+  <rect x="208" y="248" width="44" height="104" rx="18" fill="#dcae80"/>
+
+  <path d="M100 460 C108 380 162 340 214 334 L246 334 C298 340 352 380 360 460 Z" fill="#a8440f"/>
+  <path d="M204 336 C216 356 244 356 256 336 C248 344 238 348 230 348 C222 348 212 344 204 336 Z" fill="#7f330b"/>
+
+  <ellipse cx="230" cy="180" rx="90" ry="100" fill="#241f1a"/>
+
+  <ellipse cx="230" cy="202" rx="76" ry="90" fill="#eac196"/>
+
+  <path d="M148 186 C148 120 186 84 230 84 C274 84 312 120 312 186 C312 186 296 150 262 142 C238 137 210 140 186 152 C166 162 154 172 148 186 Z" fill="#241f1a"/>
+  <path d="M182 116 C204 100 256 100 278 116" stroke="#47403a" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+  <path d="M176 174 C190 166 208 166 220 172" stroke="#241f1a" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M240 172 C252 166 270 166 284 174" stroke="#241f1a" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+  <ellipse cx="200" cy="206" rx="21" ry="16" fill="#fffdf9"/>
+  <circle cx="201" cy="208" r="10" fill="#5a4632"/>
+  <circle cx="201" cy="208" r="4.5" fill="#241f1a"/>
+  <circle cx="197" cy="203" r="3.2" fill="#fffdf9"/>
+  <path d="M178 202 C190 190 212 190 222 200" stroke="#241f1a" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+  <ellipse cx="260" cy="206" rx="21" ry="16" fill="#fffdf9"/>
+  <circle cx="259" cy="208" r="10" fill="#5a4632"/>
+  <circle cx="259" cy="208" r="4.5" fill="#241f1a"/>
+  <circle cx="255" cy="203" r="3.2" fill="#fffdf9"/>
+  <path d="M238 200 C248 190 270 190 282 202" stroke="#241f1a" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+  <ellipse cx="176" cy="232" rx="14" ry="8" fill="#e79a7a" opacity="0.4"/>
+  <ellipse cx="284" cy="232" rx="14" ry="8" fill="#e79a7a" opacity="0.4"/>
+
+  <path d="M230 216 C236 226 234 232 226 234" stroke="#d2a377" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M212 250 C222 262 238 262 248 250" stroke="#a8552f" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+  <circle cx="388" cy="76" r="11" fill="#a8440f"/>
+</svg>

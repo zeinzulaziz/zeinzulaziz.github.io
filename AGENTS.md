@@ -19,7 +19,7 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 - `assets/js/main.js` — logika & data proyek
 - `assets/js/blog.js` — pemuat data artikel (manifest + fallback GitHub API)
 - `assets/js/markdown.js` — renderer Markdown sendiri, tanpa library
-- `assets/img/` — screenshot preview proyek
+- `assets/img/` — avatar (`avatar.svg`, ilustrasi) & screenshot preview proyek (`<nama-repo>.webp`)
 - `content/posts/*.md` — sumber artikel (satu file per artikel)
 - `content/posts.json` — manifest daftar artikel, hasil generate
 - `admin/` — Sveltia CMS (editor visual di `/admin/`)
