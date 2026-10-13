@@ -125,7 +125,7 @@
     const hasScreenshot = Object.prototype.hasOwnProperty.call(liveDemo, name);
 
     const preview = hasScreenshot
-      ? '<img src="assets/img/' + encodeURIComponent(name) + '.png" alt="Preview ' + escapeHtml(name) + '" loading="lazy" decoding="async" width="640" height="400">'
+      ? '<img src="assets/img/' + encodeURIComponent(name) + '.webp" alt="Preview ' + escapeHtml(name) + '" loading="lazy" decoding="async" width="640" height="400">'
       : '<div class="preview-placeholder">' + escapeHtml(firstLetter(name)) + "</div>";
 
     const badge = demo ? '<span class="preview-badge">LIVE</span>' : "";
@@ -172,6 +172,8 @@
       fragment.appendChild(renderCard(normalizeRepo(repo), index));
     });
     grid.appendChild(fragment);
+    const stat = document.getElementById("statProjects");
+    if (stat) stat.textContent = String(repos.length);
     revealCards();
   }
 

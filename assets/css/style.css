@@ -959,6 +959,141 @@ section {
   margin-bottom: 1.5rem;
 }
 
+.about-intro {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.about-photo {
+  flex: 0 0 auto;
+  width: 112px;
+  height: 112px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(245, 179, 1, 0.1), 0 14px 34px rgba(0, 0, 0, 0.45);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.7rem;
+  margin-top: 2rem;
+}
+
+.stat {
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--mono);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.25;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.about-block {
+  margin-top: 2.25rem;
+}
+
+.mini-title {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin: 0 0 0.8rem;
+}
+
+.chips + .mini-title {
+  margin-top: 1.6rem;
+}
+
+.xp {
+  border-left: 1px solid var(--border);
+  padding-left: 1.3rem;
+  display: grid;
+  gap: 1.3rem;
+}
+
+.xp-item {
+  position: relative;
+}
+
+.xp-item::before {
+  content: "";
+  position: absolute;
+  left: -1.34rem;
+  top: 0.5rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(245, 179, 1, 0.85);
+}
+
+.xp-when {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.xp p.xp-role {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+.xp p.xp-org {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  margin-top: 0.1rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.chip {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  background: var(--accent-soft);
+  padding: 0.26rem 0.65rem;
+  border-radius: 999px;
+}
+
+.chip-soft {
+  color: var(--text-dim);
+  background: transparent;
+}
+
+@media (max-width: 600px) {
+  .about-intro {
+    flex-direction: column;
+  }
+  .about-photo {
+    width: 96px;
+    height: 96px;
+  }
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
   border-top: 1px solid var(--border);
