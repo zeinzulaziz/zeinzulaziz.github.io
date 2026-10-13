@@ -23,7 +23,7 @@
   };
 
   const descriptions = {
-    "harga-pangan": "Food producer price dashboard for East Java—SISKAPERBAPO data.",
+    "harga-pangan": "Food producer price dashboard for East Java, built on SISKAPERBAPO data.",
     "convert-gold": "Gold price calculator to run quick numbers before trading.",
     "record_your_money": "A daily expense tracker, built with Flutter.",
     "broken-link-checker": "Find dead links on any site, straight from the browser.",
@@ -158,6 +158,7 @@
   function showError(message) {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
+    grid.setAttribute("aria-busy", "false");
     grid.innerHTML =
       '<div class="projects-loading">' + message + " " +
       '<a href="' + repoUrl("") + '" target="_blank" rel="noopener">See all repositories here</a>.</div>';
@@ -169,9 +170,13 @@
     grid.innerHTML = "";
     const fragment = document.createDocumentFragment();
     repos.forEach(function (repo, index) {
-      fragment.appendChild(renderCard(normalizeRepo(repo), index));
+      const card = renderCard(normalizeRepo(repo), index);
+      // The top project gets a wider treatment so the grid has a real focal point.
+      if (index === 0) card.classList.add("is-featured");
+      fragment.appendChild(card);
     });
     grid.appendChild(fragment);
+    grid.setAttribute("aria-busy", "false");
     const stat = document.getElementById("statProjects");
     if (stat) stat.textContent = String(repos.length);
     revealCards();
@@ -208,11 +213,6 @@
         showError("Failed to load projects. Try reloading the page,");
       }
     }
-  }
-
-  function setYear() {
-    const el = document.getElementById("year");
-    if (el) el.textContent = String(new Date().getFullYear());
   }
 
   /* ---------- scrollspy: highlight nav link of section in view ---------- */
@@ -296,7 +296,6 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     loadProjects();
-    setYear();
     initScrollspy();
     initHeaderShadow();
     initReveals();

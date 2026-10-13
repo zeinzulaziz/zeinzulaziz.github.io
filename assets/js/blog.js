@@ -364,6 +364,7 @@
   function renderList(posts) {
     const grid = document.getElementById("blogList");
     if (!grid) return;
+    grid.setAttribute("aria-busy", "false");
 
     if (!posts.length) {
       grid.innerHTML = '<p class="blog-empty">No articles yet. Check back soon.</p>';
@@ -400,7 +401,7 @@
     const root = document.getElementById("postRoot");
     if (!root) return;
 
-    document.title = post.title + " — Moh Zein Zulfanul Aziz";
+    document.title = post.title + " · Moh Zein Zulfanul Aziz";
     const desc = document.querySelector('meta[name="description"]');
     if (desc && post.description) desc.setAttribute("content", post.description);
 
@@ -451,9 +452,10 @@
       .catch(function (err) {
         if (hasCache) return; // cache basi masih lebih baik daripada error
         const grid = document.getElementById("blogList");
+        grid.setAttribute("aria-busy", "false");
         grid.innerHTML =
-          '<p class="blog-empty">Gagal memuat artikel (' + escapeHtml(err.message) +
-          "). Coba muat ulang halaman.</p>";
+          '<p class="blog-empty">Could not load posts (' + escapeHtml(err.message) +
+          "). Try reloading the page.</p>";
       });
   }
 
@@ -462,26 +464,20 @@
 
     const slug = new URLSearchParams(window.location.search).get("slug");
     if (!slug) {
-      showPostError("Artikel tidak ditemukan.");
+      showPostError("No post was specified.");
       return;
     }
 
     loadPost(slug)
       .then(renderSingle)
       .catch(function () {
-        showPostError("Gagal memuat artikel. Coba muat ulang halaman.");
+        showPostError("Could not load this post. Try reloading the page.");
       });
-  }
-
-  function setYear() {
-    const el = document.getElementById("year");
-    if (el) el.textContent = String(new Date().getFullYear());
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     initList();
     initSingle();
-    setYear();
   });
 
   window.BlogData = {

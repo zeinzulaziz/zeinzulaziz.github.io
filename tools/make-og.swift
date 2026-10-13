@@ -58,7 +58,7 @@ ctx.fill(CGRect(x: 80, y: H - 210, width: 76, height: 6))
 drawText("Moh Zein Zulfanul Aziz", size: 66, x: 80, y: H - 300, font: "HelveticaNeue-Bold", color: white)
 drawText("WordPress Developer & AI Product Builder", size: 32, x: 80, y: H - 355,
          font: "HelveticaNeue-Medium", color: amberBright)
-drawText("Ships fast with AI — Harga Pangan, Convert Gold, and more.", size: 26,
+drawText("Ships fast with AI: Harga Pangan, Convert Gold, and more.", size: 26,
          x: 80, y: H - 410, font: "HelveticaNeue-Regular", color: dim)
 // URL footer
 drawText("zeinzulaziz.github.io", size: 24, x: 80, y: 70, font: "Menlo-Regular", color: dim)

@@ -3,47 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Post — Moh Zein Zulfanul Aziz</title>
-  <meta name="description" content="Article on WordPress development, JavaScript, and other things I build.">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0c0c0e">
-  <meta property="og:title" content="Post — Moh Zein Zulfanul Aziz">
-  <meta property="og:description" content="Article on WordPress development, JavaScript, and other things I build.">
+  <title>Post · Moh Zein Zulfanul Aziz</title>
+  <meta name="description" content="An article by Moh Zein Zulfanul Aziz on WordPress development, JavaScript, and building products with AI.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f5f0">
+  <meta property="og:title" content="Post · Moh Zein Zulfanul Aziz">
+  <meta property="og:description" content="An article by Moh Zein Zulfanul Aziz on WordPress development, JavaScript, and building products with AI.">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://zeinzulaziz.github.io/assets/img/og.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.github.com" crossorigin>
   <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23f5b301'/%3E%3Ctext x='32' y='45' font-family='monospace' font-size='36' font-weight='700' text-anchor='middle' fill='%230b0b0b'%3EZ%3C/text%3E%3C/svg%3E">
+  <noscript><style>.js .reveal{opacity:1;transform:none}@media(max-width:720px){.nav-toggle{display:none}.nav-links{position:static;display:flex;flex-wrap:wrap;gap:.5rem;padding:0;border:0}}</style></noscript>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23a8440f'/%3E%3Ctext x='32' y='47' font-family='Georgia,serif' font-size='40' font-weight='600' text-anchor='middle' fill='%23f7f5f0'%3EZ%3C/text%3E%3C/svg%3E">
+  <script>
+    (function () {
+      try {
+        var t = window.localStorage.getItem("theme");
+        document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <header class="site-header">
-    <nav class="container nav">
-      <a href="index.html" class="nav-brand">&lt;zeinzulaziz<span class="brand-dot">/&gt;</span></a>
-      <div class="nav-links">
-        <a href="index.html#projects">Projects</a>
-        <a href="index.html#about">About</a>
-        <a href="blog.html" class="is-active">Blog</a>
-        <a href="index.html#contact">Contact</a>
+    <nav class="container nav" aria-label="Primary">
+      <a class="nav-brand" href="index.html">Zein Aziz</a>
+      <div class="nav-right">
+        <div class="nav-links" id="nav-menu">
+          <a href="index.html#projects">Projects</a>
+          <a href="index.html#about">About</a>
+          <a href="blog.html" class="is-active" aria-current="page">Blog</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+        <button class="theme-toggle" type="button" aria-label="Switch to dark theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+        </button>
       </div>
     </nav>
   </header>
 
-  <main class="post-page">
+  <main class="post-page" id="main">
     <div class="container post-container">
-      <p class="projects-loading" id="postLoading">Loading post…</p>
+      <p class="blog-empty" id="postLoading">Loading post…</p>
       <div id="postRoot" hidden></div>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Moh Zein Zulfanul Aziz · Built with plain HTML/CSS/JS.</p>
-      <p><a href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/zeinzulaziz/" target="_blank" rel="noopener">LinkedIn</a></p>
+      <p>© <span id="year"></span> Moh Zein Zulfanul Aziz</p>
+      <p>Handwritten HTML, CSS, and JavaScript. <a href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">Source on GitHub</a>.</p>
     </div>
   </footer>
 
+  <script src="assets/js/site.js" defer></script>
   <script src="assets/js/markdown.js" defer></script>
   <script src="assets/js/blog.js" defer></script>
 </body>

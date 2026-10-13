@@ -218,7 +218,7 @@
         var level = heading[1].length;
         var text = heading[2];
         out.push("<h" + level + ' id="' + escapeHtml(slugify(text)) + '">' +
-          '<a class="md-anchor" href="#' + escapeHtml(slugify(text)) + '">#</a>' +
+          '<a class="md-anchor" href="#' + escapeHtml(slugify(text)) + '" aria-hidden="true" tabindex="-1">#</a>' +
           renderInline(text) + "</h" + level + ">");
         i += 1;
         continue;
