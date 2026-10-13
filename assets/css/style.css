@@ -1,36 +1,11 @@
 /* ============================================================
    zeinzulaziz.github.io — style.css
    Calm editorial portfolio. One accent, borders do the work.
-   Light default, dark toggle. Vanilla CSS, no frameworks.
+   Dark default, light toggle. Vanilla CSS, no frameworks.
    See DESIGN.md for the direction behind every choice.
    ============================================================ */
 
 :root {
-  --paper: #f7f5f0;
-  --surface: #fffdf9;
-  --surface-2: #f0ede3;
-  --ink: #191712;
-  --ink-soft: #4a4740;
-  --ink-faint: #6f6b60;
-  --line: #e4e0d6;
-  --line-strong: #cfc9ba;
-  --accent: #a8440f;
-  --accent-ink: #ffffff;
-  --accent-soft: rgba(168, 68, 15, 0.08);
-  color-scheme: light;
-
-  --radius: 3px;
-  --radius-lg: 5px;
-
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --header-h: 60px;
-}
-
-[data-theme="dark"] {
   --paper: #15130e;
   --surface: #1d1b15;
   --surface-2: #26231b;
@@ -43,6 +18,31 @@
   --accent-ink: #1a1509;
   --accent-soft: rgba(242, 163, 60, 0.12);
   color-scheme: dark;
+
+  --radius: 3px;
+  --radius-lg: 5px;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --header-h: 60px;
+}
+
+[data-theme="light"] {
+  --paper: #f7f5f0;
+  --surface: #fffdf9;
+  --surface-2: #f0ede3;
+  --ink: #191712;
+  --ink-soft: #4a4740;
+  --ink-faint: #6f6b60;
+  --line: #e4e0d6;
+  --line-strong: #cfc9ba;
+  --accent: #a8440f;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(168, 68, 15, 0.08);
+  color-scheme: light;
 }
 
 *,
@@ -247,9 +247,10 @@ a {
   display: block;
 }
 
-.theme-toggle .icon-moon { display: none; }
-[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
-[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 /* ---------- Hero ---------- */
 .hero {

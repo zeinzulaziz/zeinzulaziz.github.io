@@ -29,19 +29,7 @@ ENERGY 2 / RHYTHM 3 / MOTION 2
 
 One accent hue (amber to rust) across both themes. Neutrals carry the layout.
 
-Light (default):
-
-| Token | Value | Use |
-|---|---|---|
-| paper | #f7f5f0 | page background |
-| surface | #fffdf9 | cards, previews |
-| ink | #191712 | primary text |
-| ink-soft | #4a4740 | body and secondary text |
-| ink-faint | #6f6b60 | metadata |
-| line | #e4e0d6 | hairlines |
-| accent | #a8440f | links, primary action, the one motif |
-
-Dark:
+Dark (default):
 
 | Token | Value | Use |
 |---|---|---|
@@ -52,6 +40,18 @@ Dark:
 | ink-faint | #8f8a7c | metadata |
 | line | #2c2921 | hairlines |
 | accent | #f2a33c | links, primary action, the one motif |
+
+Light:
+
+| Token | Value | Use |
+|---|---|---|
+| paper | #f7f5f0 | page background |
+| surface | #fffdf9 | cards, previews |
+| ink | #191712 | primary text |
+| ink-soft | #4a4740 | body and secondary text |
+| ink-faint | #6f6b60 | metadata |
+| line | #e4e0d6 | hairlines |
+| accent | #a8440f | links, primary action, the one motif |
 
 All pairings above pass WCAG AA (see the Delivery Gate for the measured ratios).
 

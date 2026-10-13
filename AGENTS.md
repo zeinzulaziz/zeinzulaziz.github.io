@@ -14,8 +14,8 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 - `post.html?slug=<slug>` — baca satu artikel
 - `DESIGN.md` — arah desain & token (palet, tipografi, motion), sumber kebenaran tampilan
 - `PRODUCT.md` — konteks produk: pengguna, tujuan, prinsip
-- `assets/css/style.css` — styling (token tema via `:root` + `[data-theme="dark"]`)
-- `assets/js/site.js` — tema (terang/gelap + localStorage), nav mobile, tahun footer
+- `assets/css/style.css` — styling (token tema via `:root` gelap default + `[data-theme="light"]`)
+- `assets/js/site.js` — tema (gelap default/terang + localStorage), nav mobile, tahun footer
 - `assets/js/main.js` — logika & data proyek
 - `assets/js/blog.js` — pemuat data artikel (manifest + fallback GitHub API)
 - `assets/js/markdown.js` — renderer Markdown sendiri, tanpa library

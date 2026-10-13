@@ -7,7 +7,7 @@
   /* ---------- theme ---------- */
 
   function currentTheme() {
-    return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    return root.getAttribute("data-theme") === "light" ? "light" : "dark";
   }
 
   function applyTheme(theme, persist) {
