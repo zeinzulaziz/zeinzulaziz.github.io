@@ -1017,10 +1017,6 @@ section {
   margin: 0 0 0.8rem;
 }
 
-.chips + .mini-title {
-  margin-top: 1.6rem;
-}
-
 .xp {
   border-left: 1px solid var(--border);
   padding-left: 1.3rem;
