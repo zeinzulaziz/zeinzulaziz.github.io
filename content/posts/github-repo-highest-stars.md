@@ -1,5 +1,5 @@
 ---
-title: daftar 20 repositori GitHub dengan jumlah stars tertinggi saat ini
+title: A list of the 20 GitHub repositories with the highest number of stars currently
 date: 2026-10-15
 type: article
 description: ''
