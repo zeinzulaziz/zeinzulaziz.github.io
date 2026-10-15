@@ -1,6 +1,18 @@
 {
-  "generated": "2026-10-10T10:00:03.596Z",
+  "generated": "2026-10-15T06:57:58.095Z",
   "posts": [
+    {
+      "slug": "github-repo-highest-stars",
+      "title": "daftar 20 repositori GitHub dengan jumlah stars tertinggi saat ini",
+      "date": "2026-10-15",
+      "description": "Peringkat Nama Repositori / Pemilik Deskripsi Singkat Kisaran Jumlah Stars 1 codecrafters io / build your own x Panduan komprehensif cara membuat ulang teknologi favorit dari nol…",
+      "tags": [
+        "github"
+      ],
+      "type": "article",
+      "draft": false,
+      "readingTime": 2
+    },
     {
       "slug": "roadmap-grok",
       "title": "Roadmap dari Grok",
