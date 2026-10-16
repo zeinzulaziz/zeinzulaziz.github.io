@@ -2,7 +2,7 @@
   "use strict";
 
   var root = document.documentElement;
-  var THEME_COLORS = { light: "#f7f5f0", dark: "#15130e" };
+  var THEME_COLORS = { light: "#f5f2ea", dark: "#181511" };
 
   /* ---------- theme ---------- */
 

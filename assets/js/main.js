@@ -124,33 +124,50 @@
     const demo = liveDemo[name] || (repo.homepage && repo.homepage.trim()) || null;
     const hasScreenshot = Object.prototype.hasOwnProperty.call(liveDemo, name);
 
-    const preview = hasScreenshot
-      ? '<img src="assets/img/' + encodeURIComponent(name) + '.webp" alt="Preview ' + escapeHtml(name) + '" loading="lazy" decoding="async" width="640" height="400">'
-      : '<div class="preview-placeholder">' + escapeHtml(firstLetter(name)) + "</div>";
+    /* Featured row: real screenshot when we have one, letter plate otherwise.
+       Plain rows get a small thumb only when a real screenshot exists. */
+    const featuredPreview = hasScreenshot
+      ? '<img src="assets/img/' + encodeURIComponent(name) + '.webp" alt="Preview ' + escapeHtml(name) + '" loading="lazy" decoding="async" width="640" height="360">'
+      : '<div class="preview-placeholder" aria-hidden="true">' + escapeHtml(firstLetter(name)) + "</div>";
 
-    const badge = demo ? '<span class="preview-badge">LIVE</span>' : "";
+    const livePlate = demo ? '<span class="live-plate">LIVE</span>' : "";
 
     const links =
-      '<div class="project-links">' +
+      '<p class="project-links">' +
       '<a href="' + repoUrl(name) + '" target="_blank" rel="noopener">Repo</a>' +
       (demo ? '<a href="' + escapeHtml(demo) + '" target="_blank" rel="noopener">Demo</a>' : "") +
+      "</p>";
+
+    const meta =
+      '<p class="project-meta"><span class="project-lang">' + escapeHtml(repo.language || "N/A") + "</span>" +
+      "<span>★ " + (repo.stargazers_count || 0) + "</span></p>";
+
+    const main =
+      '<div class="project-main">' +
+      '<h3 class="project-title"><a href="' + repoUrl(name) + '" target="_blank" rel="noopener">' + escapeHtml(langBadge(name)) + "</a></h3>" +
+      '<p class="project-desc">' + escapeHtml(lookUp(descriptions, name, repo.description || "Public repository with no description.")) + "</p>" +
       "</div>";
 
     const card = document.createElement("article");
-    card.className = "project-card reveal";
-    card.style.setProperty("--d", (index * 60) + "ms");
+    card.className = "project-row reveal";
+    card.style.setProperty("--d", (index * 50) + "ms");
 
-    card.innerHTML =
-      '<div class="project-preview">' + preview + badge + "</div>" +
-      '<div class="project-body">' +
-      '<h3 class="project-title"><a href="' + repoUrl(name) + '" target="_blank" rel="noopener">' + escapeHtml(langBadge(name)) + "</a></h3>" +
-      '<p class="project-desc">' + escapeHtml(lookUp(descriptions, name, repo.description || "Public repository with no description.")) + "</p>" +
-      '<div class="project-meta">' +
-      '<span class="project-lang">' + escapeHtml(repo.language || "N/A") + "</span>" +
-      "<span>★ " + (repo.stargazers_count || 0) + "</span>" +
-      "</div>" +
-      links +
-      "</div>";
+    if (index === 0) {
+      card.classList.add("is-featured");
+      card.innerHTML =
+        '<div class="project-media">' + featuredPreview + livePlate + "</div>" +
+        main +
+        '<div class="project-side">' + meta + links + "</div>";
+    } else if (hasScreenshot) {
+      card.innerHTML =
+        '<div class="project-media"><img src="assets/img/' + encodeURIComponent(name) + '.webp" alt="" loading="lazy" decoding="async" width="640" height="400"></div>' +
+        main +
+        '<div class="project-side">' + meta + links + "</div>";
+    } else {
+      card.innerHTML =
+        main +
+        '<div class="project-side">' + meta + links + "</div>";
+    }
 
     return card;
   }
@@ -170,10 +187,7 @@
     grid.innerHTML = "";
     const fragment = document.createDocumentFragment();
     repos.forEach(function (repo, index) {
-      const card = renderCard(normalizeRepo(repo), index);
-      // The top project gets a wider treatment so the grid has a real focal point.
-      if (index === 0) card.classList.add("is-featured");
-      fragment.appendChild(card);
+      fragment.appendChild(renderCard(normalizeRepo(repo), index));
     });
     grid.appendChild(fragment);
     grid.setAttribute("aria-busy", "false");
@@ -209,7 +223,7 @@
     } catch (err) {
       if (cached) {
         renderAll(cached.repos); // stale cache beats an error message
-      } else if (!grid.querySelector(".project-card")) {
+      } else if (!grid.querySelector(".project-row")) {
         showError("Failed to load projects. Try reloading the page,");
       }
     }
