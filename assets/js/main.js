@@ -8,28 +8,16 @@
   const liveDemo = {
     "harga-pangan": "https://zeinzulaziz.github.io/harga-pangan/",
     "convert-gold": "https://zeinzulaziz.github.io/convert-gold/",
-    "record_your_money": "https://zeinzulaziz.github.io/record_your_money/",
-    "broken-link-checker": "https://broken-link-checker-sepia.vercel.app",
   };
 
   const titles = {
-    "record_your_money": "Record Your Money",
-    "broken-link-checker": "Broken Link Checker",
     "harga-pangan": "Food Prices",
     "convert-gold": "Convert Gold",
-    "Kiro-Project": "Kiro Project",
-    "grafik-chart": "Chart Graph",
-    "motorcycle-alarm-schematic": "Motorcycle Alarm Schematic",
   };
 
   const descriptions = {
     "harga-pangan": "Food producer price dashboard for East Java, built on SISKAPERBAPO data.",
     "convert-gold": "Gold price calculator to run quick numbers before trading.",
-    "record_your_money": "A daily expense tracker, built with Flutter.",
-    "broken-link-checker": "Find dead links on any site, straight from the browser.",
-    "Kiro-Project": "A JavaScript experiment with no clear direction, let it be.",
-    "grafik-chart": "Make charts and graphs quickly, so data looks good.",
-    "motorcycle-alarm-schematic": "Motorcycle alarm circuit schematic (hardware).",
   };
 
   function lookUp(obj, name, fallback) {
