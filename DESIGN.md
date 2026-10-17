@@ -101,6 +101,22 @@ Radius 3px everywhere. Hairline borders carry structure; the single shadow in
 the system lifts only the scrolled sticky header, so elevation marks the one
 floating chrome surface. No pill controls.
 
+## Texture
+
+The paper is not blank. The page background carries two layers, both drawn
+from the ledger/instrument identity:
+
+- Faint horizontal ledger rules (1px every 32px, `line` at 55% alpha),
+  the ruled paper a kept ledger is written on.
+- Fine grayscale grain (inline `feTurbulence` data-URI, ~4.5% opacity), the
+  tooth of real paper. No external image file, no request.
+
+Surfaces (cards, featured row, contact band) stay flat, so they read as
+slips laid on the ruled desk. The texture never sits behind the inverse
+accent block or under text at a contrast-relevant strength; `line` remains
+decorative as declared in the Palette section. Static only — no animation,
+so `prefers-reduced-motion` is unaffected.
+
 ## Motion
 
 Scroll reveal (small translate, staggered per row), hover states, a theme
