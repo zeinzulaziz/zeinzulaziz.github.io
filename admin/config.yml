@@ -26,7 +26,7 @@ collections:
       hint: "URL & nama file artikel — huruf kecil, angka, dan strip. Terkunci setelah artikel dibuat."
       pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase letters, numbers, and dashes only"]
     summary: "{{date}} · {{title}}"
-    preview_path: "post.html?slug={{slug}}"
+    preview_path: "post/{{slug}}/"
     view_filters:
       - label: Draft
         field: draft
@@ -58,6 +58,11 @@ collections:
         widget: text
         required: false
         hint: "One or two sentences. Shown on the blog list and used for SEO."
+      - label: Cover image
+        name: cover
+        widget: image
+        required: false
+        hint: "Shown as the preview image when the article is shared (1200×630 looks best). Defaults to the site-wide image."
       - label: Tags
         name: tags
         widget: list

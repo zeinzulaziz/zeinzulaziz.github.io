@@ -2,7 +2,7 @@
 title: A list of the 20 GitHub repositories with the highest number of stars currently
 date: 2026-10-15
 type: article
-description: ''
+description: 'Daftar 20 repositori GitHub dengan bintang terbanyak saat ini — dari panduan build-your-own-x sampai kumpulan API gratis — lengkap dengan ringkasan isi dan kisaran bintang tiap repo.'
 tags:
   - github
 draft: false

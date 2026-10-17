@@ -1,14 +1,16 @@
-// Render assets/img/og.png (1200x630) — dark bg, amber glow, dot grid, site title.
+// Render assets/img/og.jpg (1200x630) in the warm monochrome direction:
+// dark paper (#181511), chalk ink (#f4f1e7), one hairline rule, dot grid.
+// No hue anywhere — differentiation comes from tone only. See DESIGN.md.
 import Foundation
 import CoreGraphics
 import CoreText
 import ImageIO
 
 let W = 1200, H = 630
-let amber = CGColor(red: 0.961, green: 0.702, blue: 0.004, alpha: 1)
-let amberBright = CGColor(red: 1.0, green: 0.773, blue: 0.239, alpha: 1)
-let white = CGColor(red: 0.94, green: 0.94, blue: 0.95, alpha: 1)
-let dim = CGColor(red: 0.55, green: 0.55, blue: 0.58, alpha: 1)
+let paper = CGColor(red: 0.094, green: 0.082, blue: 0.067, alpha: 1)      // #181511
+let ink = CGColor(red: 0.957, green: 0.945, blue: 0.906, alpha: 1)        // #f4f1e7
+let inkSoft = CGColor(red: 0.710, green: 0.694, blue: 0.635, alpha: 1)    // #b5b1a2
+let inkFaint = CGColor(red: 0.580, green: 0.561, blue: 0.494, alpha: 1)   // #948f7e
 
 guard let ctx = CGContext(
     data: nil, width: W, height: H, bitsPerComponent: 8, bytesPerRow: W * 4,
@@ -16,23 +18,11 @@ guard let ctx = CGContext(
     bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
 ) else { fatalError("context") }
 
-// Background #0c0c0e
-ctx.setFillColor(CGColor(red: 0.047, green: 0.047, blue: 0.055, alpha: 1))
+ctx.setFillColor(paper)
 ctx.fill(CGRect(x: 0, y: 0, width: W, height: H))
 
-// Radial amber glows
-let glowColors = [CGColor(red: 0.961, green: 0.702, blue: 0.004, alpha: 0.30),
-                  CGColor(red: 0.961, green: 0.702, blue: 0.004, alpha: 0)] as CFArray
-if let g = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
-                      colors: glowColors, locations: [0, 1]) {
-    ctx.drawRadialGradient(g, startCenter: CGPoint(x: 260, y: 540), startRadius: 0,
-                           endCenter: CGPoint(x: 260, y: 540), endRadius: 560, options: [])
-    ctx.drawRadialGradient(g, startCenter: CGPoint(x: 1020, y: 90), startRadius: 0,
-                           endCenter: CGPoint(x: 1020, y: 90), endRadius: 460, options: [])
-}
-
-// Subtle dot grid
-ctx.setFillColor(CGColor(red: 1, green: 1, blue: 1, alpha: 0.06))
+// Subtle dot grid, same rhythm as the old OG but tone-on-tone.
+ctx.setFillColor(CGColor(red: 0.173, green: 0.161, blue: 0.125, alpha: 1))
 for x in stride(from: 24, to: W, by: 40) {
     for y in stride(from: 24, to: H, by: 40) {
         ctx.fill(CGRect(x: x, y: y, width: 2, height: 2))
@@ -49,19 +39,18 @@ func drawText(_ s: String, size: CGFloat, x: Int, y: Int, font: String, color: C
     CTLineDraw(line, ctx)
 }
 
-// Brand tag
-drawText("<zeinzulaziz/>", size: 30, x: 80, y: H - 90, font: "Menlo-Bold", color: amberBright)
-// Accent bar
-ctx.setFillColor(amber)
-ctx.fill(CGRect(x: 80, y: H - 210, width: 76, height: 6))
-// Title + subtitle
-drawText("Moh Zein Zulfanul Aziz", size: 66, x: 80, y: H - 300, font: "HelveticaNeue-Bold", color: white)
-drawText("WordPress Developer & AI Product Builder", size: 32, x: 80, y: H - 355,
-         font: "HelveticaNeue-Medium", color: amberBright)
-drawText("Ships fast with AI: Harga Pangan, Convert Gold, and more.", size: 26,
-         x: 80, y: H - 410, font: "HelveticaNeue-Regular", color: dim)
-// URL footer
-drawText("zeinzulaziz.github.io", size: 24, x: 80, y: 70, font: "Menlo-Regular", color: dim)
+// Brand tag (mono, metadata voice)
+drawText("zeinzulaziz.github.io", size: 28, x: 80, y: H - 84, font: "Menlo-Regular", color: inkFaint)
+// The one inversion gesture: a small chalk block, the same accent discipline
+// as the site (index plates, primary button).
+ctx.setFillColor(ink)
+ctx.fill(CGRect(x: 80, y: H - 190, width: 76, height: 6))
+// Name in display weight, role and lede below in quieter tones.
+drawText("Moh Zein Zulfanul Aziz", size: 64, x: 80, y: H - 280, font: "HelveticaNeue-Bold", color: ink)
+drawText("WordPress Developer · Solo AI Product Builder", size: 30, x: 80, y: H - 334,
+         font: "HelveticaNeue-Medium", color: inkSoft)
+drawText("Small products with AI — Harga Pangan, Convert Gold, and more.", size: 25,
+         x: 80, y: H - 384, font: "HelveticaNeue-Regular", color: inkFaint)
 
 guard let image = ctx.makeImage() else { fatalError("makeImage") }
 let outURL = URL(fileURLWithPath: "assets/img/og.jpg") as CFURL

@@ -4,6 +4,19 @@
   var root = document.documentElement;
   var THEME_COLORS = { light: "#f5f2ea", dark: "#181511" };
 
+  // Privacy-friendly analytics (GoatCounter: no cookies, no personal data).
+  // Set your site code from goatcounter.com to enable; empty string disables.
+  var ANALYTICS = "";
+
+  function initAnalytics() {
+    if (!ANALYTICS) return;
+    var s = document.createElement("script");
+    s.defer = true;
+    s.dataset.goatcounter = "https://" + ANALYTICS + ".goatcounter.com/count";
+    s.src = "//gc.zgo.at/count.js";
+    document.head.appendChild(s);
+  }
+
   /* ---------- theme ---------- */
 
   function currentTheme() {
@@ -80,6 +93,7 @@
     initTheme();
     initNav();
     setYear();
+    initAnalytics();
   }
 
   if (document.readyState === "loading") {

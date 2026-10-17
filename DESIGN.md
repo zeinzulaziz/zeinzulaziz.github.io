@@ -92,6 +92,8 @@ All text pairings above pass WCAG AA at normal size.
   reason: neutral and highly legible, stays quiet next to the display face.
 - Mono: IBM Plex Mono. Real metadata only (dates, languages, read time, the
   facts panel), never decoration, never headings.
+- All three are self-hosted woff2 (assets/fonts, latin subset, SIL OFL); no
+  third-party font request leaves the page.
 
 ## Shape
 

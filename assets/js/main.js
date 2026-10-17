@@ -2,7 +2,7 @@
   "use strict";
 
   const GITHUB_USER = "zeinzulaziz";
-  const CACHE_KEY = "projects.cache.v1";
+  const CACHE_KEY = "projects.cache.v2";
   const CACHE_TTL = 10 * 60 * 1000; // 10 minutes, matches blog.js
 
   const liveDemo = {
@@ -91,21 +91,20 @@
 
   /* ---------- data ---------- */
 
+  // content/repos.json is a build-time snapshot (tools/build-repos.mjs, kept
+  // fresh by CI). Reading it same-origin avoids the unauthenticated GitHub
+  // API limit of 60 req/hour per IP, which every first-time visitor used to
+  // burn through together.
   function fetchRepos() {
-    return fetch("https://api.github.com/users/" + GITHUB_USER + "/repos?per_page=100&sort=updated")
+    return fetch("content/repos.json", { cache: "no-cache" })
       .then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status);
         return res.json();
       })
-      .then(function (repos) {
+      .then(function (data) {
+        const repos = Array.isArray(data) ? data : data && data.repos;
         if (!Array.isArray(repos)) throw new Error("Invalid response");
-        return repos
-          .filter(function (r) {
-            return !r.fork && r.name !== GITHUB_USER + ".github.io";
-          })
-          .sort(function (a, b) {
-            return b.stargazers_count - a.stargazers_count || String(b.pushed_at).localeCompare(String(a.pushed_at));
-          });
+        return repos;
       });
   }
 

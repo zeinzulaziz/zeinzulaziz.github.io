@@ -3,7 +3,7 @@ title: Roadmap dari Grok
 slug: roadmap-by-grok
 date: 2026-10-10
 type: note
-description: ''
+description: 'Catatan: roadmap belajar dan membangun dengan AI untuk 3–6 bulan ke depan — kebiasaan ship → feedback → perbaiki lebih penting daripada menghafal tools.'
 tags:
   - roadmap
   - grok
@@ -61,13 +61,3 @@ Setiap akhir bulan luangkan 30-60 menit untuk review:
 Catat hasil review-nya singkat, lalu sesuaikan fokus bulan berikutnya. Jangan kaku memegang rencana lama kalau situasinya sudah beda.
 
 Intinya: bergerak dengan arah yang jelas, tapi selalu siap menyesuaikan. Yang kamu latih sebenarnya adalah kemampuan beradaptasi dan menghasilkan sesuatu yang berguna, bukan menguasai daftar skill yang pasti basi.
-
-Silakan dicopy. Kalau mau ditambahin bagian tertentu atau dibuat lebih ringkas lagi, bilang saja.
-
-Rate textGoodBad
-
-Thanks!
-
-ExportTotal 7 minutes saved
-
-[Text formatter](https://textformatter.ai/)[Text beautifier](https://textformatter.ai/text-beautifier/)[AI document formatter](https://textformatter.ai/ai-document-formatter/)[Paragraph formatter](https://textformatter.ai/paragraph-formatter/)[About](https://textformatter.ai/about/)

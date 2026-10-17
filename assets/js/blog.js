@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const CACHE_KEY = "blog.index.v3";
+  const CACHE_KEY = "blog.index.v4";
   const CACHE_TTL = 60 * 1000;
 
   const REPO = "zeinzulaziz/zeinzulaziz.github.io";
@@ -20,6 +20,11 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+
+  // The canonical article URL is the prerendered page built by tools/build.mjs.
+  function postUrl(slug) {
+    return "post/" + encodeURIComponent(slug) + "/";
   }
 
   function isLocalHost() {
@@ -140,7 +145,7 @@
       type: d.type === "note" ? "note" : "article",
       draft: d.draft === true || d.published === false,
       body: parsed.body,
-      url: "post.html?slug=" + encodeURIComponent(slug),
+      url: postUrl(slug),
     };
   }
 
@@ -237,7 +242,7 @@
             type: entry.type === "note" ? "note" : "article",
             draft: entry.draft === true,
             readingTime: entry.readingTime || 0,
-            url: "post.html?slug=" + encodeURIComponent(entry.slug),
+            url: postUrl(entry.slug),
           };
         });
 
@@ -253,7 +258,7 @@
                 // Nama file adalah identitas yang benar-benar ada di repo —
                 // frontmatter slug yang beda tidak boleh dipakai sebagai URL.
                 post.slug = file.slug;
-                post.url = "post.html?slug=" + encodeURIComponent(file.slug);
+                post.url = postUrl(file.slug);
                 return post;
               })
               .catch(function () {
@@ -397,13 +402,38 @@
     }
   }
 
+  function setMeta(attr, key, content) {
+    if (!content) return;
+    var el = document.querySelector('meta[' + attr + '="' + key + '"]');
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute(attr, key);
+      document.head.appendChild(el);
+    }
+    el.setAttribute("content", content);
+  }
+
   function renderSingle(post) {
-    const root = document.getElementById("postRoot");
+    var root = document.getElementById("postRoot");
     if (!root) return;
 
     document.title = post.title + " · Moh Zein Zulfanul Aziz";
-    const desc = document.querySelector('meta[name="description"]');
+    var desc = document.querySelector('meta[name="description"]');
     if (desc && post.description) desc.setAttribute("content", post.description);
+
+    // This page is only a fallback for old ?slug= links; point every signal
+    // at the canonical prerendered page so shares and indexing converge there.
+    var canonical = new URL(postUrl(post.slug), window.location.origin).href;
+    var link = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.setAttribute("rel", "canonical");
+      document.head.appendChild(link);
+    }
+    link.setAttribute("href", canonical);
+    setMeta("property", "og:title", post.title);
+    setMeta("property", "og:description", post.description);
+    setMeta("property", "og:url", canonical);
 
     const tags = post.tags.length
       ? '<div class="post-tags">' + post.tags.map(function (tag) {

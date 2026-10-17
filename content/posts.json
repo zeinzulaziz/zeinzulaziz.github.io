@@ -1,29 +1,31 @@
 {
-  "generated": "2026-10-15T07:14:24.918Z",
+  "generated": "2026-10-17T01:41:55.015Z",
   "posts": [
     {
       "slug": "github-repo-highest-stars",
       "title": "A list of the 20 GitHub repositories with the highest number of stars currently",
       "date": "2026-10-15",
-      "description": "Peringkat Nama Repositori / Pemilik Deskripsi Singkat Kisaran Jumlah Stars 1 codecrafters io / build your own x Panduan komprehensif cara membuat ulang teknologi favorit dari nol…",
+      "description": "Daftar 20 repositori GitHub dengan bintang terbanyak saat ini — dari panduan build-your-own-x sampai kumpulan API gratis — lengkap dengan ringkasan isi dan kisaran bintang tiap repo.",
       "tags": [
         "github"
       ],
       "type": "article",
       "draft": false,
+      "cover": "",
       "readingTime": 2
     },
     {
       "slug": "roadmap-grok",
       "title": "Roadmap dari Grok",
       "date": "2026-10-10",
-      "description": "Versi Baru (Lebih Longgar dan Tahan Lama) Prinsip Utama 3 6 Bulan ke Depan: Bukan menghafal tools tertentu, tapi membangun kebiasaan yang tetap berguna meski AI berubah cepat. 1.…",
+      "description": "Catatan: roadmap belajar dan membangun dengan AI untuk 3–6 bulan ke depan — kebiasaan ship → feedback → perbaiki lebih penting daripada menghafal tools.",
       "tags": [
         "roadmap",
         "grok"
       ],
       "type": "note",
       "draft": false,
+      "cover": "",
       "readingTime": 2
     },
     {
@@ -36,6 +38,7 @@
       ],
       "type": "article",
       "draft": false,
+      "cover": "",
       "readingTime": 2
     }
   ]
