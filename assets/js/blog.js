@@ -373,6 +373,7 @@
 
     if (!posts.length) {
       grid.innerHTML = '<p class="blog-empty">No articles yet. Check back soon.</p>';
+      contentChanged();
       return;
     }
 
@@ -400,6 +401,14 @@
         el.classList.add("is-in");
       });
     }
+
+    contentChanged();
+  }
+
+  // Async content changes the page height; the scroll progress bar and the
+  // chapter engine listen for this instead of guessing.
+  function contentChanged() {
+    document.dispatchEvent(new CustomEvent("contentchange"));
   }
 
   function setMeta(attr, key, content) {
@@ -459,6 +468,7 @@
     root.hidden = false;
     const loader = document.getElementById("postLoading");
     if (loader) loader.hidden = true;
+    contentChanged();
   }
 
   function showPostError(message) {
@@ -466,6 +476,7 @@
     if (loader) {
       loader.innerHTML = '<p class="blog-empty">' + escapeHtml(message) + "</p>";
     }
+    contentChanged();
   }
 
   function initList() {
@@ -486,6 +497,7 @@
         grid.innerHTML =
           '<p class="blog-empty">Could not load posts (' + escapeHtml(err.message) +
           "). Try reloading the page.</p>";
+        contentChanged();
       });
   }
 

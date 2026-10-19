@@ -19,4 +19,6 @@ project, read a post, or start a conversation.
   data, not invented metrics.
 - Every link points somewhere that exists.
 - Content first: no section exists only because a template has it.
-- Calm over loud. One accent, used at the few moments that matter.
+- Calm over loud. One accent, spent only where it has to carry. The eclipse is
+  the single loud thing on the page; everything around it stays quiet, and its
+  light is kept pale enough that text crossing it still reads.

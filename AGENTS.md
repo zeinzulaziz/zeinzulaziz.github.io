@@ -19,8 +19,11 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 - `DESIGN.md` — arah desain & token (palet, tipografi, motion), sumber kebenaran tampilan
 - `PRODUCT.md` — konteks produk: pengguna, tujuan, prinsip
 - `assets/css/style.css` — styling (token tema via `:root` gelap default + `[data-theme="light"]`, termasuk `@font-face` self-hosted)
-- `assets/fonts/` — woff2 self-hosted (Bricolage Grotesque, IBM Plex Sans/Mono), lisensi SIL OFL
+- `assets/fonts/` — woff2 self-hosted (Space Grotesk, IBM Plex Sans/Mono), lisensi SIL OFL
 - `assets/js/site.js` — tema (gelap default/terang + localStorage), nav mobile, tahun footer, opt-in GoatCounter
+- `assets/js/journey.js` — progres halaman, chapter rail, event `journey` (hanya halaman utama)
+- `assets/js/scene.js` — gerhana WebGL (three.js) di belakang hero, hanya dimuat halaman utama
+- `assets/vendor/three/` — three.js min (MIT) yang di-vendor; `scene.js` mengimpornya secara relatif
 - `assets/js/main.js` — logika & data proyek (baca `content/repos.json`)
 - `assets/js/blog.js` — pemuat data artikel (manifest + fallback GitHub API)
 - `assets/js/markdown.js` — renderer Markdown sendiri, tanpa library (dipakai blog.js & build)
@@ -72,6 +75,36 @@ ke URL prerender.
 ### Penting
 - `.nojekyll` wajib ada, kalau tidak Jekyll akan mengubah file `.md` ber-frontmatter menjadi HTML dan file mentahnya tidak ter-deploy.
 - Path di `admin/config.yml` ditulis dari root repo (misal `/content/posts`), karena CMS berada di `/admin/`.
+
+## Halaman utama: gerhana & chapter
+- Hero digambar oleh `scene.js` (three.js yang di-vendor di `assets/vendor/three/`):
+  bola bulan 3D — permukaannya dipindahkan jadi kawah dan maria, albedonya digambar
+  di canvas saat boot — diterangi dua sumber hangat (satu di depan bahu kanan atas,
+  satu menyapu sisi jauh supaya siluetnya tetap ada), ditambah bidang korona di
+  belakangnya dan bintang di frustum yang sama. Paletnya dibaca dari token CSS
+  (`--scene-core`, `--scene-glow`, `--scene-body`), jadi tema terang/gelap memakai
+  satu implementasi. `scene.js` menambah kelas `is-ready` ke `.scene` setelah
+  membuktikan adegan benar-benar menggambar (baca balik pixel di titik bulan).
+- Tata letak bulan: lebar `WIDE = { size: 0.30, x: 0.775, y: 0.44 }`, sempit
+  `NARROW = { size: 0.165, x: 0.875, y: 0.225 }`, diblend dengan smoothstep pada
+  aspek viewport (0.70 → 1.05). Kamera digeser, bukan diputar, supaya pusatnya persis
+  (bola selalu bulat dari sudut mana pun). Angka yang sama dipakai `.still-eclipse`
+  di CSS dan `probe-fit.mjs`: ubah satu, ubah semuanya.
+- Fallback tanpa JS/WebGL: `.still-eclipse` (CSS saja) tetap ada di markup. Saat
+  `is-ready`, elemen ini disembunyikan — lewat transisi CSS **dan** `display: none`
+  dari JS, karena tab yang di-background tidak menjalankan transisi.
+- Empat chapter (`#opening`, `#projects`, `#about`, `#contact`) diberi nomor dan
+  ditandai oleh `journey.js`; rail chapter hanya tampil di layar ≥1240px.
+- Animasi dihormati: `prefers-reduced-motion` dan tombol "Motion on/off" mematikan
+  pin, reveal, dan loop render (adegan digambar sekali sebagai still).
+- Paralaks pointer hanya memutar grup bintang; progres `journey` hanya meredupkan
+  korona (1 → 0.42) — bulan tak pernah bergeser dari angka tata letaknya, jadi
+  pengukuran kontras dan `probe-fit` tetap berlaku di semua posisi scroll.
+- Kontrak antar modul lewat event di `document`: `themechange`, `motionchange`,
+  `journey` (progres scroll), `contentchange` (daftar proyek selesai dimuat).
+- Reveal bersifat opsional: `.js .reveal` baru disembunyikan kalau JS jalan, dan
+  `main.js` punya jaring pengaman yang menampilkan apa pun yang ada di viewport
+  kalau observer gagal atau tertunda.
 
 ## Komunikasi
 - Bahasa Indonesia untuk komunikasi dengan user

@@ -166,6 +166,7 @@
     grid.innerHTML =
       '<div class="projects-loading">' + message + " " +
       '<a href="' + repoUrl("") + '" target="_blank" rel="noopener">See all repositories here</a>.</div>';
+    document.dispatchEvent(new CustomEvent("contentchange"));
   }
 
   function renderAll(repos) {
@@ -181,6 +182,8 @@
     const stat = document.getElementById("statProjects");
     if (stat) stat.textContent = String(repos.length);
     revealCards();
+    // The page just got taller; let the scroll progress bar catch up.
+    document.dispatchEvent(new CustomEvent("contentchange"));
   }
 
   function revealCards() {
@@ -235,7 +238,9 @@
       const fromTop = window.scrollY + 90;
       let current = null;
       sections.forEach(function (section) {
-        if (section.offsetTop <= fromTop) current = section.id;
+        // Rect-based: the chapters sit inside a positioned parent, so
+        // offsetTop would be measured from the wrong origin.
+        if (section.getBoundingClientRect().top + window.scrollY <= fromTop) current = section.id;
       });
       Object.keys(links).forEach(function (id) {
         links[id].classList.toggle("is-active", id === current);
@@ -254,27 +259,13 @@
     pick();
   }
 
-  function initHeaderShadow() {
-    const header = document.querySelector(".site-header");
-    if (!header) return;
-    let ticking = false;
-    window.addEventListener("scroll", function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () {
-        header.classList.toggle("is-scrolled", window.scrollY > 8);
-        ticking = false;
-      });
-    }, { passive: true });
-    header.classList.toggle("is-scrolled", window.scrollY > 8);
-  }
-
   /* ---------- scroll reveal ---------- */
 
   function initReveals() {
     const els = document.querySelectorAll(".reveal");
     if (!els.length) return;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      document.documentElement.getAttribute("data-motion") === "off";
     if (reduceMotion || typeof IntersectionObserver === "undefined") {
       els.forEach(function (el) { el.classList.add("is-in"); });
       return;
@@ -293,12 +284,23 @@
         io.observe(el);
       });
     };
+
+    // Safety net. A rootMargin can keep an element that is already on screen
+    // from ever intersecting, and a background tab can stall the transition.
+    // Once the page has settled, anything sitting in the viewport is shown.
+    function settle() {
+      document.querySelectorAll(".reveal:not(.is-in)").forEach(function (el) {
+        var box = el.getBoundingClientRect();
+        if (box.top < window.innerHeight && box.bottom > 0) el.classList.add("is-in");
+      });
+    }
+    window.setTimeout(settle, 1500);
+    window.addEventListener("load", function () { window.setTimeout(settle, 400); });
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     loadProjects();
     initScrollspy();
-    initHeaderShadow();
     initReveals();
   });
 })();

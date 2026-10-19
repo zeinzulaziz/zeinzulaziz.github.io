@@ -1,4 +1,4 @@
-// Render app icons from the site favicon (dark paper plate, chalk "Z").
+// Render app icons from the site favicon (deep ink plate, chalk "Z").
 // Usage: swift tools/make-icon.swift <size> <output.png>
 // The 180px output is the apple-touch-icon; 192/512 feed site.webmanifest.
 import Foundation
@@ -18,20 +18,26 @@ guard let ctx = CGContext(
     bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
 ) else { fatalError("context") }
 
-// Dark ink plate (#1d1a13) with a chalk "Z" — same mark as the SVG favicon.
+// Deep ink plate (#080d16) with a chalk "Z" — same mark as the SVG favicon.
 // The plate is opaque: iOS applies its own rounded mask and flattens any
 // transparency to black, so a see-through icon would look wrong.
-ctx.setFillColor(CGColor(red: 0.114, green: 0.102, blue: 0.075, alpha: 1))
+ctx.setFillColor(CGColor(red: 0.031, green: 0.051, blue: 0.086, alpha: 1))
 ctx.fill(CGRect(x: 0, y: 0, width: size, height: size))
 
-// Centered "Z" in chalk (#f5f2ea), sized relative to the canvas.
+// One copper dot, the site's identity mark, in the upper right.
+let dot = CGFloat(size) * 0.072
+ctx.setFillColor(CGColor(red: 0.847, green: 0.647, blue: 0.475, alpha: 1))
+ctx.fillEllipse(in: CGRect(x: CGFloat(size) * 0.72, y: CGFloat(size) * 0.72,
+                           width: dot, height: dot))
+
+// Centered "Z" in chalk (#ede6d9), sized relative to the canvas.
 let font = "HelveticaNeue-Bold" as CFString
 let fontSize = CGFloat(size) * 0.62
 guard let f = CTFontCreateWithName(font, fontSize, nil) as CTFont? else { fatalError("font") }
 let text = "Z" as CFString
 let attrs: [String: Any] = [kCTFontAttributeName as String: f,
                             kCTForegroundColorAttributeName as String:
-                                CGColor(red: 0.961, green: 0.949, blue: 0.918, alpha: 1)]
+                                CGColor(red: 0.929, green: 0.902, blue: 0.851, alpha: 1)]
 guard let attr = CFAttributedStringCreate(nil, text, attrs as CFDictionary) else { fatalError("attrs") }
 let line = CTLineCreateWithAttributedString(attr)
 var ascent: CGFloat = 0, descent: CGFloat = 0, leading: CGFloat = 0
