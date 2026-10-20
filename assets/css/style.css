@@ -57,9 +57,10 @@
   --rail-ink: var(--ink-faint);
   color-scheme: dark;
 
-  /* The scene reads these to paint its eclipse in the current theme. */
-  --scene-core: #ede6d9;
-  --scene-glow: #d8a579;
+  /* The scene reads these to paint its eclipse in the current theme. The glow
+     is the corona's warm; the core is the hairline on the limb. */
+  --scene-core: #fff0cc;
+  --scene-glow: #ffbf80;
   /* The moon's own body. The live scene gets this from its light; the CSS
      stand-in needs it named, so the two agree while the canvas boots. */
   --scene-body: #0e121b;
@@ -265,13 +266,13 @@ main,
   position: absolute;
   /* Anchored and sized like the live scene: see WIDE in scene.js. */
   left: 77.5%;
-  top: 44%;
-  width: min(30svh, 34vw);
+  top: 45.5%;
+  width: min(45svh, 44vw);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: radial-gradient(
-    circle at 68% 26%,
+    circle at 34% 22%,
     color-mix(in srgb, var(--scene-glow) 40%, var(--scene-body)) 0%,
     var(--scene-body) 42%
   );
@@ -279,13 +280,21 @@ main,
     0 0 0 1px color-mix(in srgb, var(--scene-glow) 72%, transparent),
     0 0 24px color-mix(in srgb, var(--scene-glow) 28%, transparent),
     0 0 130px color-mix(in srgb, var(--scene-glow) 13%, transparent);
+  transition: opacity 0.8s var(--ease);
+}
+
+/* The stand-in keeps the plot in the one move CSS can afford: it leaves while
+   the chapters are read, and comes back for the closing frame. */
+html:not([data-chapter-active="opening"]):not([data-chapter-active="contact"])
+  .still-eclipse .disc {
+  opacity: 0;
 }
 
 /* Narrow screens only have the top right corner: see NARROW in scene.js. */
 @media (max-aspect-ratio: 1/1) {
   .still-eclipse .disc {
-    left: 87.5%;
-    top: 22.5%;
+    left: 90%;
+    top: 23.5%;
     width: min(16.5svh, 30vw);
   }
 }
@@ -536,6 +545,15 @@ main,
 
 .eyebrow .index {
   color: var(--accent);
+}
+
+/* The narrowest phones put the eclipse right where this line ends. The rule is
+   decoration — forty pixels of it are the difference between a clear corner and
+   a label under the limb — so it goes rather than the line wrapping. */
+@media (max-width: 400px) {
+  .eyebrow .bar {
+    display: none;
+  }
 }
 
 .eyebrow .bar {

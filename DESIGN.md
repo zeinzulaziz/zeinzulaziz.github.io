@@ -79,8 +79,8 @@ themes share a single implementation):
 
 | Token | Dark | Light | Use |
 |---|---|---|---|
-| scene-core | #ede6d9 | #6b3c1a | the corona's hottest line: chalk at night, deep copper on paper |
-| scene-glow | #d8a579 | #8a5426 | corona, halo, the moon's warm light |
+| scene-core | #fff0cc | #6b3c1a | the corona's hottest line: cream at night, deep copper on paper |
+| scene-glow | #ffbf80 | #8a5426 | corona, halo, and the stand-in's ring |
 | scene-body | #0e121b | #121824 | the stand-in's body, so the CSS eclipse matches the lit one |
 
 The light `scene-glow` stays brighter than the light `accent` on purpose: the
@@ -95,19 +95,25 @@ pixels, where the scene's glow tints the field:
 - light tokens: ink/paper 14.97, ink-soft/paper 7.95, ink-faint/paper 5.75,
   ink-faint/surface 6.33, ink-faint/surface-2 5.13, accent/paper 6.86 (the
   previous light accent, #8a5426, was 5.01 and failed over the copper penumbra).
-- measured on the opening screen (glow at full strength behind the labels) in
-  both themes, at 1280x900, 390x844 and 360x640: worst 5.37 in dark
-  (`.chapter-rail a`), 5.50 in light (`.spec-item dt`), 5.69 on the narrowest
-  phone (`.role`, light). Nothing on the page falls below AA.
-- the opening screen is the worst case by construction: the moon keeps its mark
-  on the page, and the only thing scroll changes is the corona's strength, which
-  falls from 1 to 0.42 as the page is read. A dimmer glow leaves a darker field
-  behind light ink and a paler one behind dark ink, so every later position
-  measures better, not worse.
-- the chapter rail never sits under the ring: the disc's limb stops ~100px short
-  of the gutter at 1280x900, so the labels sit in the halo, and they still carry
-  their own field (5.37–6.38 measured) because a bare label in the penumbra is
-  the one place the scene could still cost legibility.
+- measured on all four frames (opening, work, about, closing) in both themes at
+  1440x900, 1280x900, 768x1024 and 390x844, plus the phone widths down to
+  360x640: worst 4.93 at 768x1024 light on the opening (`.spec-item dt` over the
+  moon's body), 5.27 in dark (`.chapter-rail a`, over the instruments), 5.26 on
+  the phone (light). The work and about frames measure no worse than the
+  opening — they move the instrument into the margin instead of growing it.
+  Nothing on the page falls below AA.
+- the opening frame is the one to protect: it carries the full instrument and the
+  full glow, and it is the only frame where the type still sits beside the body.
+  Once the work chapter arrives the instrument is scaled to 0.64 and its
+  materials at 0.42, so the field behind the reading copy only gets quieter; the
+  closing frame repeats the opening on the contact chapter, whose copy sits
+  below the moon's mark rather than beside it.
+- the chapter rail runs through the instruments, not clear of them: at 1280x900
+  the disc's limb reaches the gutter, so the labels cross the rings. They carry
+  their own field (5.27–8.78 measured in dark, 6.00–11.45 on paper) because a bare
+  label over brass or over the halo is the one place the scene could still cost
+  legibility — with the field, the ratio barely depends on what the moon is doing
+  behind it.
 - `line` is decorative and never carries text or state on its own;
   `line-strong` is the boundary value that must stay visible (6.48 dark,
   5.75 light, both well above the 3:1 rule for non-text UI).
@@ -143,15 +149,52 @@ on a shadow.
 
 The ground is not flat: a fixed canvas draws a moon eclipse behind the page
 (`assets/js/scene.js`, three.js). A real sphere, not a painted disc: its surface
-is pushed in and out into craters and maria, dusted with a canvas-made albedo,
-and lit by two warm sources — one in front of the upper-right shoulder, one
-grazing the far limb — so the body carries a gradient rather than a painted
-edge. Outside the silhouette a plane paints the corona: a hot ring at the limb, a
-wide halo, and a slow streamer. Stars sit far behind in the same frustum and the
-pointer sweeps them against the moon, which is the one cue that says depth
-rather than picture. It is the only illustration in the system and the only place
-copper is used at scale. On top of it, a static vignette (`radial-gradient`) keeps
-the page edges settled so text stays on a calm field.
+is pushed in and out into twenty-three basins, and it is lit by a studio that is
+built in memory — a dark room with six emissive panels, pre-filtered into an
+environment map — plus a warm key, a cool fill and a lamp that sits *inside* the
+sphere, where only the instruments can see it. The body therefore carries a
+gradient rather than a painted edge. By measure it is almost black (it renders
+around #231f1d against a #080d16 field): dark enough to hold an eclipse, light
+enough to be an object.
+
+Three instruments ring it, on three tilted planes: a brass torus, a thin hair
+ring and eighty instanced tick marks, with three booms and a pearl at each
+joint. That is what makes the thing an observatory rather than a planet. Behind
+them a plane paints the corona: a hairline on the limb, thirty-seven streamers, a
+wide floor, and the diamond ring where the light wins. Stars sit far behind in
+the same frustum and the pointer sweeps them against the moon, which is the one
+cue that says depth rather than picture. It is the only illustration in the
+system and the only place copper is used at scale. On top of it, a static
+vignette (`radial-gradient`) keeps the page edges settled so text stays on a
+calm field.
+
+The scroll is the scene's clock. `journey.js` reads the chapter boxes and hands
+the scene one continuous stage value: 0 while the opening holds, 1 once the work
+chapter's top crosses 35% of the viewport, 2 for about, 3 for contact. A line the
+page cannot scroll to counts as the last one it can reach, so the closing frame
+still lands at the bottom when a chapter is shorter than the viewport or the pin
+is off. Every move is a smoothstep window on that value, so the shot is never
+caught between two keyframes, and scrolling back retraces the same shapes. Four
+frames:
+
+- **Opening (0) and contact (3):** the full instrument, as described above. The
+  closing frame is the opening frame on purpose: the page ends where it began.
+- **Work (1):** the stack unfolds into three rings seen square on, spaced along
+  the eye line into a shallow tunnel. The whole instrument steps back into the
+  right margin and dims (scale 0.64, opacity 0.42), and the moon lets go: the
+  body scales to a point and the corona goes out, so the chapter is read on an
+  empty field.
+- **About (2):** the same rings turn edge-on (`rotation.x` 1.34) and close into a
+  lens at 0.58 of full size, still in the margin, swinging slowly.
+
+The meshes never change; only tilt, spacing along the axis, scale and opacity
+move. Opacity is written by the stage, and depth is written only while a ring is
+solid: a half-faded ring that still writes depth cuts the ones behind it and the
+instrument reads broken rather than faint. The windows, in stage units: unfold
+0.28–0.95, release 0.40–1.00, dim 0.30–0.70, edge-on 1.45–1.95, restore
+2.70–2.95, return 2.80–3.00, glow 2.86–3.00. On a render loop the value catches
+up as `1 − e^(−7dt)` — the reference's own constant — so a flick arrives a beat
+late instead of snapping; with motion off it is applied straight.
 
 Under the canvas, the body carries one static layer: a half-tone dither of 1px
 dots at 3% alpha, the film-grain tooth of the reference. No image request.
@@ -161,37 +204,50 @@ The scene is skipped when `prefers-reduced-motion: reduce` is set or the visitor
 turns motion off: it then paints a single static frame (a still eclipse), so the
 picture never disappears — only the movement does. If WebGL is unavailable, a
 CSS-only still eclipse stands in (`.still-eclipse`), so the page never depends on
-the canvas to look finished. The stand-in sits above the canvas in paint order, so
+the canvas to look finished. That stand-in keeps the plot in the one move CSS can
+afford: it fades out while the middle chapters are active and returns for contact
+(`data-chapter-active`). The stand-in sits above the canvas in paint order, so
 once the shader has proved it painted, `scene.js` both fades it out with a CSS
 transition and takes it out of the picture with `display: none` — a background tab
 never advances a transition, and a stand-in that lingers would cover the scene.
 The stand-in is built from the same tokens, anchored at the same two points, so
 the handover does not move the moon.
 
-Placement. On wide screens the moon has the right column: its diameter is 0.30 of
-the viewport height, its centre at 77.5% across and 44% down. Phones have no such
-column, so it shrinks to 0.165 and moves into the gap beside the headline — 87.5%
-across, 22.5% down — clear of the eyebrow above it and the lede below. The blend
-between the two is a smoothstep on the viewport aspect (0.70 → 1.05), so nothing
-snaps at a breakpoint. `probe-fit.mjs` mirrors those numbers and checks that the
-disc never reaches a line of text.
+Placement. On wide screens the moon has the right column: its diameter is 0.45 of
+the viewport height, its centre at 77.5% across and 45.5% down, with the whole
+instrument stack on. The stack is at full size in the opening and closing frames;
+while work and about are read it steps back to 0.64 and 0.58 of that, which keeps
+the rings clear of the copy column. Phones have no such column, so the moon
+shrinks to 0.165, moves into the corner beside the headline — 90% across, 23.5%
+down, running off the right edge on purpose — and the rings and booms are
+dropped: at that size they are noise over the copy, and a ring around a
+hundred-pixel disc is not a telescope. A phone keeps the moon for the opening
+and contact only: the body departs with the work chapter and returns for the
+last one, so nothing sits behind the reading copy. The halo is pulled in there
+too (`uSpread` at 0.4): at that size a wide glow is a bright field behind the
+words. Below 400px the meta line drops its decorative rule so it ends clear of
+the limb instead of running under it. The blend between the two is a smoothstep
+on the viewport aspect (0.70 → 1.05), so nothing snaps at a breakpoint.
+`probe-fit.mjs` mirrors those numbers and checks that the disc never reaches a
+line of text.
 
 The camera is aimed by translating it the other way rather than by rotating: a
 sphere projects to a circle from any viewpoint, so the centre lands exactly where
 the layout asked and the silhouette stays round at every aspect.
 
-Themes. One implementation, two readings. At night the ring's hot line is chalk
-(`--scene-core`), the halo is copper, and the stars are out. On paper the ring is
-the deepest copper instead — a chalk ring on cream disappears — the wide falloff
-is held back (`mix(1.0, 0.5, uDay)` on the halo), the stars are dropped as grit,
-and the key light steps back so the body reads as a dark disc and not a brown
-stain. The corona's hottest line is set by scroll, so the chapters below are never
-lit by a bright thing behind the words.
+Themes. One implementation, two readings. At night the corona is additive: a
+chalk hairline (`--scene-core`) inside a copper halo, with the stars out. On
+paper additive glow is unprintable, so the same shader switches to premultiplied
+colour under normal blending, the hairline widens (`mix(170.0, 90.0, uDay)`)
+because only the sliver outside the silhouette shows, the halo is held back to
+0.05 and the stars are dropped as grit. The instruments stay in both themes: on
+cream the brass reads as an engraving, and their stage opacity does not change
+with the theme. The corona is out through the middle of the page — no body, no
+light — so the reading chapters are never lit by a bright thing behind the words.
 
-Blending. The corona writes premultiplied colour (`vec4(colour * alpha, alpha)`)
-under normal blending rather than additive: additive over cream is neither
-predictable nor printable, and a premultiplied result can be audited against the
-page in both themes.
+Blending. Night adds light (`vec4(colour, alpha)` under `AdditiveBlending`); day
+writes premultiplied paint (`vec4(colour * alpha, alpha)`) under normal blending,
+which can be audited against the page in both themes.
 
 Layer order, bottom to top: the dither ground (body background), the canvas
 (`.scene`, z-index 1, `pointer-events: none`, `aria-hidden`), the still eclipse
@@ -200,10 +256,10 @@ header (z-index 50).
 
 Cost: three.js is vendored as two minified files (`three.module.min.js` +
 `three.core.min.js`, ~751 KB raw, ~187 KB gzip) and only the home page imports it.
-That is a lot of bytes for one sphere behind a headline; the scene is built and
-disposed once, the texture is made in a canvas at boot, and no image is fetched,
-but if the weight ever matters more than the convenience this is the first file to
-question.
+That is a lot of bytes for one object behind a headline; the scene is built once,
+the studio map is generated at boot from geometry (no image is fetched), the moon
+is a single 112 × 72 sphere, and the ticks are instanced. If the weight ever
+matters more than the convenience, this is the first file to question.
 
 ## Motion
 
@@ -211,9 +267,13 @@ question.
   sweeps the star field against it, which is the parallax that sells the depth.
   The stars only move; the moon keeps its mark on the page, so the fit and the
   contrast stay where the layout put them.
-- Scroll progress fades the corona and draws the moon back a hair as the page is
-  read (from 0.40 to 0.92 of the way down), so no chapter below is lit by a
-  bright thing behind the words.
+- Scroll drives the acts (see Texture): the stage is read from the chapter boxes,
+  each chapter's top crossing 35% of the viewport, so every section has its own
+  shape and the change between them is continuous. Nothing is keyframed to a
+  clock; the scroll is the clock. The rings also breathe and swing on the render
+  loop while they are only scenery, but neither motion changes their mark.
+- The scene catches the stage up as `1 − e^(−7dt)`, a beat behind the finger, and
+  applies it straight when motion is off.
 - Chapters: `#opening` and `#contact` pin for one viewport of scroll; the work
   and about chapters keep their label column sticky while the body scrolls. The
   pin is `calc(100svh - var(--header-h) - 1px)`, because the sticky header is in
@@ -254,12 +314,13 @@ previous filled index plate. One per chapter, nowhere else.
 
 The chapter rail (wide screens only) repeats those names down the right gutter and
 marks the current one with `aria-current` plus a longer copper rule, so the state
-never rests on colour alone. The moon's halo reaches into that gutter as the page
-is read, so each label carries its own field — a soft paper plate with a backdrop
-blur, the same idiom as the header veil. A bare label in the penumbra is the one
-place the scene could still cost legibility; with its own field the rail measures
-5.37 or better. That plate is a deliberate trade: it is visible over the dark disc
-in the day theme, and legibility wins.
+never rests on colour alone. The eclipse reaches into that gutter — the halo in
+the opening and closing frames, the rings while the middle is read — so each
+label carries its own field: a soft paper plate with a backdrop blur, the same
+idiom as the header veil. A bare label in the penumbra is the one place the scene
+could still cost legibility; with its own field the rail measures 5.27 or better
+across the four acts. That plate is a deliberate trade: it is visible over the
+dark disc in the day theme, and legibility wins.
 
 ## Content structure
 
@@ -286,11 +347,22 @@ Recorded so they are decisions, not accidents:
    it is ready instead.
 3. Type: our own display face (Space Grotesk) and our own mono (IBM Plex Mono),
    but body copy stays IBM Plex Sans rather than the display face.
-4. The eclipse is our own build, not a port of the reference's scene. We borrowed
-   the technique — a displaced sphere under real lights — because a flat painted
-   disc reads as a picture rather than an object; their camera waypoints, their
-   instrument rings and their post-processing chain are all absent, and the moon,
-   its material, the lights, the corona and the stars are our own numbers.
+4. The eclipse is our own build, not a port of the reference's scene. At the
+   owner's request the *composition* now follows theirs — one dark moon, three
+   tilted instrument rings, a warm corona with streamers — because that is the
+   picture they wanted. The code is still ours: every light, material, shader and
+   layout number was written here and is documented above, and the scene is a
+   fraction of theirs. The scroll also borrows their stage grammar — an
+   instrument that unfolds, a body that is released, an alignment at the end — but
+   not their film: no camera flight through the rings, no glass lens, no
+   diaphragm, no corridor, no post chain, no loading screen. Their scene is one
+   continuous shot of one object; this page has four chapters of copy to read, so
+   the acts land on our chapters and the instrument steps back into the margin
+   while it is being read.
+5. Phones get the corner, not the band. The reference drops a full-width eclipse
+   below the copy on mobile. This page cannot: the copy alone fills a phone
+   screen. So the moon shrinks into the gap beside the headline and the
+   instruments are dropped rather than shrunk to noise.
 
 ## Scope
 
