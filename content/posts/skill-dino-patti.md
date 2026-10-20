@@ -3,7 +3,7 @@ title: Skill Paling Berguna Sepanjang Hidup - Dino Patti Djalal
 date: 2026-10-20
 type: note
 description: ''
-cover: ''
+cover: /assets/img/blog/pasted-image-1792468112146.png
 tags:
   - youtube
 draft: false
