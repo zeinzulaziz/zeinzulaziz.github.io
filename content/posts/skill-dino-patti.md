@@ -4,7 +4,8 @@ date: 2026-10-20
 type: note
 description: ''
 cover: ''
-tags: []
+tags:
+  - youtube
 draft: false
 ---
 
