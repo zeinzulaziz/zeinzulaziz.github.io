@@ -326,8 +326,9 @@ dark disc in the day theme, and legibility wins.
 
 - Opening: the display statement, the role line, one lede paragraph, two
   actions, and the real facts panel (base, work, availability, other profiles).
-- 01 Work: GitHub repos sorted by stars as ruled rows; the top row is the
-  featured block with its real screenshot and a LIVE plate when a demo exists.
+- 01 Work: curated products first (including private builds with no repo link),
+  then GitHub repos sorted by stars, as ruled rows; the top row is the featured
+  block with its real screenshot and a LIVE plate when a demo exists.
 - 02 About: two paragraphs beside the photo, three real stats, then Experience
   and Certifications as one records band.
 - 03 Contact: the closing band with the display title, the availability

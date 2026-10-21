@@ -24,7 +24,7 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 - `assets/js/journey.js` — progres halaman, chapter rail, event `journey` (hanya halaman utama)
 - `assets/js/scene.js` — gerhana WebGL (three.js) di belakang hero, hanya dimuat halaman utama
 - `assets/vendor/three/` — three.js min (MIT) yang di-vendor; `scene.js` mengimpornya secara relatif
-- `assets/js/main.js` — logika & data proyek (baca `content/repos.json`)
+- `assets/js/main.js` — logika & data proyek (baca `content/repos.json`; proyek privat tanpa repo GitHub dikurasi di `ownedProjects` dalam file ini, jangan taruh di `repos.json` karena ditimpa build)
 - `assets/js/blog.js` — pemuat data artikel (manifest + fallback GitHub API)
 - `assets/js/markdown.js` — renderer Markdown sendiri, tanpa library (dipakai blog.js & build)
 - `assets/img/` — avatar (`avatar.svg`, ilustrasi) & screenshot preview proyek (`<nama-repo>.webp`)

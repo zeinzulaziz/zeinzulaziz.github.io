@@ -8,17 +8,34 @@
   const liveDemo = {
     "harga-pangan": "https://zeinzulaziz.github.io/harga-pangan/",
     "convert-gold": "https://zeinzulaziz.github.io/convert-gold/",
+    invoice: "https://invoice-fd1d2.web.app/",
   };
 
   const titles = {
     "harga-pangan": "Food Prices",
     "convert-gold": "Convert Gold",
+    invoice: "Invoice Generator",
   };
 
   const descriptions = {
     "harga-pangan": "Food producer price dashboard for East Java, built on SISKAPERBAPO data.",
     "convert-gold": "Gold price calculator to run quick numbers before trading.",
+    invoice: "Invoice generator with PDF export and calendar-ready due dates.",
   };
+
+  /* Work with no public repository. content/repos.json only holds what the
+     GitHub API returns (and CI rewrites it), so these live here instead.
+     `private: true` drops the repo link and the star count from the card. */
+  const ownedProjects = [
+    {
+      name: "invoice",
+      language: "Web app",
+      stargazers_count: 0,
+      description: null,
+      homepage: liveDemo.invoice,
+      private: true,
+    },
+  ];
 
   function lookUp(obj, name, fallback) {
     return Object.prototype.hasOwnProperty.call(obj, name) ? obj[name] : fallback;
@@ -103,13 +120,26 @@
       stargazers_count: r.stargazers_count || 0,
       description: r.description,
       homepage: r.homepage,
+      private: r.private === true,
     };
+  }
+
+  /* Curated work leads the list. If a curated project ever becomes a public
+     repository, the GitHub entry wins so the card can link to it. */
+  function allProjects(repos) {
+    const names = new Set(repos.map(function (r) { return r.name; }));
+    return ownedProjects.filter(function (p) { return !names.has(p.name); }).concat(repos);
   }
 
   function renderCard(repo, index) {
     const name = repo.name;
     const demo = liveDemo[name] || (repo.homepage && repo.homepage.trim()) || null;
     const hasScreenshot = Object.prototype.hasOwnProperty.call(liveDemo, name);
+    const isPrivate = repo.private === true;
+    const repoHref = isPrivate ? null : repoUrl(name);
+    /* A private project still gets a clickable title, it just points at the
+       live product instead of a repository that outsiders cannot open. */
+    const titleHref = repoHref || demo;
 
     /* Featured row: real screenshot when we have one, letter plate otherwise.
        Plain rows get a small thumb only when a real screenshot exists. */
@@ -121,18 +151,24 @@
 
     const links =
       '<p class="project-links">' +
-      '<a href="' + repoUrl(name) + '" target="_blank" rel="noopener">Repo</a>' +
+      (repoHref
+        ? '<a href="' + repoHref + '" target="_blank" rel="noopener">Repo</a>'
+        : "") +
       (demo ? '<a href="' + escapeHtml(demo) + '" target="_blank" rel="noopener">Demo</a>' : "") +
       "</p>";
 
     const meta =
       '<p class="project-meta"><span class="project-lang">' + escapeHtml(repo.language || "N/A") + "</span>" +
-      "<span>★ " + (repo.stargazers_count || 0) + "</span></p>";
+      "<span>" + (isPrivate ? "Private" : "★ " + (repo.stargazers_count || 0)) + "</span></p>";
+
+    const title = titleHref
+      ? '<a href="' + escapeHtml(titleHref) + '" target="_blank" rel="noopener">' + escapeHtml(langBadge(name)) + "</a>"
+      : escapeHtml(langBadge(name));
 
     const main =
       '<div class="project-main">' +
-      '<h3 class="project-title"><a href="' + repoUrl(name) + '" target="_blank" rel="noopener">' + escapeHtml(langBadge(name)) + "</a></h3>" +
-      '<p class="project-desc">' + escapeHtml(lookUp(descriptions, name, repo.description || "Public repository with no description.")) + "</p>" +
+      '<h3 class="project-title">' + title + "</h3>" +
+      '<p class="project-desc">' + escapeHtml(lookUp(descriptions, name, repo.description || (isPrivate ? "Private project." : "Public repository with no description."))) + "</p>" +
       "</div>";
 
     const card = document.createElement("article");
@@ -162,25 +198,29 @@
   function showError(message) {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
-    grid.setAttribute("aria-busy", "false");
-    grid.innerHTML =
-      '<div class="projects-loading">' + message + " " +
-      '<a href="' + repoUrl("") + '" target="_blank" rel="noopener">See all repositories here</a>.</div>';
-    document.dispatchEvent(new CustomEvent("contentchange"));
+    /* Curated work does not depend on the API, so it still gets rendered. */
+    renderAll([]);
+    const note = document.createElement("div");
+    note.className = "projects-loading";
+    note.innerHTML =
+      message + " " +
+      '<a href="' + repoUrl("") + '" target="_blank" rel="noopener">See all repositories here</a>.';
+    grid.appendChild(note);
   }
 
   function renderAll(repos) {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
     grid.innerHTML = "";
+    const projects = allProjects(repos);
     const fragment = document.createDocumentFragment();
-    repos.forEach(function (repo, index) {
+    projects.forEach(function (repo, index) {
       fragment.appendChild(renderCard(normalizeRepo(repo), index));
     });
     grid.appendChild(fragment);
     grid.setAttribute("aria-busy", "false");
     const stat = document.getElementById("statProjects");
-    if (stat) stat.textContent = String(repos.length);
+    if (stat) stat.textContent = String(projects.length);
     revealCards();
     // The page just got taller; let the scroll progress bar catch up.
     document.dispatchEvent(new CustomEvent("contentchange"));
