@@ -8,7 +8,6 @@
   const liveDemo = {
     "harga-pangan": "https://zeinzulaziz.github.io/harga-pangan/",
     "convert-gold": "https://zeinzulaziz.github.io/convert-gold/",
-    invoice: "https://invoice-fd1d2.web.app/",
   };
 
   const titles = {
@@ -20,20 +19,25 @@
   const descriptions = {
     "harga-pangan": "Food producer price dashboard for East Java, built on SISKAPERBAPO data.",
     "convert-gold": "Gold price calculator to run quick numbers before trading.",
-    invoice: "Invoice generator with PDF export and calendar-ready due dates.",
+    invoice:
+      "An invoice workspace for small businesses: build and manage invoices, " +
+      "export PDFs, track payments, and keep a cloud backup. Firebase auth keeps " +
+      "each workspace closed.",
   };
 
   /* Work with no public repository. content/repos.json only holds what the
      GitHub API returns (and CI rewrites it), so these live here instead.
-     `private: true` drops the repo link and the star count from the card. */
+     `private: true` drops the repo link and the star count; with no homepage
+     the card also skips the demo link and the LIVE plate. */
   const ownedProjects = [
     {
       name: "invoice",
-      language: "Web app",
+      language: "Firebase web app",
       stargazers_count: 0,
       description: null,
-      homepage: liveDemo.invoice,
+      homepage: null,
       private: true,
+      screenshot: true,
     },
   ];
 
@@ -121,6 +125,7 @@
       description: r.description,
       homepage: r.homepage,
       private: r.private === true,
+      screenshot: r.screenshot === true,
     };
   }
 
@@ -134,7 +139,7 @@
   function renderCard(repo, index) {
     const name = repo.name;
     const demo = liveDemo[name] || (repo.homepage && repo.homepage.trim()) || null;
-    const hasScreenshot = Object.prototype.hasOwnProperty.call(liveDemo, name);
+    const hasScreenshot = Boolean(liveDemo[name] || repo.screenshot);
     const isPrivate = repo.private === true;
     const repoHref = isPrivate ? null : repoUrl(name);
     /* A private project still gets a clickable title, it just points at the
@@ -149,13 +154,14 @@
 
     const livePlate = demo ? '<span class="live-plate">LIVE</span>' : "";
 
-    const links =
-      '<p class="project-links">' +
-      (repoHref
-        ? '<a href="' + repoHref + '" target="_blank" rel="noopener">Repo</a>'
-        : "") +
-      (demo ? '<a href="' + escapeHtml(demo) + '" target="_blank" rel="noopener">Demo</a>' : "") +
-      "</p>";
+    const links = (repoHref || demo)
+      ? '<p class="project-links">' +
+        (repoHref
+          ? '<a href="' + repoHref + '" target="_blank" rel="noopener">Repo</a>'
+          : "") +
+        (demo ? '<a href="' + escapeHtml(demo) + '" target="_blank" rel="noopener">Demo</a>' : "") +
+        "</p>"
+      : "";
 
     const meta =
       '<p class="project-meta"><span class="project-lang">' + escapeHtml(repo.language || "N/A") + "</span>" +
