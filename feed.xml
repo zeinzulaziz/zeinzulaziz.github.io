@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Blog · Moh Zein Zulfanul Aziz</title>
+  <title>Blog · Ze.in</title>
   <subtitle>Articles and short notes on WordPress development, JavaScript, and building small products with AI.</subtitle>
   <link href="https://zeinzulaziz.github.io/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="https://zeinzulaziz.github.io/blog.html" rel="alternate" type="text/html"/>
   <updated>2026-10-20T00:00:00+07:00</updated>
   <id>https://zeinzulaziz.github.io/blog.html</id>
-  <author><name>Moh Zein Zulfanul Aziz</name><uri>https://zeinzulaziz.github.io/</uri></author>
+  <author><name>Ze.in</name><uri>https://zeinzulaziz.github.io/</uri></author>
   <entry>
     <title>Skill Paling Berguna Sepanjang Hidup - Dino Patti Djalal</title>
     <link href="https://zeinzulaziz.github.io/post/skill-dino-patti/" rel="alternate" type="text/html"/>

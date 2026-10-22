@@ -11,7 +11,7 @@ import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const SITE = "https://zeinzulaziz.github.io";
-const AUTHOR = "Moh Zein Zulfanul Aziz";
+const AUTHOR = "Ze.in";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const postsDir = join(root, "content", "posts");
 const postsOut = join(root, "content", "posts.json");
@@ -238,7 +238,7 @@ function renderArticlePage(post, newer, older) {
 
   <header class="site-header">
     <nav class="container nav" aria-label="Primary">
-      <a class="nav-brand" href="/"><span class="mark" aria-hidden="true"></span>Zein Aziz</a>
+      <a class="nav-brand" href="/"><span class="mark" aria-hidden="true"></span>Ze.in</a>
       <div class="nav-right">
         <div class="nav-links" id="nav-menu">
           <a href="/#projects">Projects</a>

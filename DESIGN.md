@@ -13,7 +13,7 @@ departs from that reference.
 
 ## Identity
 
-Personal portfolio of Moh Zein Zulfanul Aziz, a WordPress developer and solo
+Personal portfolio of Ze.in, a WordPress developer and solo
 builder of small AI products based in East Java, Indonesia. The site exists to
 show real public work and writing, and to make contact easy.
 

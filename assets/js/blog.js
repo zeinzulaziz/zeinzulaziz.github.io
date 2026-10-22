@@ -426,7 +426,7 @@
     var root = document.getElementById("postRoot");
     if (!root) return;
 
-    document.title = post.title + " · Moh Zein Zulfanul Aziz";
+    document.title = post.title + " · Ze.in";
     var desc = document.querySelector('meta[name="description"]');
     if (desc && post.description) desc.setAttribute("content", post.description);
 
