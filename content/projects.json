@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T07:57:59.889Z",
+  "generated": "2026-10-22T08:02:37.074Z",
   "projects": [
     {
       "slug": "harga-pangan",
@@ -36,15 +36,16 @@
     {
       "slug": "invoice",
       "title": "Invoice Generator",
-      "summary": "An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.",
+      "summary": "An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.",
       "repo": "invoice",
       "demo": "",
-      "language": "Firebase web app",
+      "language": "Vanilla JavaScript + Firebase",
       "cover": "assets/img/invoice.webp",
       "private": true,
       "tags": [
         "invoice",
-        "firebase"
+        "firebase",
+        "pwa"
       ],
       "date": "",
       "draft": false

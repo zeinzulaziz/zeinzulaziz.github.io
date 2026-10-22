@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invoice Generator · Ze.in</title>
-  <meta name="description" content="An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.">
+  <meta name="description" content="An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#080d16">
   <link rel="canonical" href="https://zeinzulaziz.github.io/project/invoice/">
   <meta property="og:title" content="Invoice Generator · Ze.in">
-  <meta property="og:description" content="An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.">
+  <meta property="og:description" content="An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://zeinzulaziz.github.io/project/invoice/">
   <meta property="og:image" content="https://zeinzulaziz.github.io/assets/img/invoice.webp">
@@ -31,7 +31,7 @@
       } catch (e) {}
     })();
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Invoice Generator","description":"An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.","url":"https://zeinzulaziz.github.io/project/invoice/","image":"https://zeinzulaziz.github.io/assets/img/invoice.webp","author":{"@type":"Person","name":"Ze.in","url":"https://zeinzulaziz.github.io/"},"keywords":"invoice, firebase"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Invoice Generator","description":"An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.","url":"https://zeinzulaziz.github.io/project/invoice/","image":"https://zeinzulaziz.github.io/assets/img/invoice.webp","author":{"@type":"Person","name":"Ze.in","url":"https://zeinzulaziz.github.io/"},"keywords":"invoice, firebase, pwa"}</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -65,13 +65,32 @@
       <a class="post-back" href="/#projects">&larr; All projects</a>
       <article>
         <h1 class="post-title">Invoice Generator</h1>
-        <p class="page-lede">An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.</p>
-        <div class="post-meta"><span>Firebase web app</span><span>Private project</span></div>
-        <div class="post-tags"><span>invoice</span><span>firebase</span></div>
+        <p class="page-lede">An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.</p>
+        <div class="post-meta"><span>Vanilla JavaScript + Firebase</span><span>Private project</span></div>
+        <div class="post-tags"><span>invoice</span><span>firebase</span><span>pwa</span></div>
         
         <figure class="project-shot"><img src="/assets/img/invoice.webp" alt="Screenshot of Invoice Generator" loading="lazy" decoding="async"></figure>
-        <div class="prose"><p>The workspace covers the routine parts of invoicing: drafting invoices, exporting them as PDF, tracking which ones are paid, and keeping a cloud backup. Firebase Authentication keeps each workspace closed to its owner.</p>
-<p>The project is private, so there is no public repository or live demo to open.</p></div>
+        <div class="prose"><p>Tinara is a web app for creating, sending, and managing professional invoices, designed for makeup artists and other small service businesses. Built with Vanilla JavaScript and Firebase, with no build tools, and installable on phones as a PWA.</p>
+<h3 id="invoice-building"><a class="md-anchor" href="#invoice-building" aria-hidden="true" tabindex="-1">#</a>Invoice building</h3>
+<ul><li>Multi-step invoice form (client, line items, payment) with inline validation</li><li>Invoice numbers that auto-increment from a configurable starting number</li><li>Dynamic service items: name, price, quantity, add or remove rows freely</li><li>Automatic totals: full amount, discounts, down payments, and remaining balance</li><li>Custom notes per invoice</li><li>Live PDF preview beside the form (desktop) or in a modal (mobile)</li></ul>
+<h3 id="branding-and-pdf-design"><a class="md-anchor" href="#branding-and-pdf-design" aria-hidden="true" tabindex="-1">#</a>Branding and PDF design</h3>
+<ul><li>Five invoice templates: Classic, Minimal, Bold, Elegant, and Modern</li><li>Custom PDF accent color from a color picker</li><li>Separate logo uploads for the app and the invoice header</li><li>Brand name and subtitle shown on every screen</li></ul>
+<h3 id="automatic-loyalty-discounts"><a class="md-anchor" href="#automatic-loyalty-discounts" aria-hidden="true" tabindex="-1">#</a>Automatic loyalty discounts</h3>
+<ul><li>Discount rules based on the client&#39;s order count (every Nth order)</li><li>Percentage off or a fixed amount off</li><li>Shows up as a voucher when a returning client creates a new invoice</li></ul>
+<h3 id="payments-and-management"><a class="md-anchor" href="#payments-and-management" aria-hidden="true" tabindex="-1">#</a>Payments and management</h3>
+<ul><li>Manage a list of bank accounts; pick several or type one in manually</li><li>Payment status: mark invoices paid or unpaid from the dashboard</li></ul>
+<h3 id="sending-and-sharing"><a class="md-anchor" href="#sending-and-sharing" aria-hidden="true" tabindex="-1">#</a>Sending and sharing</h3>
+<ul><li>Share to WhatsApp with an automatically formatted summary message (WhatsApp formatting, with iOS/Android/desktop detection)</li><li>Download a PDF (jsPDF) straight from the browser</li><li>Add the invoice to Google Calendar or download an <code>.ics</code> file</li></ul>
+<h3 id="dashboard-and-analytics"><a class="md-anchor" href="#dashboard-and-analytics" aria-hidden="true" tabindex="-1">#</a>Dashboard and analytics</h3>
+<ul><li>Stats: total invoices, total revenue, down payments received, pending settlements</li><li>Client and number search, month filter, date sorting, pagination</li><li>Business analytics: best-selling services, monthly revenue, top clients, payment status distribution</li><li>KPIs: total orders, unique clients, average invoice value</li><li>Automatically rotating motivation cards</li></ul>
+<h3 id="sync-and-data-safety"><a class="md-anchor" href="#sync-and-data-safety" aria-hidden="true" tabindex="-1">#</a>Sync and data safety</h3>
+<ul><li>Multi-user with Firebase Auth (email and password login or registration)</li><li>Per-user data stored in Cloud Firestore plus automatic backups to localStorage</li><li>Offline persistence: the app keeps working without internet</li><li>Field-by-field audit log of every invoice change, searchable and exportable</li></ul>
+<h3 id="admin-panel"><a class="md-anchor" href="#admin-panel" aria-hidden="true" tabindex="-1">#</a>Admin panel</h3>
+<ul><li>Create new accounts, enable or disable them, and set admin/user roles</li><li>Reset a user&#39;s password by email</li><li>Export all data: full JSON, CSV for Excel or Sheets, or settings only</li><li>Import invoices from CSV with a preview before anything is written (a ready-to-fill CSV template is included)</li></ul>
+<h3 id="the-rest"><a class="md-anchor" href="#the-rest" aria-hidden="true" tabindex="-1">#</a>The rest</h3>
+<ul><li>Installable PWA on phones (manifest and theme are set up)</li><li>Mobile-first responsive layout (desktop sidebar, mobile bottom navigation)</li><li>Terms of Service and Privacy Policy pages</li><li>SEO-ready structure with sitemap and robots.txt</li><li>Anti-XSS output sanitizing (<code>escapeHtml</code>) and try-catch error handling</li></ul>
+<h3 id="tech-stack"><a class="md-anchor" href="#tech-stack" aria-hidden="true" tabindex="-1">#</a>Tech stack</h3>
+<div class="md-table-wrap"><table><thead><tr><th>Part</th><th>Technology</th></tr></thead><tbody><tr><td>Frontend</td><td>Vanilla JavaScript (ES6+), HTML5, CSS3</td></tr><tr><td>Backend</td><td>Firebase Auth (Email/Password) + Cloud Firestore</td></tr><tr><td>PDF</td><td>jsPDF (CDN)</td></tr><tr><td>Hosting</td><td>Firebase Hosting</td></tr><tr><td>Build</td><td>None, files are edited directly</td></tr></tbody></table></div></div>
       </article>
     </div>
   </main>
