@@ -1,0 +1,53 @@
+{
+  "generated": "2026-10-22T07:27:51.480Z",
+  "projects": [
+    {
+      "slug": "harga-pangan",
+      "title": "Food Prices",
+      "summary": "A free dashboard that turns East Java producer price data into a seasonal view farmers can plan around.",
+      "repo": "harga-pangan",
+      "demo": "https://zeinzulaziz.github.io/harga-pangan/",
+      "language": "HTML",
+      "cover": "assets/img/harga-pangan.webp",
+      "private": false,
+      "tags": [
+        "dashboard",
+        "agriculture"
+      ],
+      "date": "2026-10-08",
+      "draft": false
+    },
+    {
+      "slug": "convert-gold",
+      "title": "Convert Gold",
+      "summary": "A gold price calculator that turns USD per troy ounce into rupiah per gram, with entry, target, and stop-loss numbers.",
+      "repo": "convert-gold",
+      "demo": "https://zeinzulaziz.github.io/convert-gold/",
+      "language": "HTML",
+      "cover": "assets/img/convert-gold.webp",
+      "private": false,
+      "tags": [
+        "calculator",
+        "gold"
+      ],
+      "date": "",
+      "draft": false
+    },
+    {
+      "slug": "invoice",
+      "title": "Invoice Generator",
+      "summary": "An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.",
+      "repo": "invoice",
+      "demo": "",
+      "language": "Firebase web app",
+      "cover": "assets/img/invoice.webp",
+      "private": true,
+      "tags": [
+        "invoice",
+        "firebase"
+      ],
+      "date": "",
+      "draft": false
+    }
+  ]
+}

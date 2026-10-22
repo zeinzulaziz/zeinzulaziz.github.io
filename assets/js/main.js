@@ -2,8 +2,12 @@
   "use strict";
 
   const GITHUB_USER = "zeinzulaziz";
-  const CACHE_KEY = "projects.cache.v2";
+  const PROJECTS_MANIFEST = "content/projects.json";
+  const CACHE_KEY = "projects.cache.v3";
   const CACHE_TTL = 10 * 60 * 1000; // 10 minutes, matches blog.js
+
+  // Build-time project pages (tools/build.mjs), keyed by slug and repo name.
+  let projectPages = {};
 
   const liveDemo = {
     "harga-pangan": "https://zeinzulaziz.github.io/harga-pangan/",
@@ -79,6 +83,7 @@
       if (!parsed || !Array.isArray(parsed.repos)) return null;
       return {
         repos: parsed.repos,
+        pages: Array.isArray(parsed.pages) ? parsed.pages : [],
         fresh: typeof parsed.time === "number" && Date.now() - parsed.time <= CACHE_TTL,
       };
     } catch (err) {
@@ -86,12 +91,12 @@
     }
   }
 
-  function writeCache(repos) {
+  function writeCache(repos, pages) {
     if (cacheDisabled()) return;
     try {
       window.localStorage.setItem(
         CACHE_KEY,
-        JSON.stringify({ time: Date.now(), repos: repos })
+        JSON.stringify({ time: Date.now(), repos: repos, pages: pages })
       );
     } catch (err) {
       /* storage full or blocked — cache is only a fast path */
@@ -129,6 +134,43 @@
     };
   }
 
+  /* ---------- project pages (content/projects.json) ---------- */
+
+  function indexProjectPages(list) {
+    const map = {};
+    (list || []).forEach(function (page) {
+      if (!page || !page.slug) return;
+      map[page.slug] = page;
+      if (page.repo) map[page.repo] = page;
+    });
+    return map;
+  }
+
+  function projectPageList() {
+    const list = [];
+    const seen = {};
+    Object.keys(projectPages).forEach(function (key) {
+      const page = projectPages[key];
+      if (page && !seen[page.slug]) {
+        seen[page.slug] = true;
+        list.push(page);
+      }
+    });
+    return list;
+  }
+
+  function fetchProjectPages() {
+    return fetch(PROJECTS_MANIFEST, { cache: "no-cache" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        const list = Array.isArray(data) ? data : data && data.projects;
+        return Array.isArray(list) ? list : [];
+      });
+  }
+
   /* Curated work leads the list. If a curated project ever becomes a public
      repository, the GitHub entry wins so the card can link to it. */
   function allProjects(repos) {
@@ -138,24 +180,32 @@
 
   function renderCard(repo, index) {
     const name = repo.name;
-    const demo = liveDemo[name] || (repo.homepage && repo.homepage.trim()) || null;
-    const hasScreenshot = Boolean(liveDemo[name] || repo.screenshot);
-    const isPrivate = repo.private === true;
+    const page = projectPages[name] || null;
+    const pageHref = page ? "project/" + encodeURIComponent(page.slug) + "/" : null;
+    const demo =
+      liveDemo[name] || (page && page.demo) || (repo.homepage && repo.homepage.trim()) || null;
+    const hasScreenshot = Boolean(liveDemo[name] || repo.screenshot || (page && page.cover));
+    const isPrivate = repo.private === true || Boolean(page && page.private);
     const repoHref = isPrivate ? null : repoUrl(name);
     /* A private project still gets a clickable title, it just points at the
-       live product instead of a repository that outsiders cannot open. */
-    const titleHref = repoHref || demo;
+       project page or live product instead of a repository that outsiders
+       cannot open. */
+    const titleHref = pageHref || repoHref || demo;
 
     /* Featured row: real screenshot when we have one, letter plate otherwise.
        Plain rows get a small thumb only when a real screenshot exists. */
+    const shotSrc = page && page.cover
+      ? page.cover.replace(/^\//, "")
+      : "assets/img/" + encodeURIComponent(name) + ".webp";
     const featuredPreview = hasScreenshot
-      ? '<img src="assets/img/' + encodeURIComponent(name) + '.webp" alt="Preview ' + escapeHtml(name) + '" loading="lazy" decoding="async" width="640" height="360">'
+      ? '<img src="' + escapeHtml(shotSrc) + '" alt="Preview ' + escapeHtml(name) + '" loading="lazy" decoding="async" width="640" height="360">'
       : '<div class="preview-placeholder" aria-hidden="true">' + escapeHtml(firstLetter(name)) + "</div>";
 
     const livePlate = demo ? '<span class="live-plate">LIVE</span>' : "";
 
-    const links = (repoHref || demo)
+    const links = (pageHref || repoHref || demo)
       ? '<p class="project-links">' +
+        (pageHref ? '<a href="' + pageHref + '">Details</a>' : "") +
         (repoHref
           ? '<a href="' + repoHref + '" target="_blank" rel="noopener">Repo</a>'
           : "") +
@@ -167,14 +217,26 @@
       '<p class="project-meta"><span class="project-lang">' + escapeHtml(repo.language || "N/A") + "</span>" +
       "<span>" + (isPrivate ? "Private" : "★ " + (repo.stargazers_count || 0)) + "</span></p>";
 
+    const label = page && page.title ? page.title : langBadge(name);
     const title = titleHref
-      ? '<a href="' + escapeHtml(titleHref) + '" target="_blank" rel="noopener">' + escapeHtml(langBadge(name)) + "</a>"
-      : escapeHtml(langBadge(name));
+      ? pageHref
+        ? '<a href="' + pageHref + '">' + escapeHtml(label) + "</a>"
+        : '<a href="' + escapeHtml(titleHref) + '" target="_blank" rel="noopener">' + escapeHtml(label) + "</a>"
+      : escapeHtml(label);
+
+    const desc =
+      page && page.summary
+        ? page.summary
+        : lookUp(
+            descriptions,
+            name,
+            repo.description || (isPrivate ? "Private project." : "Public repository with no description.")
+          );
 
     const main =
       '<div class="project-main">' +
       '<h3 class="project-title">' + title + "</h3>" +
-      '<p class="project-desc">' + escapeHtml(lookUp(descriptions, name, repo.description || (isPrivate ? "Private project." : "Public repository with no description."))) + "</p>" +
+      '<p class="project-desc">' + escapeHtml(desc) + "</p>" +
       "</div>";
 
     const card = document.createElement("article");
@@ -189,7 +251,7 @@
         '<div class="project-side">' + meta + links + "</div>";
     } else if (hasScreenshot) {
       card.innerHTML =
-        '<div class="project-media"><img src="assets/img/' + encodeURIComponent(name) + '.webp" alt="" loading="lazy" decoding="async" width="640" height="400"></div>' +
+        '<div class="project-media"><img src="' + escapeHtml(shotSrc) + '" alt="" loading="lazy" decoding="async" width="640" height="400"></div>' +
         main +
         '<div class="project-side">' + meta + links + "</div>";
     } else {
@@ -240,15 +302,24 @@
 
   function fillGrid(repos) {
     renderAll(repos);
-    writeCache(repos.map(normalizeRepo));
+    writeCache(repos.map(normalizeRepo), projectPageList());
   }
 
   async function loadProjects() {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
 
-    // Skeletons stay visible while we check the cache first.
     const cached = readCache();
+
+    // Project pages power the "Details" links. If the manifest is missing the
+    // cards simply keep pointing at the repository or the live demo.
+    try {
+      projectPages = indexProjectPages(await fetchProjectPages());
+    } catch (err) {
+      projectPages = cached ? indexProjectPages(cached.pages) : {};
+    }
+
+    // Skeletons stay visible while we check the cache first.
     if (cached && cached.fresh) {
       renderAll(cached.repos);
     }

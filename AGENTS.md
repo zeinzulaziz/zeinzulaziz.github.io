@@ -13,6 +13,9 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 - `blog.html` — daftar artikel
 - `post.html?slug=<slug>` — fallback render client untuk link lama (link baru pakai `post/<slug>/`)
 - `post/<slug>/index.html` — artikel prerender (hasil build, jangan edit manual)
+- `project/<slug>/index.html` — halaman detail proyek prerender (hasil build, jangan edit manual)
+- `content/projects/*.md` — sumber halaman detail proyek (satu file per proyek)
+- `content/projects.json` — manifest proyek, hasil generate (dipakai `main.js` untuk link kartu)
 - `404.html` — halaman error kustom (dipakai otomatis GitHub Pages)
 - `sitemap.xml`, `feed.xml` (Atom), `robots.txt` — hasil build
 - `site.webmanifest`, `assets/img/apple-touch-icon.png` — ikon app/PWA
@@ -75,6 +78,37 @@ ke URL prerender.
 ### Penting
 - `.nojekyll` wajib ada, kalau tidak Jekyll akan mengubah file `.md` ber-frontmatter menjadi HTML dan file mentahnya tidak ter-deploy.
 - Path di `admin/config.yml` ditulis dari root repo (misal `/content/posts`), karena CMS berada di `/admin/`.
+
+## Projects
+Halaman detail proyek mengikuti pola yang sama dengan artikel: sumber Markdown di
+`content/projects/`, HTML prerender di `project/<slug>/index.html`, manifest di
+`content/projects.json`. Frontmatter:
+
+```markdown
+---
+title: "Food Prices"
+summary: "One or two sentences for the card and SEO."
+date: 2026-10-08
+repo: harga-pangan
+demo: https://zeinzulaziz.github.io/harga-pangan/
+language: HTML
+cover: assets/img/harga-pangan.webp
+private: false
+tags: ["dashboard", "agriculture"]
+draft: false
+---
+
+Isi halaman (Markdown, opsional).
+```
+
+- **Slug = nama file** (`harga-pangan.md` → `project/harga-pangan/`). Samakan dengan nama repo supaya `main.js` bisa mencocokkan kartu ke halaman.
+- `repo` diisi nama repo GitHub; `private: true` menyembunyikan link repo dan status publik.
+- `demo` dan `cover` opsional. Tanpa `cover`, halaman memakai `assets/img/og.jpg` dan kartu memakai `assets/img/<repo>.webp`.
+- `draft: true` menyembunyikan proyek dari kartu, halaman, dan sitemap.
+- Kartu di homepage membaca manifest: judul dan ringkasan diambil dari file proyek, lalu menambah link **Details** ke halaman detail. Repo yang belum punya file proyek tetap tampil dengan perilaku lama (link ke repo/demo).
+
+Alur: edit `content/projects/<slug>.md` (di `/admin/` atau manual), jalankan
+`node tools/build.mjs`, commit. CI juga otomatis build saat file proyek berubah.
 
 ## Halaman utama: gerhana & chapter
 - Hero digambar oleh `scene.js` (three.js yang di-vendor di `assets/vendor/three/`).

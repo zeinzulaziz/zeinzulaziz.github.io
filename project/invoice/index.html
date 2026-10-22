@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Generator · Ze.in</title>
+  <meta name="description" content="An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#080d16">
+  <link rel="canonical" href="https://zeinzulaziz.github.io/project/invoice/">
+  <meta property="og:title" content="Invoice Generator · Ze.in">
+  <meta property="og:description" content="An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zeinzulaziz.github.io/project/invoice/">
+  <meta property="og:image" content="https://zeinzulaziz.github.io/assets/img/invoice.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="application/atom+xml" title="Blog · Ze.in" href="/feed.xml">
+  <link rel="preload" href="/assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080d16'/%3E%3Ctext x='32' y='46' font-family='Helvetica,Arial,sans-serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23ede6d9'%3EZ%3C/text%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script>
+    (function () {
+      try {
+        var t = window.localStorage.getItem("theme");
+        document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+        var m = window.localStorage.getItem("motion");
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.documentElement.setAttribute("data-motion", m ? m : (reduce ? "off" : "on"));
+      } catch (e) {}
+    })();
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Invoice Generator","description":"An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.","url":"https://zeinzulaziz.github.io/project/invoice/","image":"https://zeinzulaziz.github.io/assets/img/invoice.webp","author":{"@type":"Person","name":"Ze.in","url":"https://zeinzulaziz.github.io/"},"keywords":"invoice, firebase"}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="container nav" aria-label="Primary">
+      <a class="nav-brand" href="/"><span class="mark" aria-hidden="true"></span>Ze.in</a>
+      <div class="nav-right">
+        <div class="nav-links" id="nav-menu">
+          <a href="/#projects" class="is-active" aria-current="page">Projects</a>
+          <a href="/#about">About</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/#contact">Contact</a>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 7h17M3.5 12h17M3.5 17h17"/></svg><span class="control-label">Menu</span></button>
+        <button class="control motion-toggle" type="button" aria-label="Turn motion off">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="6.6"/><path d="M14.6 7.8a6.6 6.6 0 0 0 0 8.4"/></svg>
+          <span class="control-label">Motion on</span>
+        </button>
+        <button class="control theme-toggle" type="button" aria-label="Switch to light theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div class="progress" aria-hidden="true"><span></span></div>
+  </header>
+
+  <main class="post-page project-page" id="main">
+    <div class="container post-container">
+      <a class="post-back" href="/#projects">&larr; All projects</a>
+      <article>
+        <h1 class="post-title">Invoice Generator</h1>
+        <p class="page-lede">An invoice workspace for small businesses: build and manage invoices, export PDFs, track payments, and keep a cloud backup.</p>
+        <div class="post-meta"><span>Firebase web app</span><span>Private project</span></div>
+        <div class="post-tags"><span>invoice</span><span>firebase</span></div>
+        
+        <figure class="project-shot"><img src="/assets/img/invoice.webp" alt="Screenshot of Invoice Generator" loading="lazy" decoding="async"></figure>
+        <div class="prose"><p>The workspace covers the routine parts of invoicing: drafting invoices, exporting them as PDF, tracking which ones are paid, and keeping a cloud backup. Firebase Authentication keeps each workspace closed to its owner.</p>
+<p>The project is private, so there is no public repository or live demo to open.</p></div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Ze.in</p>
+      <p>Hand-coded HTML, CSS, and JavaScript. <a href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">Source on GitHub</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/site.js" defer></script>
+</body>
+</html>

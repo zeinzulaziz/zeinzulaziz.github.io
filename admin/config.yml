@@ -78,3 +78,32 @@ collections:
       - label: Body
         name: body
         widget: markdown
+  - name: projects
+    label: Projects
+    label_singular: Project
+    description: Detail pages for selected work. Saved as Markdown files in content/projects.
+    folder: /content/projects
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    media_folder: /assets/img
+    public_folder: /assets/img
+    slug:
+      editable: [create]
+      hint: "URL halaman proyek. Sebaiknya sama dengan nama repo, huruf kecil dan strip. Terkunci setelah dibuat."
+      pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase letters, numbers, and dashes only"]
+    summary: "{{title}}"
+    preview_path: "project/{{slug}}/"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Summary, name: summary, widget: text, hint: "One or two sentences. Shown on the project card and used for SEO." }
+      - { label: Date, name: date, widget: datetime, type: date, required: false }
+      - { label: Repository name, name: repo, widget: string, required: false, hint: "GitHub repo name, for example harga-pangan." }
+      - { label: Live demo, name: demo, widget: string, required: false, hint: "Full URL. Leave empty when there is nothing to open." }
+      - { label: Language or platform, name: language, widget: string, required: false }
+      - { label: Cover image, name: cover, widget: image, required: false, hint: "Screenshot for the project page. 16:9 looks best." }
+      - { label: Private project, name: private, widget: boolean, default: false, required: false, hint: "Hides the repository link and star count." }
+      - { label: Tags, name: tags, widget: list, required: false, default: [], field: { label: Tag, name: tag, widget: string } }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false, hint: "Drafts stay hidden from visitors until you turn this off." }
+      - { label: Body, name: body, widget: markdown, required: false }

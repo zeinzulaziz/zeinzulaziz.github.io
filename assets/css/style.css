@@ -1419,6 +1419,28 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
 
 .post-nav a:hover { color: var(--accent); }
 
+/* ---------- project detail ---------- */
+
+.project-page .page-lede {
+  margin-bottom: 1.8rem;
+}
+
+.project-shot {
+  margin: 2.4rem 0 0;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.project-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.project-page .prose {
+  margin-top: 2.6rem;
+}
+
 /* ---------- prose ---------- */
 
 .prose {
