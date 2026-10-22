@@ -171,7 +171,7 @@ function articleJsonLd(post) {
   }).replace(/<\//g, "<\\/");
 }
 
-function renderArticlePage(post, newer, older) {
+function renderArticlePage(post) {
   const url = postUrl(post.slug);
   const image = postImage(post);
   const meta =
@@ -181,22 +181,6 @@ function renderArticlePage(post, newer, older) {
   const tags = post.tags.length
     ? `<div class="post-tags">${post.tags.map((t) => `<span>${escapeHtml(t)}</span>`).join("")}</div>`
     : "";
-
-  const nav =
-    newer || older
-      ? `<nav class="post-nav" aria-label="More posts">` +
-        (older
-          ? `<a class="post-nav-prev" href="${escapeHtml(older.slug)}/" rel="prev">` +
-            `<span class="post-nav-label">&larr; Previous post</span>` +
-            `<span class="post-nav-title">${escapeHtml(older.title)}</span></a>`
-          : "") +
-        (newer
-          ? `<a class="post-nav-next" href="${escapeHtml(newer.slug)}/" rel="next">` +
-            `<span class="post-nav-label">Next post &rarr;</span>` +
-            `<span class="post-nav-title">${escapeHtml(newer.title)}</span></a>`
-          : "") +
-        `</nav>`
-      : "";
 
   return `<!DOCTYPE html>
 <html lang="en" class="js">
@@ -273,7 +257,6 @@ function renderArticlePage(post, newer, older) {
         ${tags}
         <div class="prose">${MiniMarkdown.render(post.body)}</div>
       </article>
-      ${nav}
     </div>
   </main>
 
@@ -292,12 +275,10 @@ function renderArticlePage(post, newer, older) {
 
 // post/ holds only generated pages — wipe and rewrite so deleted posts vanish.
 await rm(pagesDir, { recursive: true, force: true });
-for (let i = 0; i < published.length; i++) {
-  const post = published[i];
-  // published is newest-first: i-1 is newer, i+1 is older.
+for (const post of published) {
   const dir = join(pagesDir, post.slug);
   await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, "index.html"), renderArticlePage(post, published[i - 1], published[i + 1]), "utf8");
+  await writeFile(join(dir, "index.html"), renderArticlePage(post), "utf8");
 }
 
 /* ---------- 3. project pages ---------- */
