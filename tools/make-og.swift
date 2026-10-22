@@ -73,7 +73,7 @@ func drawText(_ s: String, size: CGFloat, x: Int, y: Int, font: String, color: C
 drawText("OBSERVATORY / 001", size: 22, x: 80, y: H - 84, font: "Menlo-Regular", color: copper)
 // Name in display weight, role and lede below in quieter tones.
 drawText("Moh Zein Zulfanul Aziz", size: 64, x: 80, y: H - 200, font: "HelveticaNeue-Bold", color: ink)
-drawText("WordPress Developer · Solo AI Product Builder", size: 28, x: 80, y: H - 254,
+drawText("WordPress Developer · AI Product Builder", size: 28, x: 80, y: H - 254,
          font: "HelveticaNeue-Medium", color: inkSoft)
 drawText("Small products with AI — Harga Pangan, Convert Gold, and more.", size: 24,
          x: 80, y: H - 306, font: "HelveticaNeue-Regular", color: inkFaint)
