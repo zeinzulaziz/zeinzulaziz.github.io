@@ -186,10 +186,14 @@ function renderArticlePage(post, newer, older) {
     newer || older
       ? `<nav class="post-nav" aria-label="More posts">` +
         (older
-          ? `<a class="post-nav-prev" href="${escapeHtml(older.slug)}/">&larr; ${escapeHtml(older.title)}</a>`
+          ? `<a class="post-nav-prev" href="${escapeHtml(older.slug)}/" rel="prev">` +
+            `<span class="post-nav-label">&larr; Previous post</span>` +
+            `<span class="post-nav-title">${escapeHtml(older.title)}</span></a>`
           : "") +
         (newer
-          ? `<a class="post-nav-next" href="${escapeHtml(newer.slug)}/">${escapeHtml(newer.title)} &rarr;</a>`
+          ? `<a class="post-nav-next" href="${escapeHtml(newer.slug)}/" rel="next">` +
+            `<span class="post-nav-label">Next post &rarr;</span>` +
+            `<span class="post-nav-title">${escapeHtml(newer.title)}</span></a>`
           : "") +
         `</nav>`
       : "";
