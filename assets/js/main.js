@@ -43,6 +43,15 @@
       private: true,
       screenshot: true,
     },
+    {
+      name: "wordpress",
+      language: "WordPress",
+      stargazers_count: 0,
+      description: null,
+      homepage: null,
+      private: true,
+      screenshot: false,
+    },
   ];
 
   function lookUp(obj, name, fallback) {
