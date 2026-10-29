@@ -1,20 +1,6 @@
 {
-  "generated": "2026-10-29T17:53:03.055Z",
+  "generated": "2026-10-29T18:05:17.219Z",
   "repos": [
-    {
-      "name": "Kiro-Project",
-      "language": "JavaScript",
-      "stargazers_count": 0,
-      "description": "A to-do app built spec-first — the .kiro/ spec folder is the artifact, not the app.",
-      "homepage": null
-    },
-    {
-      "name": "record_your_money",
-      "language": "Dart",
-      "stargazers_count": 0,
-      "description": "Flutter experiment: log a transaction by voice or receipt photo, parse it with an LLM.",
-      "homepage": null
-    },
     {
       "name": "broken-link-checker",
       "language": "JavaScript",

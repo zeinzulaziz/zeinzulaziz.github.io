@@ -10,7 +10,9 @@ on:
   # Daily refresh keeps content/repos.json (GitHub snapshot) from going stale
   # even when nothing is pushed.
   schedule:
-    - cron: "17 3 * * *"
+    # Tiap jam: repo yang dijadikan privat atau dihapus hilang dari homepage
+    # dalam <=1 jam tanpa perlu push apa pun.
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
