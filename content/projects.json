@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-29T18:07:03.357Z",
+  "generated": "2026-10-29T18:10:58.526Z",
   "projects": [
     {
       "slug": "wordpress",
-      "title": "WordPress sites, still live",
-      "summary": "Three production WordPress sites built between 2019 and 2021 — a florist, a battery shop, and an academic publishing platform. All three are still online in 2026.",
+      "title": "WordPress sites in production",
+      "summary": "Three WordPress and WooCommerce sites built between 2019 and 2021 for a florist, a battery retailer, and an academic publishing platform. All three are still serving traffic in 2026.",
       "repo": "",
       "demo": "",
       "language": "WordPress",

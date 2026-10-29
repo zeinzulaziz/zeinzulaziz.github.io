@@ -1,60 +1,46 @@
 ---
-title: "WordPress sites, still live"
-summary: "Three production WordPress sites built between 2019 and 2021 — a florist, a battery shop, and an academic publishing platform. All three are still online in 2026."
+title: "WordPress sites in production"
+summary: "Three WordPress and WooCommerce sites built between 2019 and 2021 for a florist, a battery retailer, and an academic publishing platform. All three are still serving traffic in 2026."
 date: 2026-10-29
 language: WordPress
 tags: ["wordpress", "woocommerce", "performance"]
 draft: false
 ---
 
-Most portfolios show a screenshot taken the day the site launched. That screenshot
-proves nothing, because every site looks good on launch day. The only question that
-matters is the one nobody asks in the case study: **is it still there?**
+Portfolio entries typically show a screenshot from launch day: the moment a site looks its best and proves the least.
 
-These three still are.
+What outlasts the launch is whether a site still runs years later — after plugin updates, after a theme stops being maintained, after a hosting migration, after an owner has spent years editing content unsupervised.
 
-| Site | What it does | Runs on | First byte | Page weight |
+All three below are still running in 2026.
+
+| Site | Function | Stack | First byte | Page weight |
 |---|---|---|---|---|
 | [cikhaflorist.com](https://cikhaflorist.com/) | Florist in Nganjuk: catalogue, categories, WhatsApp ordering | WordPress, WooCommerce, Astra, Elementor, LiteSpeed Cache | 0.18 s | 181 KB |
-| [akimobiljombang.com](https://akimobiljombang.com/) | Car and motorcycle battery shop, 24-hour call-out | WordPress, WooCommerce, Astra, Elementor, SpeedyCache | 0.18 s | 179 KB |
+| [akimobiljombang.com](https://akimobiljombang.com/) | Car and motorcycle battery retailer with 24-hour call-out | WordPress, WooCommerce, Astra, Elementor, SpeedyCache | 0.18 s | 179 KB |
 | [studitafsir.com](https://studitafsir.com/) | Academic publishing platform on Qur'anic studies, multiple authors | WordPress | 0.50 s | 85 KB |
 
-Numbers measured 29 October 2026, first uncached request from Indonesia.
+Measured 29 October 2026, first uncached request from Indonesia.
 
-## Why longevity is the interesting part
+## Scope of work
 
-A site that survives five to seven years in production has cleared every obstacle a
-demo never meets: the client who stops paying attention, the plugin that breaks after
-an update, the theme that gets abandoned, the hosting that moves twice, the one
-section the owner edits badly at 11 p.m. and then calls about.
+- Theme and plugin selection, kept to a minimum from the first commit
+- Caching and image handling, to hold each page under 200 KB
+- A content model the owner can extend without breaking the layout
+- WordPress core, plugin, and PHP updates after launch
+- Fault correction as updates broke things
 
-Surviving that is not a design skill. It is a decision made at build time about how
-much the site depends on things that will change.
+## Constraints
 
-## What I actually did
+Two of the three were built on a limited budget, using the owner's own photography and copy. The visual result reflects those inputs, and I would approach all three differently today.
 
-- Built the site, chose the theme and the plugin set, and kept the set small
-- Set up caching and image handling so the pages stay under 200 KB
-- Structured content so the owner can add their own products and articles without
-  breaking the layout
-- Kept the WordPress core, plugins, and PHP current after launch
-- Fixed the things that broke
+The trade was deliberate: a maintained site that still converts is worth more to its owner than one that photographs well and is left to decay.
 
-## What they are not
+## Result
 
-They are not beautiful. Two of them were built under a tight budget with the owner's
-own photos and the owner's own copy, and it shows. I would design all three
-differently today.
-
-That is the honest trade: a site that looks like a portfolio piece sits on a shelf.
-A site that looks ordinary and is still taking orders six years later has done its
-job. **studitafsir.com is still publishing new articles in 2026** — six years after
-build — which is the outcome I would rather be judged on.
+Six to seven years in production without a rebuild. `studitafsir.com` published new material in September 2026, six years after launch.
 
 ## What I would do differently
 
-- Cap plugin count from week one, not year three
-- Put the analytics and the backup schedule in writing at handover, so the site does
-  not depend on one person remembering
-- Charge for maintenance from the start — these three ran unprotected for years
-  because that was the deal I offered
+- Cap the plugin count from week one, not year three
+- Hand over a written update and backup schedule, so the site does not depend on one person's memory
+- Charge for maintenance from the start — these three ran unprotected for years because that was the arrangement I offered
