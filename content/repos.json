@@ -1,6 +1,27 @@
 {
-  "generated": "2026-10-29T09:53:13.307Z",
+  "generated": "2026-10-29T17:52:47.631Z",
   "repos": [
+    {
+      "name": "Kiro-Project",
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "description": "A to-do app built spec-first — the .kiro/ spec folder is the artifact, not the app.",
+      "homepage": null
+    },
+    {
+      "name": "record_your_money",
+      "language": "Dart",
+      "stargazers_count": 0,
+      "description": "Flutter experiment: log a transaction by voice or receipt photo, parse it with an LLM.",
+      "homepage": null
+    },
+    {
+      "name": "broken-link-checker",
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "description": "Self-hosted crawler that finds broken links on a site and exports them as CSV/JSON.",
+      "homepage": "https://broken-link-checker-sepia.vercel.app"
+    },
     {
       "name": "harga-pangan",
       "language": "HTML",
@@ -12,8 +33,8 @@
       "name": "convert-gold",
       "language": "HTML",
       "stargazers_count": 0,
-      "description": null,
-      "homepage": null
+      "description": "USD/oz to Rp/gram gold calculator with entry, target, and stop-loss — live FX and Indonesian retail prices.",
+      "homepage": "https://zeinzulaziz.github.io/convert-gold/"
     }
   ]
 }

@@ -31,7 +31,13 @@ if (!res.ok) {
 }
 
 const repos = (await res.json())
-  .filter((r) => !r.fork && r.name !== `${GITHUB_USER}.github.io`)
+  // Bukan proyek: repo profile README (konvensi GitHub) dan repo situs ini.
+  .filter(
+    (r) =>
+      !r.fork &&
+      r.name !== GITHUB_USER &&
+      r.name !== `${GITHUB_USER}.github.io`
+  )
   .sort(
     (a, b) =>
       b.stargazers_count - a.stargazers_count ||
