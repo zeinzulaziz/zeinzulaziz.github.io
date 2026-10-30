@@ -21,6 +21,34 @@ const pagesDir = join(root, "post");
 const mdSource = await readFile(join(root, "assets", "js", "markdown.js"), "utf8");
 const MiniMarkdown = new Function("window", mdSource + "\n;return window.MiniMarkdown;")({});
 
+/* Intrinsic size for the cover image, so the prerendered page can reserve the
+   space before the screenshot loads. Only the formats the covers use. */
+async function imageSize(file) {
+  let buf;
+  try {
+    buf = await readFile(file);
+  } catch {
+    return null;
+  }
+  if (buf.length > 30 && buf.toString("ascii", 0, 4) === "RIFF" && buf.toString("ascii", 8, 12) === "WEBP") {
+    const kind = buf.toString("ascii", 12, 16);
+    if (kind === "VP8 ") {
+      return { width: buf.readUInt16LE(26) & 0x3fff, height: buf.readUInt16LE(28) & 0x3fff };
+    }
+    if (kind === "VP8L") {
+      const bits = buf.readUInt32LE(21);
+      return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 };
+    }
+    if (kind === "VP8X") {
+      return { width: buf.readUIntLE(24, 3) + 1, height: buf.readUIntLE(27, 3) + 1 };
+    }
+  }
+  if (buf.length > 24 && buf[0] === 0x89 && buf.toString("ascii", 1, 4) === "PNG") {
+    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+  }
+  return null;
+}
+
 /* ---------- frontmatter ---------- */
 function parseFrontmatter(raw) {
   const text = String(raw).replace(/^﻿/, "").replace(/\r\n?/g, "\n");
@@ -131,21 +159,23 @@ for (const file of files) {
 posts.sort((a, b) => String(b.date).localeCompare(String(a.date)));
 const published = posts.filter((p) => !p.draft);
 
+/* A manifest timestamp only changes when its contents do; otherwise every
+   scheduled build would produce a no-op commit just for `generated`. */
+async function writeManifest(file, key, items) {
+  let generated = new Date().toISOString();
+  try {
+    const prev = JSON.parse(await readFile(file, "utf8"));
+    if (JSON.stringify(prev[key]) === JSON.stringify(items)) generated = prev.generated || generated;
+  } catch {
+    /* no previous manifest, or unreadable: write a fresh one */
+  }
+  await writeFile(file, JSON.stringify({ generated, [key]: items }, null, 2) + "\n", "utf8");
+}
+
 /* ---------- 1. manifest ---------- */
 // Body stays out of the manifest: blog.js only needs metadata, and the raw
 // markdown is fetched per post when someone actually opens one.
-await writeFile(
-  postsOut,
-  JSON.stringify(
-    {
-      generated: new Date().toISOString(),
-      posts: posts.map(({ body, ...meta }) => meta),
-    },
-    null,
-    2
-  ) + "\n",
-  "utf8"
-);
+await writeManifest(postsOut, "posts", posts.map(({ body, ...meta }) => meta));
 
 /* ---------- 2. prerendered article pages ---------- */
 function postUrl(slug) {
@@ -319,17 +349,10 @@ projects.sort(
 const liveProjects = projects.filter((p) => !p.draft);
 
 // Same shape as posts.json: metadata only, the body stays on the page.
-await writeFile(
+await writeManifest(
   projectsOut,
-  JSON.stringify(
-    {
-      generated: new Date().toISOString(),
-      projects: liveProjects.map(({ body, ...meta }) => meta),
-    },
-    null,
-    2
-  ) + "\n",
-  "utf8"
+  "projects",
+  liveProjects.map(({ body, ...meta }) => meta)
 );
 
 function projectUrl(slug) {
@@ -386,8 +409,11 @@ function renderProjectPage(project) {
         `</div>`
       : "";
 
+  // The screenshot sits near the top of the page, so it loads eagerly; the
+  // dimensions still reserve its space.
+  const coverSize = project.coverSize;
   const shot = project.cover
-    ? `<figure class="project-shot"><img src="/${project.cover.replace(/^\//, "")}" alt="Screenshot of ${escapeHtml(project.title)}" loading="lazy" decoding="async"></figure>`
+    ? `<figure class="project-shot"><img src="/${project.cover.replace(/^\//, "")}" alt="Screenshot of ${escapeHtml(project.title)}"${coverSize ? ` width="${coverSize.width}" height="${coverSize.height}"` : ""} decoding="async"></figure>`
     : "";
 
   const prose = project.body.trim()
@@ -487,6 +513,9 @@ function renderProjectPage(project) {
 // project/ holds only generated pages — wipe and rewrite so deleted projects vanish.
 await rm(projectPagesDir, { recursive: true, force: true });
 for (const project of liveProjects) {
+  project.coverSize = project.cover
+    ? await imageSize(join(root, project.cover.replace(/^\//, "")))
+    : null;
   const dir = join(projectPagesDir, project.slug);
   await mkdir(dir, { recursive: true });
   await writeFile(join(dir, "index.html"), renderProjectPage(project), "utf8");
