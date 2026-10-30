@@ -293,7 +293,7 @@ function renderArticlePage(post) {
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>&copy; <span id="year"></span> ${AUTHOR}</p>
-      <p>Hand-coded HTML, CSS, and JavaScript. <a href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">Source on GitHub</a>.</p>
+      <p>Hand-coded HTML, CSS, and JavaScript. <a href="https://github.com/zeinzulaziz/zeinzulaziz.github.io" target="_blank" rel="noopener">Source on GitHub</a>.</p>
     </div>
   </footer>
 
@@ -507,7 +507,7 @@ function renderProjectPage(project) {
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>&copy; <span id="year"></span> ${AUTHOR}</p>
-      <p>Hand-coded HTML, CSS, and JavaScript. <a href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">Source on GitHub</a>.</p>
+      <p>Hand-coded HTML, CSS, and JavaScript. <a href="https://github.com/zeinzulaziz/zeinzulaziz.github.io" target="_blank" rel="noopener">Source on GitHub</a>.</p>
     </div>
   </footer>
 

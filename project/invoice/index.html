@@ -70,7 +70,7 @@
         <div class="post-tags"><span>invoice</span><span>firebase</span><span>pwa</span></div>
         
         <figure class="project-shot"><img src="/assets/img/invoice.webp" alt="Screenshot of Invoice Generator" width="1600" height="900" decoding="async"></figure>
-        <div class="prose"><p>Tinara is a web app for creating, sending, and managing professional invoices, designed for makeup artists and other small service businesses. Built with Vanilla JavaScript and Firebase, with no build tools, and installable on phones as a PWA.</p>
+        <div class="prose"><p>Tinara is the invoice app shown on this page: it creates, sends, and manages professional invoices for makeup artists and other small service businesses. It is built with vanilla JavaScript and Firebase, has no build tools, and installs on phones as a PWA.</p>
 <h2 id="invoice-building"><a class="md-anchor" href="#invoice-building" aria-hidden="true" tabindex="-1">#</a>Invoice building</h2>
 <ul><li>Multi-step invoice form (client, line items, payment) with inline validation</li><li>Invoice numbers that auto-increment from a configurable starting number</li><li>Dynamic service items: name, price, quantity, add or remove rows freely</li><li>Automatic totals: full amount, discounts, down payments, and remaining balance</li><li>Custom notes per invoice</li><li>Live PDF preview beside the form (desktop) or in a modal (mobile)</li></ul>
 <h2 id="branding-and-pdf-design"><a class="md-anchor" href="#branding-and-pdf-design" aria-hidden="true" tabindex="-1">#</a>Branding and PDF design</h2>
@@ -87,10 +87,10 @@
 <ul><li>Multi-user with Firebase Auth (email and password login or registration)</li><li>Per-user data stored in Cloud Firestore plus automatic backups to localStorage</li><li>Offline persistence: the app keeps working without internet</li><li>Field-by-field audit log of every invoice change, searchable and exportable</li></ul>
 <h2 id="admin-panel"><a class="md-anchor" href="#admin-panel" aria-hidden="true" tabindex="-1">#</a>Admin panel</h2>
 <ul><li>Create new accounts, enable or disable them, and set admin/user roles</li><li>Reset a user&#39;s password by email</li><li>Export all data: full JSON, CSV for Excel or Sheets, or settings only</li><li>Import invoices from CSV with a preview before anything is written (a ready-to-fill CSV template is included)</li></ul>
-<h2 id="the-rest"><a class="md-anchor" href="#the-rest" aria-hidden="true" tabindex="-1">#</a>The rest</h2>
-<ul><li>Installable PWA on phones (manifest and theme are set up)</li><li>Mobile-first responsive layout (desktop sidebar, mobile bottom navigation)</li><li>Terms of Service and Privacy Policy pages</li><li>SEO-ready structure with sitemap and robots.txt</li><li>Anti-XSS output sanitizing (<code>escapeHtml</code>) and try-catch error handling</li></ul>
+<h2 id="everything-else"><a class="md-anchor" href="#everything-else" aria-hidden="true" tabindex="-1">#</a>Everything else</h2>
+<ul><li>Installable PWA on phones (manifest and theme are set up)</li><li>Mobile-first responsive layout (desktop sidebar, mobile bottom navigation)</li><li>Terms of Service and Privacy Policy pages</li><li>Sitemap and robots.txt included</li><li>Anti-XSS output sanitizing (<code>escapeHtml</code>) and try-catch error handling</li></ul>
 <h2 id="tech-stack"><a class="md-anchor" href="#tech-stack" aria-hidden="true" tabindex="-1">#</a>Tech stack</h2>
-<div class="md-table-wrap"><table><thead><tr><th>Part</th><th>Technology</th></tr></thead><tbody><tr><td>Frontend</td><td>Vanilla JavaScript (ES6+), HTML5, CSS3</td></tr><tr><td>Backend</td><td>Firebase Auth (Email/Password) + Cloud Firestore</td></tr><tr><td>PDF</td><td>jsPDF (CDN)</td></tr><tr><td>Hosting</td><td>Firebase Hosting</td></tr><tr><td>Build</td><td>None, files are edited directly</td></tr></tbody></table></div></div>
+<div class="md-table-wrap"><table><thead><tr><th>Part</th><th>Technology</th></tr></thead><tbody><tr><td>Frontend</td><td>Vanilla JavaScript (ES6+), HTML5, CSS3</td></tr><tr><td>Backend</td><td>Firebase Auth (Email/Password) + Cloud Firestore</td></tr><tr><td>PDF</td><td>jsPDF (CDN)</td></tr><tr><td>Hosting</td><td>Firebase Hosting</td></tr><tr><td>Build</td><td>No build step; files are edited directly</td></tr></tbody></table></div></div>
       </article>
     </div>
   </main>
@@ -98,7 +98,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>&copy; <span id="year"></span> Ze.in</p>
-      <p>Hand-coded HTML, CSS, and JavaScript. <a href="https://github.com/zeinzulaziz" target="_blank" rel="noopener">Source on GitHub</a>.</p>
+      <p>Hand-coded HTML, CSS, and JavaScript. <a href="https://github.com/zeinzulaziz/zeinzulaziz.github.io" target="_blank" rel="noopener">Source on GitHub</a>.</p>
     </div>
   </footer>
 

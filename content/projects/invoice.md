@@ -9,7 +9,7 @@ tags: ["invoice", "firebase", "pwa"]
 draft: false
 ---
 
-Tinara is a web app for creating, sending, and managing professional invoices, designed for makeup artists and other small service businesses. Built with Vanilla JavaScript and Firebase, with no build tools, and installable on phones as a PWA.
+Tinara is the invoice app shown on this page: it creates, sends, and manages professional invoices for makeup artists and other small service businesses. It is built with vanilla JavaScript and Firebase, has no build tools, and installs on phones as a PWA.
 
 ## Invoice building
 
@@ -66,12 +66,12 @@ Tinara is a web app for creating, sending, and managing professional invoices, d
 - Export all data: full JSON, CSV for Excel or Sheets, or settings only
 - Import invoices from CSV with a preview before anything is written (a ready-to-fill CSV template is included)
 
-## The rest
+## Everything else
 
 - Installable PWA on phones (manifest and theme are set up)
 - Mobile-first responsive layout (desktop sidebar, mobile bottom navigation)
 - Terms of Service and Privacy Policy pages
-- SEO-ready structure with sitemap and robots.txt
+- Sitemap and robots.txt included
 - Anti-XSS output sanitizing (`escapeHtml`) and try-catch error handling
 
 ## Tech stack
@@ -82,4 +82,4 @@ Tinara is a web app for creating, sending, and managing professional invoices, d
 | Backend | Firebase Auth (Email/Password) + Cloud Firestore |
 | PDF | jsPDF (CDN) |
 | Hosting | Firebase Hosting |
-| Build | None, files are edited directly |
+| Build | No build step; files are edited directly |

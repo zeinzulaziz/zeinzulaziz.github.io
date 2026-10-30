@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-30T02:40:56.673Z",
+  "generated": "2026-10-30T09:24:19.168Z",
   "projects": [
     {
       "slug": "wordpress",
       "title": "WordPress sites in production",
-      "summary": "Three WordPress and WooCommerce sites built between 2019 and 2021 for a florist, a battery retailer, and an academic publishing platform. All three are still serving traffic in 2026.",
+      "summary": "Three WordPress sites, two with WooCommerce, built between 2019 and 2021 for a florist, a battery retailer, and an academic publishing platform. All three are still serving traffic in 2026.",
       "repo": "",
       "demo": "",
       "language": "WordPress",
@@ -20,7 +20,7 @@
     },
     {
       "slug": "harga-pangan",
-      "title": "Food Prices",
+      "title": "Harga Pangan (Food Prices)",
       "summary": "A free dashboard that turns East Java producer price data into a seasonal view farmers can plan around.",
       "repo": "harga-pangan",
       "demo": "https://zeinzulaziz.github.io/harga-pangan/",
@@ -37,7 +37,7 @@
     {
       "slug": "convert-gold",
       "title": "Convert Gold",
-      "summary": "A gold price calculator that turns USD per troy ounce into rupiah per gram, with entry, target, and stop-loss numbers.",
+      "summary": "A gold price calculator that turns USD per troy ounce into rupiah per gram, with entry, target, and stop-loss levels.",
       "repo": "convert-gold",
       "demo": "https://zeinzulaziz.github.io/convert-gold/",
       "language": "HTML",
