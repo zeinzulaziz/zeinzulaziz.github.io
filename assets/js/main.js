@@ -15,14 +15,14 @@
   };
 
   const titles = {
-    "harga-pangan": "Harga Pangan (Food Prices)",
+    "harga-pangan": "Food Prices",
     "convert-gold": "Convert Gold",
     "broken-link-checker": "Broken Link Checker",
     invoice: "Invoice Generator",
   };
 
   const descriptions = {
-    "harga-pangan": "Harga Pangan: producer price dashboard for East Java, built on SISKAPERBAPO data.",
+    "harga-pangan": "Food Prices: producer price dashboard for East Java, built on SISKAPERBAPO data.",
     "convert-gold": "Gold price calculator to run quick numbers before trading.",
     invoice:
       "An invoice workspace for small businesses: build and manage invoices, " +

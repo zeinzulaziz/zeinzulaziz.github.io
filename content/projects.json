@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-30T09:24:19.168Z",
+  "generated": "2026-10-30T16:41:48.157Z",
   "projects": [
     {
       "slug": "wordpress",
@@ -20,7 +20,7 @@
     },
     {
       "slug": "harga-pangan",
-      "title": "Harga Pangan (Food Prices)",
+      "title": "Food Prices",
       "summary": "A free dashboard that turns East Java producer price data into a seasonal view farmers can plan around.",
       "repo": "harga-pangan",
       "demo": "https://zeinzulaziz.github.io/harga-pangan/",

@@ -1,5 +1,5 @@
 ---
-title: "Harga Pangan (Food Prices)"
+title: "Food Prices"
 summary: "A free dashboard that turns East Java producer price data into a seasonal view farmers can plan around."
 date: 2026-10-08
 repo: harga-pangan
