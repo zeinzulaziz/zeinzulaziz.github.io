@@ -49,7 +49,7 @@
       stargazers_count: 0,
       description: null,
       homepage: null,
-      private: true,
+      caseStudy: true,
       screenshot: false,
     },
   ];
@@ -139,6 +139,7 @@
       description: r.description,
       homepage: r.homepage,
       private: r.private === true,
+      caseStudy: r.caseStudy === true,
       screenshot: r.screenshot === true,
     };
   }
@@ -195,7 +196,10 @@
       liveDemo[name] || (page && page.demo) || (repo.homepage && repo.homepage.trim()) || null;
     const hasScreenshot = Boolean(liveDemo[name] || repo.screenshot || (page && page.cover));
     const isPrivate = repo.private === true || Boolean(page && page.private);
-    const repoHref = isPrivate ? null : repoUrl(name);
+    // No repository to link to, but not private either: a case study page.
+    const caseStudy =
+      repo.caseStudy === true || Boolean(page && !page.repo && !page.private);
+    const repoHref = isPrivate || caseStudy ? null : repoUrl(name);
     /* A private project still gets a clickable title, it just points at the
        project page or live product instead of a repository that outsiders
        cannot open. */
@@ -224,7 +228,7 @@
 
     const meta =
       '<p class="project-meta"><span class="project-lang">' + escapeHtml(repo.language || "N/A") + "</span>" +
-      "<span>" + (isPrivate ? "Private" : "★ " + (repo.stargazers_count || 0)) + "</span></p>";
+      "<span>" + (isPrivate ? "Private" : caseStudy ? "Case study" : "★ " + (repo.stargazers_count || 0)) + "</span></p>";
 
     const label = page && page.title ? page.title : langBadge(name);
     const title = titleHref
@@ -239,7 +243,7 @@
         : lookUp(
             descriptions,
             name,
-            repo.description || (isPrivate ? "Private project." : "Public repository with no description.")
+            repo.description || (isPrivate ? "Private project." : caseStudy ? "Case study." : "Public repository with no description.")
           );
 
     const main =

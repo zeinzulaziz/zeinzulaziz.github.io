@@ -1,6 +1,5 @@
 ---
 title: Roadmap dari Grok
-slug: roadmap-by-grok
 date: 2026-10-10
 type: note
 description: 'Catatan: roadmap belajar dan membangun dengan AI untuk 3–6 bulan ke depan — kebiasaan ship → feedback → perbaiki lebih penting daripada menghafal tools.'
@@ -10,9 +9,9 @@ tags:
 draft: false
 ---
 
-# Versi Baru (Lebih Longgar dan Tahan Lama)
+## Versi Baru (Lebih Longgar dan Tahan Lama)
 
-## Prinsip Utama 3-6 Bulan ke Depan:
+### Prinsip Utama 3-6 Bulan ke Depan:
 
 **Bukan menghafal tools tertentu, tapi membangun kebiasaan yang tetap berguna meski AI berubah cepat.**
 
@@ -23,9 +22,9 @@ AI bisa bantu analisis dan coding, tapi keputusan mana yang penting dan berguna 
 3. **Biasakan siklus ship → dapat feedback → perbaiki.**
 Rilis sesuatu meski sederhana, lihat apakah dipakai orang, lalu iterasi. Ini yang paling sulit digantikan sepenuhnya oleh AI.
 
-## Arah Praktis 3-6 Bulan (Bisa Berubah Sesuai Perkembangan):
+### Arah Praktis 3-6 Bulan (Bisa Berubah Sesuai Perkembangan):
 
-### Bulan 1-2
+#### Bulan 1-2
 
 Perkuat cara kerja dengan AI agent terbaru yang ada saat itu.
 
@@ -33,7 +32,7 @@ Fokus tingkatkan Harga Pangan: buat analisis lebih berguna, tampilan lebih jelas
 
 Latihan setiap minggu minimal satu tugas besar yang dikerjakan bersama AI dari awal sampai selesai.
 
-### Bulan 3-4
+#### Bulan 3-4
 
 Buat versi yang lebih mudah diakses orang (mobile atau PWA).
 
@@ -41,7 +40,7 @@ Tambah 1-2 fitur yang benar-benar dibutuhkan berdasarkan feedback sederhana dari
 
 Mulai ukur pemakaian secukupnya (berapa orang buka, fitur mana yang dipakai).
 
-### Bulan 5-6
+#### Bulan 5-6
 
 Sebarkan produk ke komunitas yang relevan.
 
@@ -49,7 +48,7 @@ Perbarui portfolio dengan menekankan proses AI + dampak nyata.
 
 Pilih satu arah pendalaman sesuai yang paling berjalan (AI workflow lebih advanced, data, atau integrasi dengan kerja WordPress).
 
-## Cara Biar Roadmap Ini Tidak Cepat Usang:
+### Cara Biar Roadmap Ini Tidak Cepat Usang:
 
 Setiap akhir bulan luangkan 30-60 menit untuk review:
 

@@ -1,11 +1,11 @@
 {
-  "generated": "2026-10-30T02:40:56.661Z",
+  "generated": "2026-10-30T09:09:10.015Z",
   "posts": [
     {
       "slug": "skill-dino-patti",
       "title": "Skill Paling Berguna Sepanjang Hidup - Dino Patti Djalal",
       "date": "2026-10-20",
-      "description": "Menurut Pak Dino Patti Djalal, belajar logika adalah skill atau perangkat lunak ( software ) yang paling berguna sepanjang hidup (29:33 29:58). Berikut adalah beberapa manfaat…",
+      "description": "Catatan dari Dino Patti Djalal: logika adalah skill paling berguna sepanjang hidup, dari menguji argumen sampai mengenali manipulasi.",
       "tags": [
         "youtube"
       ],
@@ -16,9 +16,9 @@
     },
     {
       "slug": "github-repo-highest-stars",
-      "title": "A list of the 20 GitHub repositories with the highest number of stars currently",
+      "title": "20 repositori GitHub dengan bintang terbanyak",
       "date": "2026-10-15",
-      "description": "Daftar 20 repositori GitHub dengan bintang terbanyak saat ini — dari panduan build-your-own-x sampai kumpulan API gratis — lengkap dengan ringkasan isi dan kisaran bintang tiap repo.",
+      "description": "Daftar 20 repositori GitHub dengan bintang terbanyak per 15 Oktober 2026 — dari panduan build-your-own-x sampai kumpulan API gratis — lengkap dengan ringkasan isi dan kisaran bintang tiap repo.",
       "tags": [
         "github"
       ],
@@ -47,7 +47,7 @@
       "date": "2026-10-08",
       "description": "A free, open tool that turns historical producer price data into practical guidance for farmers in East Java.",
       "tags": [
-        "blog"
+        "agriculture"
       ],
       "type": "article",
       "draft": false,

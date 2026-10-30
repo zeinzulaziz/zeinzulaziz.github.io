@@ -2,7 +2,7 @@
 title: Skill Paling Berguna Sepanjang Hidup - Dino Patti Djalal
 date: 2026-10-20
 type: note
-description: ''
+description: 'Catatan dari Dino Patti Djalal: logika adalah skill paling berguna sepanjang hidup, dari menguji argumen sampai mengenali manipulasi.'
 cover: /assets/img/blog/pasted-image-1792468112146.png
 tags:
   - youtube

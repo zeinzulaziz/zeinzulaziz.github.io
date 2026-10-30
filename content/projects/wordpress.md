@@ -37,7 +37,7 @@ The trade was deliberate: a maintained site that still converts is worth more to
 
 ## Result
 
-Six to seven years in production without a rebuild. `studitafsir.com` published new material in September 2026, six years after launch.
+Five to seven years in production without a rebuild. `studitafsir.com` published new material in September 2026, six years after launch.
 
 ## What I would do differently
 

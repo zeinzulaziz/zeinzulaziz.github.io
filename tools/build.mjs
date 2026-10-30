@@ -388,9 +388,16 @@ function renderProjectPage(project) {
   const url = projectUrl(project.slug);
   const repoHref = projectRepoUrl(project);
 
+  // A project page without a repo is a case study, not a public repository.
+  const status = project.private
+    ? "Private project"
+    : project.repo
+      ? "Public repository"
+      : "Case study";
+
   const facts =
     (project.language ? `<span>${escapeHtml(project.language)}</span>` : "") +
-    `<span>${project.private ? "Private project" : "Public repository"}</span>` +
+    `<span>${status}</span>` +
     (project.date ? `<span>${escapeHtml(formatDate(project.date))}</span>` : "");
 
   const tags = project.tags.length

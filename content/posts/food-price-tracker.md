@@ -5,7 +5,7 @@ date: 2026-10-08
 type: article
 description: A free, open tool that turns historical producer price data into practical guidance for farmers in East Java.
 tags:
-  - blog
+  - agriculture
 draft: false
 ---
 
