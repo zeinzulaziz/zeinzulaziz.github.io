@@ -52,6 +52,17 @@
     return "<img " + attr("src", url) + " " + attr("alt", alt) + ' loading="lazy">';
   }
 
+  /* Emphasis is applied inside link labels too, so a table cell like
+     [**owner / repo**](url) renders as a bold link instead of literal asterisks. */
+  function emphasize(text) {
+    return text
+      .replace(/\*\*\*([^*]+)\*\*\*/g, "<strong><em>$1</em></strong>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/(^|[\s(])\*([^*\n]+)\*(?=[\s).,;:!?]|$)/g, "$1<em>$2</em>")
+      .replace(/(^|[\s(])_([^_\n]+)_(?=[\s).,;:!?]|$)/g, "$1<em>$2</em>")
+      .replace(/~~([^~]+)~~/g, "<del>$1</del>");
+  }
+
   function linkTag(label, href) {
     var url = safeUrl(href);
     if (!url) return label;
@@ -59,7 +70,7 @@
     return (
       "<a " + attr("href", url) +
       (external ? ' target="_blank" rel="noopener noreferrer"' : "") +
-      ">" + label + "</a>"
+      ">" + emphasize(label) + "</a>"
     );
   }
 
@@ -68,6 +79,12 @@
 
     out = out.replace(/`([^`]+)`/g, function (_, code) {
       return stash("<code>" + code.replace(/^ | $/g, "") + "</code>");
+    });
+
+    /* Backslash escapes (\~, \*, \|…) resolve to the bare character after
+       code spans are stashed, so code still shows the backslash verbatim. */
+    out = out.replace(/\\([\\`*_{}\[\]()#+\-.!~|])/g, function (_, ch) {
+      return stash(ch);
     });
 
     out = out.replace(/!\[([^\]]*)\]\(\s*([^)\s]+)(?:\s+&quot;[^&]*&quot;)?\s*\)/g, function (_, alt, src) {
@@ -82,11 +99,7 @@
       return stash(linkTag(label, "#" + slugify(ref || label)));
     });
 
-    out = out.replace(/\*\*\*([^*]+)\*\*\*/g, "<strong><em>$1</em></strong>");
-    out = out.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-    out = out.replace(/(^|[\s(])\*([^*\n]+)\*(?=[\s).,;:!?]|$)/g, "$1<em>$2</em>");
-    out = out.replace(/(^|[\s(])_([^_\n]+)_(?=[\s).,;:!?]|$)/g, "$1<em>$2</em>");
-    out = out.replace(/~~([^~]+)~~/g, "<del>$1</del>");
+    out = emphasize(out);
 
     return unstash(out);
   }
