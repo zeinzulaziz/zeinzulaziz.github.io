@@ -48,7 +48,7 @@ Jangan edit manual (hasil generate): `post/*/index.html`, `project/*/index.html`
 - `assets/js/main.js` — logika & data proyek (baca `content/repos.json`; proyek privat tanpa repo GitHub dikurasi di `ownedProjects` dalam file ini, jangan taruh di `repos.json` karena ditimpa build)
 - `assets/js/blog.js` — pemuat data artikel (manifest + fallback GitHub API)
 - `assets/js/markdown.js` — renderer Markdown sendiri, tanpa library (dipakai blog.js & build)
-- `assets/img/` — avatar (`avatar.svg`, ilustrasi) & screenshot preview proyek (`<nama-repo>.webp`)
+- `assets/img/` — avatar (`avatar.svg`, `avatar-anime.webp`) & screenshot preview proyek (`<nama-repo>.webp`)
 - `content/posts/*.md` — sumber artikel (satu file per artikel)
 - `content/posts.json` — manifest daftar artikel, hasil generate
 - `content/repos.json` — snapshot daftar repo GitHub, hasil generate
