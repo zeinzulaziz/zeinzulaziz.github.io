@@ -629,6 +629,41 @@ html:not([data-chapter-active="opening"]):not([data-chapter-active="contact"])
   margin-top: 1.4rem;
 }
 
+/* services sit inside the work chapter so the page keeps its four-act structure */
+.services {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--line);
+  padding-top: 1.6rem;
+}
+
+.service-list { display: grid; }
+
+.service-row {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.service-row:first-child { border-top: 0; padding-top: 0.2rem; }
+
+.service-row h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.service-row p {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  max-width: 34rem;
+}
+
+.service-cta { min-height: 40px; }
+
 /* The cue closes the hero: it says the page is read by scrolling, and it is
    the last thing the first screen shows. A phone hero is meant to be taller
    than the screen, so there the cut-off carries the hint instead. */
@@ -1157,6 +1192,48 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   flex-wrap: wrap;
   gap: 1.6rem;
   margin-top: 2.2rem;
+}
+
+.process {
+  display: grid;
+  list-style: none;
+  max-width: 44rem;
+  margin-top: 1.8rem;
+  border-top: 1px solid var(--line);
+}
+
+.process li {
+  display: grid;
+  grid-template-columns: 2.5rem 5.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 620px) {
+  .process li { grid-template-columns: 2.5rem minmax(0, 1fr); }
+  .process-copy { grid-column: 2; }
+}
+
+.process-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+
+.process-title {
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.process-copy {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.55;
 }
 
 /* ---------- chapter rail (home, wide screens) ---------- */

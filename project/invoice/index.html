@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invoice Generator · Ze.in</title>
-  <meta name="description" content="An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.">
+  <meta name="description" content="A private invoice workspace for makeup artists and small service businesses: build invoices, send them on WhatsApp, export PDFs, track payments, and keep a synced backup.">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#080d16">
   <link rel="canonical" href="https://zeinzulaziz.github.io/project/invoice/">
   <meta property="og:title" content="Invoice Generator · Ze.in">
-  <meta property="og:description" content="An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.">
+  <meta property="og:description" content="A private invoice workspace for makeup artists and small service businesses: build invoices, send them on WhatsApp, export PDFs, track payments, and keep a synced backup.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://zeinzulaziz.github.io/project/invoice/">
   <meta property="og:image" content="https://zeinzulaziz.github.io/assets/img/invoice.webp">
@@ -31,7 +31,7 @@
       } catch (e) {}
     })();
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Invoice Generator","description":"An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.","url":"https://zeinzulaziz.github.io/project/invoice/","image":"https://zeinzulaziz.github.io/assets/img/invoice.webp","author":{"@type":"Person","name":"Ze.in","url":"https://zeinzulaziz.github.io/"},"keywords":"invoice, firebase, pwa"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Invoice Generator","description":"A private invoice workspace for makeup artists and small service businesses: build invoices, send them on WhatsApp, export PDFs, track payments, and keep a synced backup.","url":"https://zeinzulaziz.github.io/project/invoice/","image":"https://zeinzulaziz.github.io/assets/img/invoice.webp","author":{"@type":"Person","name":"Ze.in","url":"https://zeinzulaziz.github.io/"},"keywords":"invoice, firebase, pwa"}</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -65,12 +65,13 @@
       <a class="post-back" href="/#projects">&larr; All projects</a>
       <article>
         <h1 class="post-title">Invoice Generator</h1>
-        <p class="page-lede">An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.</p>
+        <p class="page-lede">A private invoice workspace for makeup artists and small service businesses: build invoices, send them on WhatsApp, export PDFs, track payments, and keep a synced backup.</p>
         <div class="post-meta"><span>Vanilla JavaScript + Firebase</span><span>Private project</span></div>
         <div class="post-tags"><span>invoice</span><span>firebase</span><span>pwa</span></div>
         
         <figure class="project-shot"><img src="/assets/img/invoice.webp" alt="Screenshot of Invoice Generator" width="1600" height="900" decoding="async"></figure>
-        <div class="prose"><p>Tinara is the invoice app shown on this page: it creates, sends, and manages professional invoices for makeup artists and other small service businesses. It is built with vanilla JavaScript and Firebase, has no build tools, and installs on phones as a PWA.</p>
+        <div class="prose"><p>Small service businesses lose time at the edge of the work: quoting, sending the invoice, following up, and remembering who paid. Tinara was built for that gap. It keeps the whole path in one place, from the first line item to a PDF sent over WhatsApp, with payment status and a synced backup behind it.</p>
+<p>It creates, sends, and manages invoices for makeup artists and other small service businesses. Built with vanilla JavaScript and Firebase, no build tools, and it installs on phones as a PWA.</p>
 <h2 id="invoice-building"><a class="md-anchor" href="#invoice-building" aria-hidden="true" tabindex="-1">#</a>Invoice building</h2>
 <ul><li>Multi-step invoice form (client, line items, payment) with inline validation</li><li>Invoice numbers that auto-increment from a configurable starting number</li><li>Dynamic service items: name, price, quantity, add or remove rows freely</li><li>Automatic totals: full amount, discounts, down payments, and remaining balance</li><li>Custom notes per invoice</li><li>Live PDF preview beside the form (desktop) or in a modal (mobile)</li></ul>
 <h2 id="branding-and-pdf-design"><a class="md-anchor" href="#branding-and-pdf-design" aria-hidden="true" tabindex="-1">#</a>Branding and PDF design</h2>

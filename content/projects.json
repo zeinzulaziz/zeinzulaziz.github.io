@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-30T16:41:48.157Z",
+  "generated": "2026-11-03T17:21:34.466Z",
   "projects": [
     {
       "slug": "wordpress",
       "title": "WordPress sites in production",
-      "summary": "Three WordPress sites, two with WooCommerce, built between 2019 and 2021 for a florist, a battery retailer, and an academic publishing platform. All three are still serving traffic in 2026.",
+      "summary": "Three WordPress sites, two with WooCommerce, still serving traffic years after launch. Built for owners who needed sites they could maintain, not launch-day showpieces.",
       "repo": "",
       "demo": "",
       "language": "WordPress",
@@ -53,7 +53,7 @@
     {
       "slug": "invoice",
       "title": "Invoice Generator",
-      "summary": "An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync.",
+      "summary": "A private invoice workspace for makeup artists and small service businesses: build invoices, send them on WhatsApp, export PDFs, track payments, and keep a synced backup.",
       "repo": "invoice",
       "demo": "",
       "language": "Vanilla JavaScript + Firebase",

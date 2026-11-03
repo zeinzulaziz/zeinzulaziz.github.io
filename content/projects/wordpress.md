@@ -1,15 +1,15 @@
 ---
 title: "WordPress sites in production"
-summary: "Three WordPress sites, two with WooCommerce, built between 2019 and 2021 for a florist, a battery retailer, and an academic publishing platform. All three are still serving traffic in 2026."
+summary: "Three WordPress sites, two with WooCommerce, still serving traffic years after launch. Built for owners who needed sites they could maintain, not launch-day showpieces."
 date: 2026-10-29
 language: WordPress
 tags: ["wordpress", "woocommerce", "performance"]
 draft: false
 ---
 
-Portfolio entries typically show a screenshot from launch day: the moment a site looks its best and proves the least.
+The problem was not getting these sites online. It was keeping them useful for owners who would edit products, publish articles, and fix small problems long after the build was done.
 
-What outlasts the launch is whether a site still runs years later — after plugin updates, after a theme stops being maintained, after a hosting migration, after an owner has spent years editing content unsupervised.
+A launch screenshot proves a site can look finished. These three are judged by whether they stayed stable after plugin updates, theme changes, hosting migrations, and years of unsupervised edits.
 
 | Site | Function | Stack | First byte | Page weight |
 |---|---|---|---|---|
@@ -41,4 +41,4 @@ Five to seven years in production without a rebuild. `studitafsir.com` published
 
 - Cap the plugin count from week one, not year three
 - Hand over a written update and backup schedule, so the site does not depend on one person's memory
-- Charge for maintenance from the start — these three ran unprotected for years because that was the arrangement I offered
+- Charge for maintenance from the start; these three ran unprotected for years because that was the arrangement I offered

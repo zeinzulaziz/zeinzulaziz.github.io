@@ -1,6 +1,6 @@
 ---
 title: "Invoice Generator"
-summary: "An invoice workspace for makeup artists and small service businesses: multi-step invoice building, branded PDF templates, loyalty discounts, WhatsApp sharing, analytics, and Firebase-backed data sync."
+summary: "A private invoice workspace for makeup artists and small service businesses: build invoices, send them on WhatsApp, export PDFs, track payments, and keep a synced backup."
 repo: invoice
 language: Vanilla JavaScript + Firebase
 cover: assets/img/invoice.webp
@@ -9,7 +9,9 @@ tags: ["invoice", "firebase", "pwa"]
 draft: false
 ---
 
-Tinara is the invoice app shown on this page: it creates, sends, and manages professional invoices for makeup artists and other small service businesses. It is built with vanilla JavaScript and Firebase, has no build tools, and installs on phones as a PWA.
+Small service businesses lose time at the edge of the work: quoting, sending the invoice, following up, and remembering who paid. Tinara was built for that gap. It keeps the whole path in one place, from the first line item to a PDF sent over WhatsApp, with payment status and a synced backup behind it.
+
+It creates, sends, and manages invoices for makeup artists and other small service businesses. Built with vanilla JavaScript and Firebase, no build tools, and it installs on phones as a PWA.
 
 ## Invoice building
 

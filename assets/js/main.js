@@ -12,6 +12,7 @@
   const liveDemo = {
     "harga-pangan": "https://zeinzulaziz.github.io/harga-pangan/",
     "convert-gold": "https://zeinzulaziz.github.io/convert-gold/",
+    "broken-link-checker": "https://broken-link-checker-sepia.vercel.app",
   };
 
   const titles = {
