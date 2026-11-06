@@ -1,19 +1,19 @@
 {
-  "generated": "2026-11-05T22:42:27.472Z",
+  "generated": "2026-11-06T03:29:22.893Z",
   "repos": [
-    {
-      "name": "harga-pangan",
-      "language": "HTML",
-      "stargazers_count": 0,
-      "description": "Dashboard harga produsen pangan Jawa Timur (SISKAPERBAPO) dan kalkulator waktu tanam",
-      "homepage": "https://zeinzulaziz.github.io/harga-pangan/"
-    },
     {
       "name": "convert-gold",
       "language": "HTML",
       "stargazers_count": 0,
       "description": "USD/oz to Rp/gram gold calculator with entry, target, and stop-loss — live FX and Indonesian retail prices.",
       "homepage": "https://zeinzulaziz.github.io/convert-gold/"
+    },
+    {
+      "name": "harga-pangan",
+      "language": "HTML",
+      "stargazers_count": 0,
+      "description": "Dashboard harga produsen pangan Jawa Timur (SISKAPERBAPO) dan kalkulator waktu tanam",
+      "homepage": "https://zeinzulaziz.github.io/harga-pangan/"
     },
     {
       "name": "broken-link-checker",
