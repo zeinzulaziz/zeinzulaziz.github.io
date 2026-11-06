@@ -392,23 +392,6 @@
         return postCard(post, index);
       })
       .join("");
-
-    if (typeof window.observeReveals === "function") {
-      window.observeReveals(grid.querySelectorAll(".reveal:not(.is-in)"));
-    } else {
-      // blog/post pages don't load main.js — show cards immediately.
-      grid.querySelectorAll(".reveal").forEach(function (el) {
-        el.classList.add("is-in");
-      });
-    }
-
-    contentChanged();
-  }
-
-  // Async content changes the page height; the scroll progress bar and the
-  // chapter engine listen for this instead of guessing.
-  function contentChanged() {
-    document.dispatchEvent(new CustomEvent("contentchange"));
   }
 
   function setMeta(attr, key, content) {

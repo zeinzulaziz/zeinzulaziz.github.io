@@ -6,7 +6,7 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 ## Peta Cepat
 | Kalau mengerjakan | Baca/edit |
 |---|---|
-| Hero, gerhana, animasi scroll | `assets/js/scene.js`, `assets/js/journey.js` (+ `docs/SCENE.md`) |
+| Hero pinned chapters, animasi scroll | `assets/js/journey.js`, CSS (+ `docs/SCENE.md`) |
 | Tema gelap/terang, nav, analytics | `assets/js/site.js`, `assets/css/style.css` |
 | Token desain & palet | `DESIGN.md`, `:root` di `assets/css/style.css` |
 | Kartu proyek & data repo | `assets/js/main.js`, `content/repos.json` (generate: `tools/build-repos.mjs`) |
@@ -42,9 +42,8 @@ Jangan edit manual (hasil generate): `post/*/index.html`, `project/*/index.html`
 - `assets/css/style.css` — styling (token tema via `:root` gelap default + `[data-theme="light"]`, termasuk `@font-face` self-hosted)
 - `assets/fonts/` — woff2 self-hosted (Space Grotesk, IBM Plex Sans/Mono), lisensi SIL OFL
 - `assets/js/site.js` — tema (gelap default/terang + localStorage), nav mobile, tahun footer, opt-in GoatCounter
-- `assets/js/journey.js` — progres halaman, chapter rail, event `journey` (hanya halaman utama)
-- `assets/js/scene.js` — gerhana WebGL (three.js) di belakang hero, hanya dimuat halaman utama
-- `assets/vendor/three/` — three.js min (MIT) yang di-vendor; `scene.js` mengimpornya secara relatif
+- `assets/js/journey.js` — stage chapter untuk adegan WebGL, chapter rail, event `journey` (hanya halaman utama)
+- `assets/js/journey.js` — chapter aktif untuk rail `#opening…#contact` (label halaman utama saja), dan state `data-chapter-active` yang dipakai CSS untuk scroll cue dan cakram gerhana; bukan animasi
 - `assets/js/main.js` — logika & data proyek (baca `content/repos.json`; proyek privat tanpa repo GitHub dikurasi di `ownedProjects` dalam file ini, jangan taruh di `repos.json` karena ditimpa build)
 - `assets/js/blog.js` — pemuat data artikel (manifest + fallback GitHub API)
 - `assets/js/markdown.js` — renderer Markdown sendiri, tanpa library (dipakai blog.js & build)
@@ -128,10 +127,14 @@ Isi halaman (Markdown, opsional).
 Alur: edit `content/projects/<slug>.md` (di `/admin/` atau manual), jalankan
 `node tools/build.mjs`, commit. CI juga otomatis build saat file proyek berubah.
 
-## Halaman utama: gerhana & chapter
-Detail teknis (three.js, stage scroll, palet, fallback, kontrak event) ada di
-`docs/SCENE.md`. Baca hanya saat menyentuh `assets/js/scene.js` atau
-`assets/js/journey.js`.
+## Halaman utama: chapter & gerhana statis
+Detail teknis (`journey.js`, `data-chapter-active`, cakram CSS, pin chapter,
+timeline `--chapter` untuk yang di-pin) ada di
+`docs/SCENE.md`. Baca hanya saat menyentuh `assets/js/journey.js` atau bagian
+hero di `assets/css/style.css`.
+
+## Animasi scroll
+Progres halaman, reveal, word-rise tipe `.display` → CSS native (`animation-timeline: scroll()/view()`), bukan `scroll` event atau `IntersectionObserver`. Wajib `@supports`, `prefers-reduced-motion`, `animation-duration: 1ms`. Tidak ada JS untuk animasi; `journey.js` hanya chapter state (bukan animasi). Pola: skill `scroll-driven-animations`.
 
 ## Komunikasi
 - Bahasa Indonesia untuk komunikasi dengan user

@@ -256,7 +256,6 @@
 
     const card = document.createElement("article");
     card.className = "project-row reveal";
-    card.style.setProperty("--d", (index * 50) + "ms");
 
     if (index === 0) {
       card.classList.add("is-featured");
@@ -304,15 +303,6 @@
     grid.setAttribute("aria-busy", "false");
     const stat = document.getElementById("statProjects");
     if (stat) stat.textContent = String(projects.length);
-    revealCards();
-    // The page just got taller; let the scroll progress bar catch up.
-    document.dispatchEvent(new CustomEvent("contentchange"));
-  }
-
-  function revealCards() {
-    if (typeof window.observeReveals !== "function") return;
-    const cards = document.querySelectorAll("#projectsGrid .reveal:not(.is-in)");
-    if (cards.length) window.observeReveals(cards);
   }
 
   function fillGrid(repos) {
@@ -391,48 +381,8 @@
     pick();
   }
 
-  /* ---------- scroll reveal ---------- */
-
-  function initReveals() {
-    const els = document.querySelectorAll(".reveal");
-    if (!els.length) return;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      document.documentElement.getAttribute("data-motion") === "off";
-    if (reduceMotion || typeof IntersectionObserver === "undefined") {
-      els.forEach(function (el) { el.classList.add("is-in"); });
-      return;
-    }
-    const io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-in");
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-    els.forEach(function (el) { io.observe(el); });
-    window.observeReveals = function (extra) {
-      (extra || document.querySelectorAll(".reveal:not(.is-in)")).forEach(function (el) {
-        io.observe(el);
-      });
-    };
-
-    // Safety net. A rootMargin can keep an element that is already on screen
-    // from ever intersecting, and a background tab can stall the transition.
-    // Once the page has settled, anything sitting in the viewport is shown.
-    function settle() {
-      document.querySelectorAll(".reveal:not(.is-in)").forEach(function (el) {
-        var box = el.getBoundingClientRect();
-        if (box.top < window.innerHeight && box.bottom > 0) el.classList.add("is-in");
-      });
-    }
-    window.setTimeout(settle, 1500);
-    window.addEventListener("load", function () { window.setTimeout(settle, 400); });
-  }
-
   document.addEventListener("DOMContentLoaded", function () {
     loadProjects();
     initScrollspy();
-    initReveals();
   });
 })();

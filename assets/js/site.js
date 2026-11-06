@@ -120,40 +120,6 @@
     });
   }
 
-  /* ---------- header state + real scroll progress ---------- */
-
-  function initHeader() {
-    var header = document.querySelector(".site-header");
-    var bar = document.querySelector(".progress span");
-    if (!header && !bar) return;
-
-    function paint() {
-      var max = document.documentElement.scrollHeight - window.innerHeight;
-      var y = window.scrollY || window.pageYOffset || 0;
-      var ratio = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
-      if (bar) bar.style.width = (ratio * 100).toFixed(2) + "%";
-      if (header) header.classList.toggle("is-scrolled", y > 8);
-    }
-
-    var ticking = false;
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () {
-        paint();
-        ticking = false;
-      });
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    window.addEventListener("load", paint);
-    // Async content (the project and post lists) changes the page height after
-    // load; without this the bar would stay stale until the next scroll.
-    document.addEventListener("contentchange", paint);
-    paint();
-  }
-
   function setYear() {
     var el = document.getElementById("year");
     if (el) el.textContent = String(new Date().getFullYear());
@@ -163,7 +129,6 @@
     initTheme();
     initMotion();
     initNav();
-    initHeader();
     setYear();
     initAnalytics();
   }

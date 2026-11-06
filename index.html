@@ -20,7 +20,7 @@
   <link rel="preload" href="assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
-  <noscript><style>.js .reveal{opacity:1;transform:none}@media(max-width:760px){.nav-toggle{display:none}.nav-links{position:static;display:flex;flex-wrap:wrap;gap:.75rem;padding:0;border:0}}</style></noscript>
+  <noscript><style>@media(max-width:760px){.nav-toggle{display:none}.nav-links{position:static;display:flex;flex-wrap:wrap;gap:.75rem;padding:0;border:0}}</style></noscript>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080d16'/%3E%3Ctext x='32' y='46' font-family='Helvetica,Arial,sans-serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23ede6d9'%3EZ%3C/text%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
@@ -88,7 +88,7 @@
   </header>
 
   <nav class="chapter-rail" aria-label="Chapters">
-    <a href="#opening" class="is-current" aria-current="true">Opening</a>
+    <a href="#opening" class="is-current">Opening</a>
     <a href="#projects">Projects</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
@@ -103,7 +103,7 @@
             <span class="bar" aria-hidden="true"></span>
             Observatory / East Java
           </p>
-          <h1 class="display reveal" style="--d:60ms">Ze.in</h1>
+          <h1 class="display"><span class="rise" style="--i:0"><span class="rise-in">Ze.in</span></span></h1>
           <p class="role reveal" style="--d:120ms">WordPress Developer · AI Product Builder</p>
           <div class="action-row reveal" style="--d:240ms">
             <a class="btn btn-primary" href="#projects">See the work</a>
@@ -137,14 +137,14 @@
 
     <section class="chapter" id="projects" data-chapter="Work">
       <div class="container">
-        <div class="chapter-head reveal">
-          <p class="eyebrow">
+        <div class="chapter-head">
+          <p class="eyebrow reveal">
             <span class="index">01</span>
             <span class="bar" aria-hidden="true"></span>
             Projects
           </p>
-          <h2 class="display">Projects.</h2>
-          <p class="chapter-note">Public repositories and private builds. Open a live demo where one exists.</p>
+          <h2 class="display"><span class="rise" style="--i:0"><span class="rise-in">Projects.</span></span></h2>
+          <p class="chapter-note reveal" style="--d:120ms">Public repositories and private builds. Open a live demo where one exists.</p>
         </div>
         <div class="projects-list" id="projectsGrid" aria-live="polite" aria-busy="true">
           <div class="skeleton-card" aria-hidden="true">
@@ -198,13 +198,13 @@
 
     <section class="chapter" id="about" data-chapter="About">
       <div class="container">
-        <div class="chapter-head reveal">
-          <p class="eyebrow">
+        <div class="chapter-head">
+          <p class="eyebrow reveal">
             <span class="index">02</span>
             <span class="bar" aria-hidden="true"></span>
             About
           </p>
-          <h2 class="display">About me.</h2>
+          <h2 class="display"><span class="rise" style="--i:0"><span class="rise-in">About</span></span> <span class="rise" style="--i:1"><span class="rise-in">me.</span></span></h2>
         </div>
         <div class="about-top">
           <div class="about-copy">
@@ -281,7 +281,7 @@
             <span class="bar" aria-hidden="true"></span>
             Contact
           </p>
-          <h2 class="contact-title display reveal" style="--d:60ms">Let's talk.</h2>
+          <h2 class="contact-title display"><span class="rise" style="--i:0"><span class="rise-in">Let's</span></span> <span class="rise" style="--i:1"><span class="rise-in">talk.</span></span></h2>
           <p class="lede reveal" style="--d:120ms">
             I'm open to freelance work and collaboration, especially
             WordPress, WooCommerce performance, dashboards, and small AI
@@ -319,25 +319,12 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>© <span id="year"></span> Ze.in</p>
-      <p>Hand-coded HTML, CSS, and JavaScript. Eclipse rendered with <a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> (MIT). <a href="https://github.com/zeinzulaziz/zeinzulaziz.github.io" target="_blank" rel="noopener">Source on GitHub</a>.</p>
+      <p>Hand-coded HTML, CSS, and JavaScript. The eclipse is drawn with CSS gradients — no WebGL, no images. <a href="https://github.com/zeinzulaziz/zeinzulaziz.github.io" target="_blank" rel="noopener">Source on GitHub</a>.</p>
     </div>
   </footer>
 
   <script src="assets/js/site.js" defer></script>
   <script src="assets/js/journey.js" defer></script>
   <script src="assets/js/main.js" defer></script>
-  <script src="assets/js/scene.js" type="module"></script>
-  <script>
-    // Safety net: if main.js failed to load, reveal sections instead of hiding them.
-    window.addEventListener("load", function () {
-      setTimeout(function () {
-        if (typeof window.observeReveals !== "function") {
-          document.querySelectorAll(".reveal").forEach(function (el) {
-            el.classList.add("is-in");
-          });
-        }
-      }, 2500);
-    });
-  </script>
 </body>
 </html>
