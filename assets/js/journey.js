@@ -1,7 +1,8 @@
-/* Chapter engine for the home page: marks the chapter in view for the chapter
-   rail, and keeps the CSS hooks that fade the scroll cue and the stand-in
-   eclipse in step. The WebGL scene is gone; what remains is pure state, and all
-   motion still lives in CSS. */
+/* Fallback chapter state for the home page. Modern browsers do this in CSS:
+   each chapter declares a view timeline, timeline-scope lifts the names to the
+   document, and the rail, the nav and the scroll cue read them. index.html only
+   loads this file when CSS.supports() says those timelines are missing, so the
+   work here is the old scroll-position read, kept as the safety net. */
 (function () {
   "use strict";
 

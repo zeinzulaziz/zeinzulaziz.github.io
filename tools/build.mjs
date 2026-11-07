@@ -1,10 +1,16 @@
 // Build-time generator. Runs locally (node tools/build.mjs) and in CI.
 // Outputs:
-//   content/posts.json          — manifest consumed by blog.js
+//   content/posts.json          — metadata manifest (JSON export)
+//   content/projects.json       — metadata manifest (JSON export)
 //   post/<slug>/index.html      — prerendered article (shareable, indexable)
+//   project/<slug>/index.html   — prerendered project page
+//   index.html                  — project cards between the projects: markers
+//   blog.html                   — post list between the posts: markers
 //   sitemap.xml                 — index, blog, every published article
 //   feed.xml                    — Atom feed of published articles
-// Drafts never leave this script: no page, no sitemap entry, no feed entry.
+// The home page and the blog index are rendered here, so no visitor has to
+// fetch a manifest or boot a renderer to see the work. Drafts never leave this
+// script: no card, no page, no sitemap entry, no feed entry.
 import { readdir, readFile, writeFile, mkdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
@@ -528,7 +534,242 @@ for (const project of liveProjects) {
   await writeFile(join(dir, "index.html"), renderProjectPage(project), "utf8");
 }
 
-/* ---------- 4. sitemap ---------- */
+/* ---------- 4. prerendered lists: home cards + blog index ---------- */
+// Both lists land inside marker comments in the static HTML, so the markup is
+// in the document from the first byte: no fetch, no skeleton, no layout shift,
+// and the crawler sees the same list a visitor does.
+
+const GITHUB_USER = "zeinzulaziz";
+
+// Repositories do not carry a live URL or a nicer label, so both are curated.
+const liveDemo = {
+  "harga-pangan": "https://zeinzulaziz.github.io/harga-pangan/",
+  "convert-gold": "https://zeinzulaziz.github.io/convert-gold/",
+  "broken-link-checker": "https://broken-link-checker-sepia.vercel.app",
+};
+
+const repoLabels = {
+  "harga-pangan": "Food Prices",
+  "convert-gold": "Convert Gold",
+  "broken-link-checker": "Broken Link Checker",
+  invoice: "Invoice Generator",
+};
+
+const repoDescriptions = {
+  "harga-pangan":
+    "Food Prices: producer price dashboard for East Java, built on SISKAPERBAPO data.",
+  "convert-gold": "Gold price calculator to run quick numbers before trading.",
+  invoice:
+    "An invoice workspace for small businesses: build and manage invoices, " +
+    "export PDFs, track payments, and keep a cloud backup. Firebase auth keeps " +
+    "each workspace closed.",
+};
+
+/* Work with no public repository. content/repos.json holds what the GitHub API
+   returns, so these cannot come from there; `private: true` drops the repo link
+   and the star count, and a curated entry loses to a real repository if one ever
+   appears with the same name. */
+const ownedProjects = [
+  {
+    name: "invoice",
+    language: "Firebase web app",
+    stargazers_count: 0,
+    description: null,
+    homepage: null,
+    private: true,
+    screenshot: true,
+  },
+  {
+    name: "wordpress",
+    language: "WordPress",
+    stargazers_count: 0,
+    description: null,
+    homepage: null,
+    caseStudy: true,
+    screenshot: false,
+  },
+];
+
+async function readRepos() {
+  try {
+    const data = JSON.parse(await readFile(join(root, "content", "repos.json"), "utf8"));
+    const list = Array.isArray(data) ? data : data && data.repos;
+    return Array.isArray(list) ? list : [];
+  } catch {
+    // No snapshot yet (or a broken one): the curated projects still render.
+    return [];
+  }
+}
+
+function repoUrl(name) {
+  return `https://github.com/${GITHUB_USER}/${encodeURIComponent(name)}`;
+}
+
+function firstLetter(name) {
+  return name.charAt(0).toUpperCase();
+}
+
+function renderProjectCard(repo, index, pageByName) {
+  const name = repo.name;
+  const page = pageByName[name] || null;
+  const pageHref = page ? `project/${encodeURIComponent(page.slug)}/` : null;
+  const demo = liveDemo[name] || (page && page.demo) || (repo.homepage && repo.homepage.trim()) || null;
+  const hasScreenshot = Boolean(liveDemo[name] || repo.screenshot || (page && page.cover));
+  const isPrivate = repo.private === true || Boolean(page && page.private);
+  // No repository to link to, but not private either: a case study page.
+  const caseStudy = repo.caseStudy === true || Boolean(page && !page.repo && !page.private);
+  const repoHref = isPrivate || caseStudy ? null : repoUrl(name);
+  /* A private project still gets a clickable title, it just points at the
+     project page or the live product instead of a repository outsiders cannot
+     open. */
+  const titleHref = pageHref || repoHref || demo;
+
+  const shotSrc = page && page.cover
+    ? page.cover.replace(/^\//, "")
+    : `assets/img/${encodeURIComponent(name)}.webp`;
+  const featuredPreview = hasScreenshot
+    ? `<img src="${escapeHtml(shotSrc)}" alt="Preview ${escapeHtml(name)}" loading="lazy" decoding="async" width="640" height="360">`
+    : `<div class="preview-placeholder" aria-hidden="true">${escapeHtml(firstLetter(name))}</div>`;
+
+  const livePlate = demo ? `<span class="live-plate">LIVE</span>` : "";
+
+  const links = pageHref || repoHref || demo
+    ? `<p class="project-links">` +
+      (pageHref ? `<a href="${pageHref}">Details</a>` : "") +
+      (repoHref ? `<a href="${repoHref}" target="_blank" rel="noopener">Repo</a>` : "") +
+      (demo ? `<a href="${escapeHtml(demo)}" target="_blank" rel="noopener">Demo</a>` : "") +
+      `</p>`
+    : "";
+
+  const meta =
+    `<p class="project-meta"><span class="project-lang">${escapeHtml(repo.language || "N/A")}</span>` +
+    `<span>${isPrivate ? "Private" : caseStudy ? "Case study" : `★ ${repo.stargazers_count || 0}`}</span></p>`;
+
+  const label = page && page.title ? page.title : repoLabels[name] || name.replace(/[-_]/g, " ");
+  const title = titleHref
+    ? pageHref
+      ? `<a href="${pageHref}">${escapeHtml(label)}</a>`
+      : `<a href="${escapeHtml(titleHref)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`
+    : escapeHtml(label);
+
+  const desc = page && page.summary
+    ? page.summary
+    : repoDescriptions[name] ||
+      repo.description ||
+      (isPrivate ? "Private project." : caseStudy ? "Case study." : "Public repository with no description.");
+
+  const main =
+    `<div class="project-main">` +
+    `<h3 class="project-title">${title}</h3>` +
+    `<p class="project-desc">${escapeHtml(desc)}</p>` +
+    `</div>`;
+
+  const classes = `project-row reveal${index === 0 ? " is-featured" : ""}`;
+
+  if (index === 0) {
+    return `<article class="${classes}"><div class="project-media">${featuredPreview}${livePlate}</div>${main}<div class="project-side">${meta}${links}</div></article>`;
+  }
+  if (hasScreenshot) {
+    return `<article class="${classes}"><div class="project-media"><img src="${escapeHtml(shotSrc)}" alt="" loading="lazy" decoding="async" width="640" height="400"></div>${main}<div class="project-side">${meta}${links}</div></article>`;
+  }
+  return `<article class="${classes}">${main}<div class="project-side">${meta}${links}</div></article>`;
+}
+
+function projectCardList(repos) {
+  const pageByName = {};
+  liveProjects.forEach((page) => {
+    pageByName[page.slug] = page;
+    if (page.repo) pageByName[page.repo] = page;
+  });
+
+  // Curated work leads the list; a real repository of the same name wins.
+  const names = new Set(repos.map((r) => r.name));
+  const all = ownedProjects.filter((p) => !names.has(p.name)).concat(repos);
+  return {
+    count: all.length,
+    cards: all.map((repo, index) => renderProjectCard(repo, index, pageByName)),
+  };
+}
+
+function renderPostCard(post, index) {
+  const meta =
+    `<div class="post-meta">` +
+    (post.date ? `<span>${escapeHtml(formatDate(post.date))}</span>` : "") +
+    `<span>${post.readingTime} min read</span>` +
+    `</div>`;
+
+  const tags = post.tags.length
+    ? `<div class="post-tags">${post.tags.map((t) => `<span>${escapeHtml(t)}</span>`).join("")}</div>`
+    : "";
+
+  // Stagger is capped: a long index should not leave the last card waiting.
+  const delay = Math.min(index * 60, 360);
+
+  return (
+    `<article class="post-card reveal${post.type === "note" ? " is-note" : ""}" style="--d:${delay}ms">` +
+    meta +
+    `<h2 class="post-card-title"><a href="post/${encodeURIComponent(post.slug)}/">${escapeHtml(post.title)}</a></h2>` +
+    (post.description ? `<p class="post-card-desc">${escapeHtml(post.description)}</p>` : "") +
+    tags +
+    `</article>`
+  );
+}
+
+function postCardCount() {
+  const notes = published.filter((p) => p.type === "note").length;
+  const articles = published.length - notes;
+  return (
+    `${articles} ${articles === 1 ? "article" : "articles"} · ` +
+    `${notes} ${notes === 1 ? "note" : "notes"}`
+  );
+}
+
+/* Replace everything between the marker pair, keeping the markers. The block is
+   indented to match the opening marker, so the generated file reads like a hand
+   written one. */
+function injectBlock(source, name, lines, file) {
+  const re = new RegExp(`([ \\t]*<!-- ${name}:start -->)[\\s\\S]*?([ \\t]*<!-- ${name}:end -->)`);
+  const found = source.match(re);
+  if (!found) throw new Error(`${file}: marker "${name}:start/end" not found`);
+  const indent = (found[1].match(/^[ \t]*/) || [""])[0];
+  const body = lines.map((line) => (line ? indent + line : "")).join("\n");
+  return source.replace(re, () => `${found[1]}\n${body}\n${found[2]}`);
+}
+
+function fillSlot(source, pattern, value, file) {
+  if (!pattern.test(source)) throw new Error(`${file}: expected slot not found`);
+  return source.replace(pattern, (_m, open, close) => open + value + close);
+}
+
+const repos = await readRepos();
+const cards = projectCardList(repos);
+
+const indexPath = join(root, "index.html");
+let indexHtml = await readFile(indexPath, "utf8");
+indexHtml = injectBlock(indexHtml, "projects", cards.cards, "index.html");
+indexHtml = fillSlot(
+  indexHtml,
+  /(<span class="stat-num" id="statProjects">)[^<]*(<\/span>)/,
+  String(cards.count),
+  "index.html"
+);
+await writeFile(indexPath, indexHtml, "utf8");
+
+const blogPath = join(root, "blog.html");
+let blogHtml = await readFile(blogPath, "utf8");
+const postCards = published.length
+  ? published.map(renderPostCard)
+  : ['<p class="blog-empty">No articles yet. Check back soon.</p>'];
+blogHtml = injectBlock(blogHtml, "posts", postCards, "blog.html");
+blogHtml = fillSlot(
+  blogHtml,
+  /(<p class="page-count" id="blogCount">)[^<]*(<\/p>)/,
+  postCardCount(),
+  "blog.html"
+);
+await writeFile(blogPath, blogHtml, "utf8");
+
+/* ---------- 5. sitemap ---------- */
 const latest = published.length && published[0].date ? published[0].date : "";
 const sitemapUrls = [
   `<url><loc>${SITE}/</loc>${latest ? `<lastmod>${latest}</lastmod>` : ""}</url>`,
@@ -546,7 +787,7 @@ await writeFile(
   "utf8"
 );
 
-/* ---------- 5. Atom feed ---------- */
+/* ---------- 6. Atom feed ---------- */
 const feedEntries = published.map((p) => {
   const url = postUrl(p.slug);
   const d = p.date || latest;
@@ -581,5 +822,6 @@ console.log(
   `built: posts.json (${posts.length} post, ${drafts} draft), ` +
     `projects.json (${liveProjects.length} proyek), ` +
     `${published.length} halaman artikel, ${liveProjects.length} halaman proyek, ` +
+    `index.html (${cards.count} kartu), blog.html (${published.length} kartu), ` +
     `sitemap.xml, feed.xml`
 );

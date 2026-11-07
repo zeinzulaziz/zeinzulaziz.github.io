@@ -7,10 +7,10 @@ Version note: redesigned Oct 2026, second time. The previous direction was warm
 monochrome on paper (dark brown-black, Bricolage Grotesque, hairline ledger, the
 inverse block as the only accent). The owner asked to follow the look of
 `umbra` (ln-dev7/landing-pages): a night observatory, deep ink ground, one copper
-accent, huge display type, pinned chapters, and a fixed CSS-only eclipse behind
-the page.
-file records the direction that was built, including the places it deliberately
-departs from that reference.
+accent, huge display type, and pinned chapters. This file records the direction
+that was built, including the places it deliberately departs from that
+reference. The reference also keeps a drawn eclipse behind the page; this site
+built that object twice and removed both versions (see Texture).
 
 ## Identity
 
@@ -36,9 +36,9 @@ ENERGY 3 / RHYTHM 2 / MOTION 3
   inside its body. Reading pages (blog, article, 404) drop the frame entirely
   and stay calm. This is a deliberate change from the previous RHYTHM 3
   (sections each with their own composition).
-- MOTION 3: a fixed CSS-only eclipse behind the page (no WebGL left),
-  scroll-driven reveals with CSS scroll timelines, and chapter-aware fades.
-  All of it stops on request.
+- MOTION 3: scroll-driven reveals, progress, and chapter state, all on CSS
+  scroll timelines — no motion library, no scroll handler. All of it stops on
+  request.
 
 ## Palette
 
@@ -76,44 +76,25 @@ Light, "day":
 | accent-ink | #ede6d9 | text on copper |
 | rail-ink | #3b4450 (= ink-soft) | chapter rail labels, which sit in the glow's penumbra |
 
-Eclipse tokens (the stand-in eclipse paints from these; both themes share one
-implementation):
-
-| Token | Dark | Light | Use |
-|---|---|---|---|
-| scene-core | #fff0cc | #6b3c1a | the corona's hottest line: cream at night, deep copper on paper |
-| scene-glow | #ffbf80 | #8a5426 | corona, halo, and the stand-in's ring |
-| scene-body | #0e121b | #121824 | the moon's body, so the disc on paper never goes fully black against the field |
-
-The light `scene-glow` stays brighter than the light `accent` on purpose: the
-painted haze is a large soft field, and a darker one would eat the contrast of
-every label under it.
-
 Measured ratios (WCAG 2.x). Token pairs, then the same pairs measured on rendered
-pixels, where the eclipse's glow tints the field:
+pixels, grain and vignette included:
 
 - dark tokens: ink/paper 15.68, ink-soft/paper 9.84, ink-faint/paper 6.48,
   ink-faint/surface 6.19, ink-faint/surface-2 5.69, accent/paper 8.87.
 - light tokens: ink/paper 14.97, ink-soft/paper 7.95, ink-faint/paper 5.75,
   ink-faint/surface 6.33, ink-faint/surface-2 5.13, accent/paper 6.86 (the
   previous light accent, #8a5426, was 5.01 and failed over the copper penumbra).
-- measured against the disc (the opening and contact frames) in both themes at
-  1440x900, 1280x900, 768x1024 and 390x844, plus the phone widths down to
-  360x640: worst 4.93 at 768x1024 light on the opening (`.spec-item dt` over the
-  moon's body), 5.27 in dark (`.chapter-rail a`, over the rim), 5.26 on
-  the phone (light). The work and about chapters only get quieter, since the
-  disc fades out behind them.
-  Nothing on the page falls below AA.
-- the opening frame is the one to protect: it carries the disc and the full
-  glow, and it is the only frame where the type still sits beside the body.
-  The closing frame repeats it on the contact chapter, whose copy sits below
-  the moon's mark rather than beside it.
-- the chapter rail runs through the halo, not clear of it: at 1280x900
-  the disc's limb reaches the gutter. The labels carry their own field
-  (5.27–8.78 measured in dark, 6.00–11.45 on paper) because a bare
-  label over the halo is the one place the disc could cost legibility —
-  with the field, the ratio barely depends on what the moon is doing
-  behind it.
+- measured on rendered pixels in both themes at 1440x900, 1280x900, 768x1024
+  and 390x844, plus the phone widths down to 360x640: worst 4.93 at 768x1024
+  light (`.spec-item dt`, the smallest mono label on the page), 5.26 on the
+  phone (light). Nothing on the page falls below AA.
+- the opening frame is the one to protect: it is the only frame where display
+  type, a lede, and the facts panel share one screen. The closing frame repeats
+  the same stack on the contact chapter.
+- the chapter rail crosses the featured card at 1280x900, so its labels carry
+  their own field: a soft paper plate with a backdrop blur, the same idiom as the
+  header veil (5.27–8.78 measured in dark, 6.00–11.45 on paper). With the field,
+  the ratio barely depends on what is behind it.
 - `line` is decorative and never carries text or state on its own;
   `line-strong` is the boundary value that must stay visible (6.48 dark,
   5.75 light, both well above the 3:1 rule for non-text UI).
@@ -140,54 +121,50 @@ one word per line where the copy allows. Mono labels sit at 0.7–0.75rem with
 ## Shape
 
 Radius 0 on the chrome and on images inside prose; the only rounded things are
-the eclipse's own circle. Hairlines carry structure. There is no drop shadow in
-the system: depth comes from the ground/surface steps and the copper glow. The
-sticky header lifts on a 1px `line` and a `color-mix` veil, not
-on a shadow.
+the rail's label plate and the `--radius` on controls. Hairlines carry structure.
+There is no drop shadow in the system: depth comes from the ground/surface steps
+and the copper accent. The sticky header lifts on a 1px `line` and a `color-mix`
+veil, not on a shadow.
 
 ## Texture
 
-The ground is not flat: one CSS-only eclipse sits behind the page (`.scene` and
-`.still-eclipse` in `index.html`, `.scene canvas` deleted with the WebGL build).
-It is one radial gradient and one box-shadow — no images, no JS, and one build
-for both themes; only the tokens change (`--scene-core`, `--scene-glow`,
-`--scene-body`). It is the page's only illustration and the one place copper is
-used at scale. A static vignette (`radial-gradient`) keeps the page edges
-settled so text stays on a calm field.
+The ground is flat paper, and the only things laid on it are a dither and a
+vignette: `body::before` sets a 3px grid of 1px dots at 4% ink, the film-grain
+tooth of the reference, and `body::after` settles the page edges into the ground
+with a `radial-gradient`. Both are drawn, neither is requested — no image, no JS,
+and one implementation for both themes, because both read from `--ink` and
+`--paper`.
 
-Placement. On wide screens the disc takes the right column: its centre at
-77.5% across and 45.5% down, its diameter `min(45svh, 44vw)`. Phones have no
-such column, so the disc shrinks into the top right corner (90% across, 23.5%
-down, running off the edge on purpose) at `min(16.5svh, 30vw)` under an aspect
-ratio of 1/1. The one move CSS can afford is opacity: the disc fades out while
-the middle chapters hold the screen and returns for the closing frame
-(`data-chapter-active`, set by `journey.js` to the chapter nearest the middle
-of the viewport). On a phone the disc behaves the same way, and nothing else
-sits behind the reading copy.
+History. This page carried a hand-built three.js eclipse — sphere, rings, a
+shader-drawn corona, ~187 KB gzip vendored — and replaced it with a CSS stand-in
+in November 2026. In the same month the owner asked for the object to go
+entirely. What is gone: the rings, the pointer parallax, the themed shader, the
+stage-driven choreography, and the disc itself in both its forms. What is left is
+the ground it was sitting on.
 
-History. This page carried a hand-built three.js eclipse (sphere, rings,
-noid-generated corona, ~187 KB gzip) and removed it in November 2026: a lot of
-bytes for one object behind a headline. What remains is the CSS stand-in the
-build had kept as its fallback — same tokens, same two anchors, no scene
-script at all.
-
-Layer order, bottom to top: the dither ground (body background, `body::before`),
-the `.scene` layer (z-index 1, `pointer-events: none`, `aria-hidden`), the
-still eclipse inside it, the page content (z-index 3), the chapter rail
-(z-index 40), the header (z-index 50).
-
-The body also carries one static layer: a half-tone dither of 1px dots at 3%
-alpha, the film-grain tooth of the reference. No image request.
+Layer order, bottom to top: the paper ground, the dither (`body::before`,
+z-index 0), the vignette (`body::after`, z-index 2), the page content (z-index 3),
+the chapter rail (z-index 40), the header (z-index 50).
 
 ## Motion
 
-- Nothing behind the page drifts, ticks, or rises. The disc is still; the only
-  thing that changes is its opacity, and only when `data-chapter-active` moves.
-- Scroll drives the chapters: `journey.js` reads the chapter boxes and exposes
-  which chapter is near the middle of the viewport as `data-chapter-active`;
-  everything that follows from it (the cue's fade, the disc's) is CSS. The
-  visible scroll work — progress line, header, reveals, the masked
-  word-rise in the display type — is CSS scroll timelines, not JavaScript.
+- Nothing behind the page drifts, ticks, or rises, and nothing on the page moves
+except in response to scroll.
+- Chapter state is CSS. Each chapter declares a `view-timeline` of its own;
+  `timeline-scope` on `html` lifts those names to the document; and the rail, the
+  nav highlight and the scroll cue each read the chapter they belong to. A
+  registered `--lit` property carries that state into the label colour, so
+  `:hover` and the `.is-current` fallback are not fought over. The window is a
+  fixed distance in viewport units — half a viewport after a chapter starts to
+  enter, to half a viewport before it finishes leaving — which is exactly the
+  stretch where the chapter's box holds the middle of the screen, and which
+  needs no per-chapter tuning.
+- No JavaScript runs for any of it. `index.html` loads `journey.js` only when
+  `CSS.supports()` reports the timelines missing, and that script is the old
+  scroll-position read.
+- The visible scroll work — progress line, header, reveals, the masked
+  word-rise in the display type, the rail, the cue — is CSS scroll timelines,
+  not JavaScript.
 - Chapters: `#opening` and `#contact` pin for one viewport of scroll; the work
   and about chapters keep their label column sticky while the body scrolls. The
   pin is `calc(100svh - var(--header-h) - 1px)`, because the sticky header is in
@@ -218,7 +195,6 @@ progress, focus, and hover feedback are not motion and stay.
 
 Copper is the light source. It appears at:
 
-- the eclipse behind the page,
 - the chapter index (the mono numeral that opens each chapter),
 - the scroll progress line under the header,
 - the primary button and the LIVE plate,
@@ -236,12 +212,11 @@ previous filled index plate. One per chapter, nowhere else.
 
 The chapter rail (wide screens only) repeats those names down the right gutter and
 marks the current one with a longer copper rule, so the state never rests on
-colour alone. The eclipse reaches into that gutter — the disc in the opening and
-closing frames — so each label carries its own field: a soft paper plate with a
-backdrop blur, the same idiom as the header veil. A bare label in the penumbra is
-the one place the disc could still cost legibility; with its own field the rail
-measures 5.27 or better across the four acts. That plate is a deliberate trade:
-it is visible over the disc in the day theme, and legibility wins.
+colour alone. The rail crosses whatever sits at the right edge of the container —
+a featured card, on the work chapter — so each label carries its own field: a soft
+paper plate with a backdrop blur, the same idiom as the header veil. With its own
+field the rail measures 5.27 or better across the four acts. The plate is visible
+over a card in the day theme, and legibility wins.
 
 ## Content structure
 
@@ -255,7 +230,7 @@ it is visible over the disc in the day theme, and legibility wins.
 - 03 Contact: the closing band with the display title, the availability
   sentence, and the actions.
 - Reading pages: the blog list and the article page share the tokens, the header,
-  and the footer, and nothing else — no chapters, no eclipse.
+  and the footer, and nothing else — no chapters, no rail.
 
 ## Deliberate departures from the reference
 
@@ -264,27 +239,22 @@ Recorded so they are decisions, not accidents:
 1. Two themes. The reference is dark only; this site keeps its light theme and
    the toggle, so both are designed and measured (see Palette).
 2. No loading screen. The reference gates the page behind a progress overlay
-   while WebGL boots. This page's eclipse is CSS and always available, so a
-   progress bar would be theatre.
+   while its scene boots. Nothing here needs to boot: this is static HTML and a
+   stylesheet, so a progress bar would be theatre.
 3. Type: our own display face (Space Grotesk) and our own mono (IBM Plex Mono),
    but body copy stays IBM Plex Sans rather than the display face.
-4. The eclipse is a static CSS stand-in, not the WebGL build this page once
-   shipped. The shader version (rings, studio map, shader-drawn corona) was
-   hand-built for this page, not ported — but it cost ~187 KB vendored for an
-   object behind a headline. In November 2026 the site owner asked for it to
-   go, and the stand-in it always carried as its fallback took over: same
-   tokens, same two anchors, one radial gradient and one shadow. What remains
-   is everything a static disc can do: sit behind the opening and closing
-   frames, fade out for the middle ones. What is gone with it: the rings, the
-   pointer parallax, the themed shader, the stage-driven choreography.
-5. Phones get the corner, not the band. The reference drops a full-width eclipse
-   below the copy on mobile. This page cannot: the copy alone fills a phone
-   screen. So the disc shrinks into the top right corner, running off the edge.
+4. No object behind the page. The reference keeps a drawn eclipse as its one
+   illustration. This page built that object twice — a hand-written three.js
+   scene, then a CSS stand-in — and removed both in November 2026. Bytes and
+   attention spent on an object behind a headline, when the display type is the
+   thing meant to carry the page. The ground, the vignette and the dither are
+   what remains of the idea.
 
 ## Scope
 
-index.html (chapter frame), blog.html, post.html, 404.html, the article template
-in tools/build.mjs, assets/css/style.css, assets/js/site.js, the project row
-renderer in assets/js/main.js, plus assets/js/journey.js (home page only —
-chapter state, scroll-cue and rail for the CSS eclipse). The admin CMS is
+index.html (chapter frame), blog.html, post.html, 404.html, the article and
+project templates plus the card renderers in tools/build.mjs,
+assets/css/style.css, assets/js/site.js, assets/js/markdown.js and
+assets/js/blog.js (the ?slug= fallback), plus assets/js/journey.js (home page
+only, and only loaded where CSS scroll timelines are missing). The admin CMS is
 untouched.

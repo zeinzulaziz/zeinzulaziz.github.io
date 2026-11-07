@@ -6,10 +6,10 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 ## Peta Cepat
 | Kalau mengerjakan | Baca/edit |
 |---|---|
-| Hero pinned chapters, animasi scroll | `assets/js/journey.js`, CSS (+ `docs/SCENE.md`) |
+| Chapter, rail, scroll-spy, animasi scroll | `assets/css/style.css` (+ `docs/CHAPTERS.md`) |
 | Tema gelap/terang, nav, analytics | `assets/js/site.js`, `assets/css/style.css` |
 | Token desain & palet | `DESIGN.md`, `:root` di `assets/css/style.css` |
-| Kartu proyek & data repo | `assets/js/main.js`, `content/repos.json` (generate: `tools/build-repos.mjs`) |
+| Kartu proyek & data repo | `tools/build.mjs`, `content/repos.json` (generate: `tools/build-repos.mjs`) |
 | Artikel blog | `content/posts/*.md` → `node tools/build.mjs` |
 | Halaman detail proyek | `content/projects/*.md` → `node tools/build.mjs` |
 | Renderer Markdown | `assets/js/markdown.js` |
@@ -18,12 +18,15 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 | Build & deploy | `tools/build.mjs`, `.github/workflows/build-site.yml` (push = deploy) |
 
 Jangan edit manual (hasil generate): `post/*/index.html`, `project/*/index.html`,
-`content/posts.json`, `content/projects.json`, `content/repos.json`,
+blok di antara marker `<!-- projects:start -->`/`<!-- projects:end -->` di
+`index.html`, blok di antara `<!-- posts:start -->`/`<!-- posts:end -->` di
+`blog.html`, `content/posts.json`, `content/projects.json`, `content/repos.json`,
 `sitemap.xml`, `feed.xml`.
 
 ## Stack
 - Vanilla HTML, CSS, JavaScript (tanpa framework); build script kecil pakai Node (tanpa dependensi)
 - Daftar proyek dari snapshot `content/repos.json` (sebelumnya GitHub API langsung)
+- Kartu proyek dan daftar artikel dirender saat build, jadi JS runtime hanya untuk tema, nav, dan layanan pihak ketiga
 - CMS: Sveltia CMS (drop-in Decap/Netlify CMS) dari CDN, backend GitHub + Access Token
 
 ## Struktur
@@ -33,7 +36,7 @@ Jangan edit manual (hasil generate): `post/*/index.html`, `project/*/index.html`
 - `post/<slug>/index.html` — artikel prerender (hasil build, jangan edit manual)
 - `project/<slug>/index.html` — halaman detail proyek prerender (hasil build, jangan edit manual)
 - `content/projects/*.md` — sumber halaman detail proyek (satu file per proyek)
-- `content/projects.json` — manifest proyek, hasil generate (dipakai `main.js` untuk link kartu)
+- `content/projects.json` — manifest proyek, hasil generate (metadata saja; kartunya sudah jadi HTML di `index.html`)
 - `404.html` — halaman error kustom (dipakai otomatis GitHub Pages)
 - `sitemap.xml`, `feed.xml` (Atom), `robots.txt` — hasil build
 - `site.webmanifest`, `assets/img/apple-touch-icon.png` — ikon app/PWA
@@ -42,17 +45,15 @@ Jangan edit manual (hasil generate): `post/*/index.html`, `project/*/index.html`
 - `assets/css/style.css` — styling (token tema via `:root` gelap default + `[data-theme="light"]`, termasuk `@font-face` self-hosted)
 - `assets/fonts/` — woff2 self-hosted (Space Grotesk, IBM Plex Sans/Mono), lisensi SIL OFL
 - `assets/js/site.js` — tema (gelap default/terang + localStorage), nav mobile, tahun footer, opt-in GoatCounter
-- `assets/js/journey.js` — stage chapter untuk adegan WebGL, chapter rail, event `journey` (hanya halaman utama)
-- `assets/js/journey.js` — chapter aktif untuk rail `#opening…#contact` (label halaman utama saja), dan state `data-chapter-active` yang dipakai CSS untuk scroll cue dan cakram gerhana; bukan animasi
-- `assets/js/main.js` — logika & data proyek (baca `content/repos.json`; proyek privat tanpa repo GitHub dikurasi di `ownedProjects` dalam file ini, jangan taruh di `repos.json` karena ditimpa build)
-- `assets/js/blog.js` — pemuat data artikel (manifest + fallback GitHub API)
+- `assets/js/journey.js` — chapter aktif untuk rail `#opening…#contact` (hanya halaman utama), menulis `data-chapter-active` + kelas `is-current`; bukan animasi, dan hanya dimuat kalau browser tidak punya CSS scroll timeline
+- `assets/js/blog.js` — pemuat satu artikel untuk `post.html?slug=` (fallback link lama); daftar artikel sudah jadi HTML di `blog.html`
 - `assets/js/markdown.js` — renderer Markdown sendiri, tanpa library (dipakai blog.js & build)
 - `assets/img/` — avatar (`avatar.svg`, `avatar-anime.webp`) & screenshot preview proyek (`<nama-repo>.webp`)
 - `content/posts/*.md` — sumber artikel (satu file per artikel)
-- `content/posts.json` — manifest daftar artikel, hasil generate
+- `content/posts.json` — manifest daftar artikel, hasil generate (metadata saja; tidak ada lagi yang membacanya saat runtime, daftarnya sudah ada di `blog.html`)
 - `content/repos.json` — snapshot daftar repo GitHub, hasil generate
 - `admin/` — Sveltia CMS (editor visual di `/admin/`)
-- `tools/build.mjs` — build: manifest + halaman artikel prerender + sitemap + feed
+- `tools/build.mjs` — build: manifest + kartu `index.html` + daftar `blog.html` + halaman artikel/proyek prerender + sitemap + feed
 - `tools/build-repos.mjs` — snapshot `content/repos.json` dari GitHub API (pakai `GITHUB_TOKEN` di CI)
 - `tools/make-og.swift`, `tools/make-icon.swift` — generator gambar OG & ikon (macOS saja)
 
@@ -79,18 +80,22 @@ Isi artikel.
 - Format markdown yang didukung: heading, tebal/miring, kode, list (termasuk bersarang & checklist), blockquote, tabel, tautan, gambar, horizontal rule
 
 ### Alur tulis
-1. **Paling mudah:** buka `/admin/`, login pakai GitHub Access Token, klik **New Post**, isi slug di Slug panel, publish. GitHub Actions (`.github/workflows/build-site.yml`) me-regenerate manifest + halaman prerender + sitemap + feed, lalu GitHub Pages deploy.
-2. **Manual:** buat/edit file `.md`, jalankan `node tools/build.mjs`, lalu `git push`.
+1. **Paling mudah:** buka `/admin/`, login pakai GitHub Access Token, klik **New Post**, isi slug di Slug panel, publish. GitHub Actions (`.github/workflows/build-site.yml`) me-regenerate manifest + daftar blog + kartu + halaman prerender + sitemap + feed, lalu GitHub Pages deploy.
+2. **Manual:** buat/edit file `.md`, jalankan `node tools/build.mjs` (script ini juga menulis ulang blok kartu di `index.html` dan `blog.html`), lalu `git push`.
 
 ### Cara kerja data artikel
-Halaman artikel adalah HTML prerender (`post/<slug>/index.html`) — tanpa JS pun
-terbaca crawler dan pembaca feed. `blog.js` memuat `content/posts.json` lebih
-dulu, lalu menggabungkan daftar `content/posts/` dari GitHub API untuk slug
-yang belum ada di manifest, sehingga artikel CMS baru langsung muncul walau
-Actions belum selesai. Daftar ditampilkan dari cache lalu di-revalidate di
-background; cache `localStorage` 1 menit (diabaikan di localhost).
-`post.html?slug=` tetap ada sebagai fallback link lama dan menitipkan canonical
-ke URL prerender.
+Daftar artikel adalah HTML prerender di dalam `blog.html` (blok `posts:start`→
+`posts:end`), dan tiap artikel punya halaman sendiri di `post/<slug>/index.html`.
+Tanpa JS pun crawler, pembaca feed, dan pengunjung melihat daftar yang sama — tidak
+ada fetch, tidak ada skeleton, tidak ada layout shift.
+
+Konsekuensinya: artikel baru muncul setelah Actions selesai (sekitar satu menit
+setelah publish), bukan seketika. Dulu `blog.js` menutup jeda itu dengan menarik
+manifest + daftar file dari GitHub API di browser; itu dilepas supaya halaman
+tidak perlu render daftar sama sekali.
+
+`blog.js` sekarang hanya dipakai `post.html?slug=` — fallback untuk link lama —
+dan menitipkan canonical ke URL prerender.
 
 ### Penting
 - `.nojekyll` wajib ada, kalau tidak Jekyll akan mengubah file `.md` ber-frontmatter menjadi HTML dan file mentahnya tidak ter-deploy.
@@ -118,29 +123,43 @@ draft: false
 Isi halaman (Markdown, opsional).
 ```
 
-- **Slug = nama file** (`harga-pangan.md` → `project/harga-pangan/`). Samakan dengan nama repo supaya `main.js` bisa mencocokkan kartu ke halaman.
+- **Slug = nama file** (`harga-pangan.md` → `project/harga-pangan/`). Samakan dengan nama repo supaya build bisa mencocokkan kartu ke halaman.
 - `repo` diisi nama repo GitHub; `private: true` menyembunyikan link repo dan status publik.
 - `demo` dan `cover` opsional. Tanpa `cover`, halaman memakai `assets/img/og.jpg` dan kartu memakai `assets/img/<repo>.webp`.
 - `draft: true` menyembunyikan proyek dari kartu, halaman, dan sitemap.
-- Kartu di homepage membaca manifest: judul dan ringkasan diambil dari file proyek, lalu menambah link **Details** ke halaman detail. Repo yang belum punya file proyek tetap tampil dengan perilaku lama (link ke repo/demo).
+- Kartu di homepage dirender `tools/build.mjs` dari `content/repos.json` +
+  `content/projects.json`: judul dan ringkasan dari file proyek, plus link
+  **Details** ke halaman detail. Repo tanpa file proyek tetap tampil dengan
+  perilaku lama (link ke repo/demo).
+- Proyek privat tanpa repo GitHub dikurasi di `ownedProjects` dalam
+  `tools/build.mjs`, jangan taruh di `repos.json` karena ditimpa
+  `tools/build-repos.mjs`. Kunci urutan kartu ada di sana: `ownedProjects` di
+  depan, repo GitHub di belakang, dan kartu pertama jadi featured.
 
 Alur: edit `content/projects/<slug>.md` (di `/admin/` atau manual), jalankan
 `node tools/build.mjs`, commit. CI juga otomatis build saat file proyek berubah.
 
-## Halaman utama: chapter & gerhana statis
-Detail teknis (`journey.js`, `data-chapter-active`, cakram CSS, pin chapter,
-timeline `--chapter` untuk yang di-pin) ada di
-`docs/SCENE.md`. Baca hanya saat menyentuh `assets/js/journey.js` atau bagian
-hero di `assets/css/style.css`.
+## Halaman utama: chapter, rail, dan scroll-spy
+Empat chapter (`#opening`, `#projects`, `#about`, `#contact`) plus rail di gutter
+kanan. Rail, highlight nav, dan scroll cue dikerjakan CSS scroll timeline: tiap
+chapter mendeklarasikan `view-timeline` sendiri, `timeline-scope` di `html`
+mengangkat namanya ke dokumen, dan tiap link membaca jendela `48dvh` →
+`calc(100% - 48dvh)` dari chapter-nya. Tidak ada `scroll` event.
+
+Detail lengkap (rumus jendela, `@property --lit`, jebakan spesifisitas, dan apa
+saja yang harus diubah saat menambah chapter) ada di `docs/CHAPTERS.md`. Baca hanya
+saat menyentuh blok scroll-spy/reveal di `assets/css/style.css` atau mengubah
+chapter di `index.html`.
 
 ## Animasi scroll
-Progres halaman, reveal, word-rise tipe `.display` → CSS native (`animation-timeline: scroll()/view()`), bukan `scroll` event atau `IntersectionObserver`. Wajib `@supports`, `prefers-reduced-motion`, `animation-duration: 1ms`. Tidak ada JS untuk animasi; `journey.js` hanya chapter state (bukan animasi). Pola: skill `scroll-driven-animations`.
+Progres halaman, reveal, word-rise tipe `.display`, chapter rail, dan scroll cue → CSS native (`animation-timeline: scroll()/view()`), bukan `scroll` event atau `IntersectionObserver`. Wajib `@supports`, `prefers-reduced-motion`, `animation-duration: 1ms`. Tidak ada JS untuk animasi; `journey.js` hanya state chapter dan hanya dimuat di browser tanpa scroll timeline. Pola: skill `scroll-driven-animations`.
 
 ## Komunikasi
 - Bahasa Indonesia untuk komunikasi dengan user
 - Konten website (UI) menggunakan Bahasa Inggris
 
 ## Catatan
+- **Pratinjau lokal lewat server, bukan `file://`.** Halaman prerender memakai path absolut (`/assets/...`), dan di bawah `file://` link `post/<slug>/` hanya jadi directory listing, bukan artikel. Jalankan `python3 -m http.server 8000` lalu buka `http://127.0.0.1:8000/`.
 - Jangan tambah library/framework tanpa konfirmasi
 - Screenshot preview bisa di-regenerate dengan membuka URL live demo proyek
 - Sveltia CMS dimuat dari CDN (`unpkg.com`), jadi `/admin/` butuh koneksi internet

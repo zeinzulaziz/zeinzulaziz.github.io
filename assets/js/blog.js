@@ -1,13 +1,14 @@
+/* Single-article loader for post.html — the fallback for old ?slug= links.
+   Articles are prerendered at post/<slug>/ by tools/build.mjs, and the blog
+   index is prerendered into blog.html, so the list no longer needs a renderer
+   at runtime. This file only exists so a link written before the prerendered
+   pages still resolves, and it points every signal at the canonical page. */
 (function () {
   "use strict";
-
-  const CACHE_KEY = "blog.index.v4";
-  const CACHE_TTL = 60 * 1000;
 
   const REPO = "zeinzulaziz/zeinzulaziz.github.io";
   const BRANCH = "main";
   const POSTS_DIR = "content/posts";
-  const MANIFEST = "content/posts.json";
   const RAW_BASE =
     "https://raw.githubusercontent.com/" + REPO + "/" + BRANCH + "/" + POSTS_DIR + "/";
 
@@ -25,36 +26,6 @@
   // The canonical article URL is the prerendered page built by tools/build.mjs.
   function postUrl(slug) {
     return "post/" + encodeURIComponent(slug) + "/";
-  }
-
-  function isLocalHost() {
-    return /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
-  }
-
-  function readCache() {
-    if (isLocalHost() || /[?&]nocache\b/.test(window.location.search)) return null;
-    try {
-      const raw = window.localStorage.getItem(CACHE_KEY);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      if (!parsed || typeof parsed.time !== "number") return null;
-      if (Date.now() - parsed.time > CACHE_TTL) return null;
-      return Array.isArray(parsed.posts) ? parsed.posts : null;
-    } catch (err) {
-      return null;
-    }
-  }
-
-  function writeCache(posts) {
-    if (isLocalHost() || /[?&]nocache\b/.test(window.location.search)) return;
-    try {
-      window.localStorage.setItem(
-        CACHE_KEY,
-        JSON.stringify({ time: Date.now(), posts: posts })
-      );
-    } catch (err) {
-      /* storage penuh atau diblokir — abaikan, cache hanya bonus */
-    }
   }
 
   function parseFrontmatter(raw) {
@@ -107,16 +78,12 @@
   function toArray(value) {
     if (Array.isArray(value)) return value;
     if (typeof value !== "string" || !value.trim()) return [];
-    return value.split(",").map(function (t) {
-      return t.trim();
-    }).filter(Boolean);
-  }
-
-  function slugify(value) {
-    return String(value)
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+    return value
+      .split(",")
+      .map(function (t) {
+        return t.trim();
+      })
+      .filter(Boolean);
   }
 
   function formatDate(value) {
@@ -142,8 +109,6 @@
       date: d.date || "",
       description: d.description || d.summary || "",
       tags: toArray(d.tags),
-      type: d.type === "note" ? "note" : "article",
-      draft: d.draft === true || d.published === false,
       body: parsed.body,
       url: postUrl(slug),
     };
@@ -154,7 +119,7 @@
     return Math.max(1, Math.round(words / 200));
   }
 
-  /* ---------- data layer ---------- */
+  /* ---------- data ---------- */
 
   function fetchText(url) {
     return fetch(url, { cache: "no-cache" }).then(function (res) {
@@ -165,8 +130,7 @@
 
   function listRemoteFiles() {
     const url =
-      "https://api.github.com/repos/" + REPO +
-      "/contents/" + POSTS_DIR + "?ref=" + BRANCH;
+      "https://api.github.com/repos/" + REPO + "/contents/" + POSTS_DIR + "?ref=" + BRANCH;
     return fetch(url, { cache: "no-cache" })
       .then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status);
@@ -187,107 +151,8 @@
       });
   }
 
-  function loadManifest() {
-    return fetch(MANIFEST, { cache: "no-cache" }).then(function (res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.json();
-    }).then(function (data) {
-      const list = Array.isArray(data) ? data : data && data.posts;
-      if (!Array.isArray(list)) throw new Error("Manifest tidak valid");
-      return list;
-    });
-  }
-
-  function loadPosts(options) {
-    const skipCache = !!(options && options.skipCache);
-    if (!skipCache) {
-      const cached = readCache();
-      if (cached) return Promise.resolve(cached);
-    }
-
-    return Promise.all([
-      loadManifest().catch(function () {
-        return [];
-      }),
-      listRemoteFiles().then(
-        function (files) {
-          return { ok: true, files: files };
-        },
-        function () {
-          // Listing gagal (rate limit dll) — manifest dipakai penuh sebagai fallback.
-          return { ok: false, files: [] };
-        }
-      ),
-    ])
-      .then(function (results) {
-        const manifest = results[0];
-        const remoteState = results[1];
-        const remote = remoteState.files;
-        const remoteSlugs = {};
-        remote.forEach(function (file) {
-          remoteSlugs[file.slug] = true;
-        });
-        const bySlug = {};
-
-        manifest.forEach(function (entry) {
-          if (!entry || !entry.slug) return;
-          // Saat daftar file tersedia, file yang sudah dihapus ikut terbuang.
-          if (remoteState.ok && !remoteSlugs[entry.slug]) return;
-          bySlug[entry.slug] = {
-            slug: entry.slug,
-            title: entry.title || entry.slug,
-            date: entry.date || "",
-            description: entry.description || "",
-            tags: toArray(entry.tags),
-            type: entry.type === "note" ? "note" : "article",
-            draft: entry.draft === true,
-            readingTime: entry.readingTime || 0,
-            url: postUrl(entry.slug),
-          };
-        });
-
-        const missing = remote.filter(function (file) {
-          return !bySlug[file.slug];
-        });
-
-        return Promise.all(
-          missing.map(function (file) {
-            return fetchText(file.url)
-              .then(function (raw) {
-                const post = normalize(raw, file.slug);
-                // Nama file adalah identitas yang benar-benar ada di repo —
-                // frontmatter slug yang beda tidak boleh dipakai sebagai URL.
-                post.slug = file.slug;
-                post.url = postUrl(file.slug);
-                return post;
-              })
-              .catch(function () {
-                return null;
-              });
-          })
-        ).then(function (fetched) {
-          fetched.forEach(function (post) {
-            if (post && post.slug && !bySlug[post.slug]) bySlug[post.slug] = post;
-          });
-
-          const list = Object.keys(bySlug)
-            .map(function (key) {
-              return bySlug[key];
-            })
-            .filter(function (post) {
-              return !post.draft;
-            })
-            .sort(function (a, b) {
-              return String(b.date).localeCompare(String(a.date));
-            });
-
-          if (!list.length) throw new Error("Belum ada artikel");
-          writeCache(list);
-          return list;
-        });
-      });
-  }
-
+  // Frontmatter slug can differ from the file name on older articles. Filename
+  // is the identity that actually exists in the repo, so it wins as the URL.
   function findByFrontmatterSlug(slug) {
     return listRemoteFiles().then(function (files) {
       return Promise.all(
@@ -331,8 +196,6 @@
         return post;
       })
       .catch(function () {
-        // File <slug>.md tidak ada — coba cocokkan lewat frontmatter slug
-        // (artikel lama yang nama file-nya beda dari slug).
         return findByFrontmatterSlug(slug).then(function (post) {
           post.readingTime = readingTime(post.body);
           return post;
@@ -341,58 +204,6 @@
   }
 
   /* ---------- rendering ---------- */
-
-  function postCard(post, index) {
-    const meta =
-      '<div class="post-meta">' +
-      (post.date ? "<span>" + escapeHtml(formatDate(post.date)) + "</span>" : "") +
-      (post.readingTime ? "<span>" + post.readingTime + " min read</span>" : "") +
-      "</div>";
-
-    const tags = post.tags.length
-      ? '<div class="post-tags">' + post.tags.map(function (tag) {
-          return "<span>" + escapeHtml(tag) + "</span>";
-        }).join("") + "</div>"
-      : "";
-
-    return (
-      '<article class="post-card reveal' + (post.type === "note" ? " is-note" : "") + '"' +
-      ' style="--d:' + Math.min(index * 60, 360) + 'ms">' +
-      meta +
-      '<h2 class="post-card-title"><a href="' + escapeHtml(post.url) + '">' + escapeHtml(post.title) + "</a></h2>" +
-      (post.description ? '<p class="post-card-desc">' + escapeHtml(post.description) + "</p>" : "") +
-      tags +
-      "</article>"
-    );
-  }
-
-  function renderList(posts) {
-    const grid = document.getElementById("blogList");
-    if (!grid) return;
-    grid.setAttribute("aria-busy", "false");
-
-    if (!posts.length) {
-      grid.innerHTML = '<p class="blog-empty">No articles yet. Check back soon.</p>';
-      contentChanged();
-      return;
-    }
-
-    const notes = posts.filter(function (p) {
-      return p.type === "note";
-    }).length;
-    const articles = posts.length - notes;
-
-    document.getElementById("blogCount").textContent =
-      articles + (articles === 1 ? " article" : " articles") +
-      " · " + notes + (notes === 1 ? " note" : " notes");
-
-    grid.innerHTML = posts
-      .map(function (post, index) {
-        if (!post.readingTime) post.readingTime = readingTime(post.body);
-        return postCard(post, index);
-      })
-      .join("");
-  }
 
   function setMeta(attr, key, content) {
     if (!content) return;
@@ -451,7 +262,6 @@
     root.hidden = false;
     const loader = document.getElementById("postLoading");
     if (loader) loader.hidden = true;
-    contentChanged();
   }
 
   function showPostError(message) {
@@ -459,29 +269,6 @@
     if (loader) {
       loader.innerHTML = '<p class="blog-empty">' + escapeHtml(message) + "</p>";
     }
-    contentChanged();
-  }
-
-  function initList() {
-    if (!document.getElementById("blogList")) return;
-
-    // Tampilkan cache dulu bila ada, lalu revalidate di background
-    // supaya artikel baru dari CMS langsung terlihat tanpa menunggu TTL.
-    const cached = readCache();
-    const hasCache = !!(cached && cached.length);
-    if (hasCache) renderList(cached);
-
-    loadPosts({ skipCache: true })
-      .then(renderList)
-      .catch(function (err) {
-        if (hasCache) return; // cache basi masih lebih baik daripada error
-        const grid = document.getElementById("blogList");
-        grid.setAttribute("aria-busy", "false");
-        grid.innerHTML =
-          '<p class="blog-empty">Could not load posts (' + escapeHtml(err.message) +
-          "). Try reloading the page.</p>";
-        contentChanged();
-      });
   }
 
   function initSingle() {
@@ -500,15 +287,5 @@
       });
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    initList();
-    initSingle();
-  });
-
-  window.BlogData = {
-    loadPosts: loadPosts,
-    loadPost: loadPost,
-    parseFrontmatter: parseFrontmatter,
-    slugify: slugify,
-  };
+  document.addEventListener("DOMContentLoaded", initSingle);
 })();

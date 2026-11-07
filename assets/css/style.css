@@ -42,6 +42,15 @@
   src: url("../fonts/ibm-plex-mono-500.woff2") format("woff2");
 }
 
+/* A registered number the scroll-spy animations can drive — see the spy block.
+   It lets the label colour follow the chapter without taking the colour
+   property hostage, which would kill :hover and .is-active. */
+@property --lit {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
 /* ---------- tokens: night (default) ---------- */
 :root {
   --paper: #080d16;
@@ -56,12 +65,6 @@
   --accent-ink: #080d16;
   --rail-ink: var(--ink-faint);
   color-scheme: dark;
-
-  /* The stand-in eclipse reads these. The glow is the corona's warm; the
-     core is the hairline on the limb; the body is the moon itself. */
-  --scene-core: #fff0cc;
-  --scene-glow: #ffbf80;
-  --scene-body: #0e121b;
 
   --radius: 2px;
 
@@ -94,14 +97,6 @@
      darker keeps the labels legible there. */
   --rail-ink: var(--ink-soft);
   color-scheme: light;
-
-  /* The ring's hottest line. At night it is light against the dark; on paper
-     it is the deepest copper, because a pale ring on cream disappears. */
-  --scene-core: #6b3c1a;
-  /* The painted glow stays brighter than the text accent on purpose: a darker
-     haze over paper would eat the contrast of every label under it. */
-  --scene-glow: #8a5426;
-  --scene-body: #121824;
 }
 
 *,
@@ -145,7 +140,7 @@ body::before {
   background-size: 3px 3px;
 }
 
-/* Vignette: settles the canvas edges into the page ground. */
+/* Vignette: settles the page edges into the ground. */
 body::after {
   content: "";
   position: fixed;
@@ -187,7 +182,7 @@ a {
   border-radius: 1px;
 }
 
-/* Content sits above the grain, the canvas, and the vignette. */
+/* Content sits above the grain and the vignette. */
 .site-header,
 main,
 .site-footer,
@@ -221,59 +216,6 @@ main,
 
 .skip-link:focus {
   top: 0.75rem;
-}
-
-/* ---------- the scene layer (home page only) ---------- */
-
-.scene {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* The stand-in is the eclipse: always up, holding its place in the layout. */
-.still-eclipse {
-  position: absolute;
-  inset: 0;
-  opacity: 1;
-  transition: opacity 0.9s var(--ease);
-}
-
-.still-eclipse .disc {
-  position: absolute;
-  left: 77.5%;
-  top: 45.5%;
-  width: min(45svh, 44vw);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 34% 22%,
-    color-mix(in srgb, var(--scene-glow) 40%, var(--scene-body)) 0%,
-    var(--scene-body) 42%
-  );
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--scene-glow) 72%, transparent),
-    0 0 24px color-mix(in srgb, var(--scene-glow) 28%, transparent),
-    0 0 130px color-mix(in srgb, var(--scene-glow) 13%, transparent);
-  transition: opacity 0.8s var(--ease);
-}
-
-/* The stand-in keeps the plot in the one move CSS can afford: it leaves while
-   the chapters are read, and comes back for the closing frame. */
-html:not([data-chapter-active="opening"]):not([data-chapter-active="contact"])
-  .still-eclipse .disc {
-  opacity: 0;
-}
-
-/* Narrow screens only have the top right corner. */
-@media (max-aspect-ratio: 1/1) {
-  .still-eclipse .disc {
-    left: 90%;
-    top: 23.5%;
-    width: min(16.5svh, 30vw);
-  }
 }
 
 /* ---------- header ---------- */
@@ -686,7 +628,8 @@ html:not([data-chapter-active="opening"]):not([data-chapter-active="contact"])
   transition: opacity 0.35s var(--ease), visibility 0.35s;
 }
 
-/* Once the opening chapter is behind us there is nothing to cue. */
+/* Fallback for browsers without scroll timelines: journey.js sets the state.
+   Where timelines exist, the cue-out animation wins over this. */
 html:not([data-chapter-active="opening"]) .scroll-cue {
   opacity: 0;
   visibility: hidden;
@@ -955,90 +898,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   }
 }
 
-/* ---------- loading, before the data arrives ---------- */
-
-.projects-loading {
-  color: var(--ink-faint);
-  padding: 2.5rem 0;
-}
-
-.projects-loading a {
-  color: var(--ink);
-  border-bottom: 1px solid var(--line-strong);
-  text-decoration: none;
-}
-
-.projects-loading a:hover { color: var(--accent); }
-
-.skeleton-preview,
-.skeleton-thumb,
-.skeleton-line {
-  background: linear-gradient(
-    100deg,
-    var(--surface-2) 40%,
-    color-mix(in srgb, var(--surface-2) 60%, var(--line)) 50%,
-    var(--surface-2) 60%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.4s linear infinite;
-}
-
-@keyframes shimmer {
-  to { background-position: -200% 0; }
-}
-
-.skeleton-card {
-  border: 1px solid var(--line-strong);
-  background: var(--surface);
-  padding: 1.6rem;
-  margin-bottom: 0.6rem;
-}
-
-@media (min-width: 840px) {
-  .skeleton-card {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 2.2rem;
-    align-items: center;
-  }
-}
-
-.skeleton-card .skeleton-preview {
-  aspect-ratio: 16 / 9;
-}
-
-@media (max-width: 839px) {
-  .skeleton-card .skeleton-preview { margin-bottom: 1.2rem; }
-}
-
-.skeleton-card .skeleton-line {
-  height: 0.8rem;
-  margin: 0.9rem 0 0;
-}
-
-.skeleton-card .skeleton-line:last-child { width: 55%; }
-
-.skeleton-row {
-  display: flex;
-  gap: 1.4rem;
-  align-items: center;
-  padding: 1.3rem 0;
-}
-
-.skeleton-row + .skeleton-row { border-top: 1px solid var(--line); }
-
-.skeleton-thumb {
-  flex: none;
-  width: 104px;
-  aspect-ratio: 16 / 10;
-}
-
-.skeleton-col { flex: 1; min-width: 0; }
-
-.skeleton-row .skeleton-line { height: 0.75rem; }
-.skeleton-row .skeleton-line:first-child { width: 32%; margin-bottom: 0.7rem; }
-.skeleton-row .skeleton-line:last-child { width: 58%; }
-
 /* ---------- about ---------- */
 
 .about-top {
@@ -1272,13 +1131,14 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--rail-ink);
+    /* --lit rides from 0 to 1 with the chapter in view (see the spy block). */
+    color: color-mix(in srgb, var(--accent) calc(var(--lit) * 100%), var(--rail-ink));
     text-decoration: none;
     transition: color 0.2s;
   }
 
-  /* The scene's halo drifts across this gutter as the page is read, so the
-     labels carry their own field rather than trusting what is behind them. */
+  /* The ground shifts as the page is read, so the labels carry their own field
+     rather than trusting what is behind them. */
   .chapter-rail a::before {
     content: "";
     position: absolute;
@@ -1290,24 +1150,118 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
     -webkit-backdrop-filter: blur(6px);
   }
 
+  /* 3rem wide, scaled down to 1.4rem when its chapter is not current:
+     transform composites, width would re-layout on every scroll frame. */
   .chapter-rail a::after {
     content: "";
-    width: 1.4rem;
+    width: 3rem;
     height: 1px;
     background: var(--line-strong);
-    transition: width 0.25s var(--ease), background-color 0.2s;
+    transform: scaleX(0.4667);
+    transform-origin: 100% 50%;
+    transition: background-color 0.2s;
   }
 
   .chapter-rail a:hover { color: var(--ink); }
 
+  /* Fallback for browsers without scroll timelines: journey.js adds the class.
+     Where the timelines exist, the animation wins over these declarations. */
   .chapter-rail a.is-current {
     color: var(--accent);
   }
 
   .chapter-rail a.is-current::after {
-    width: 3rem;
+    transform: scaleX(1);
     background: var(--accent);
   }
+}
+
+/* ---------- scroll-spy (CSS only) ---------- */
+/* Each chapter carries a named view timeline (declared with the reveal block).
+   timeline-scope lifts those names to the document so the rail and the nav,
+   which sit outside the chapters, can read them. A chapter is current across
+   the stretch where its centre is the nearest one to the middle of the viewport
+   — the same rule the old scroll handler applied.
+
+   That stretch needs no per-chapter tuning, because it is a fixed distance in
+   pixels, not a share of the chapter: a chapter becomes current half a viewport
+   after its box starts entering, and stops being current half a viewport before
+   it finishes leaving. So the range below is written in viewport units, and a
+   chapter of any height gets the right window. The shoulders are short: they
+   only take the edge off the switch, which is why the fade is a couple of
+   percent wide rather than a long ramp. */
+@supports (animation-timeline: view()) and (timeline-scope: --chapter-opening) {
+  html {
+    timeline-scope: --chapter-opening, --chapter-projects, --chapter-about,
+      --chapter-contact;
+  }
+
+  body.home .chapter-rail a,
+  body.home .chapter-rail a::after,
+  body.home .nav-links a[href^="#"] {
+    animation: spy-lit linear 1ms both;
+    animation-range: cover 48dvh cover calc(100% - 48dvh);
+  }
+
+  body.home .chapter-rail a::after {
+    animation-name: spy-bar;
+  }
+
+  body.home .nav-links a[href^="#"] {
+    color: color-mix(in srgb, var(--accent) calc(var(--lit) * 100%), var(--ink-soft));
+  }
+
+  /* Hover has to be re-stated: the mix above outranks the base hover rule. */
+  body.home .nav-links a:hover {
+    color: var(--ink);
+  }
+
+  /* One chapter per link, read by name. Every selector here has to outrank the
+     `animation` shorthand above: that shorthand resets animation-timeline to
+     auto, and specificity decides which wins. */
+  body.home .chapter-rail a[href="#opening"],
+  body.home .chapter-rail a[href="#opening"]::after,
+  body.home .nav-links a[href$="#opening"] { animation-timeline: --chapter-opening; }
+
+  body.home .chapter-rail a[href="#projects"],
+  body.home .chapter-rail a[href="#projects"]::after,
+  body.home .nav-links a[href$="#projects"] { animation-timeline: --chapter-projects; }
+
+  body.home .chapter-rail a[href="#about"],
+  body.home .chapter-rail a[href="#about"]::after,
+  body.home .nav-links a[href$="#about"] { animation-timeline: --chapter-about; }
+
+  body.home .chapter-rail a[href="#contact"],
+  body.home .chapter-rail a[href="#contact"]::after,
+  body.home .nav-links a[href$="#contact"] { animation-timeline: --chapter-contact; }
+
+  /* The cue belongs to the opening chapter, which has no nav link of its own.
+     It fades over the last fifth of a viewport before that chapter stops being
+     current — the point where the pin has released and the page is moving. */
+  body.home .scroll-cue {
+    animation: cue-out linear 1ms both;
+    animation-timeline: --chapter-opening;
+    animation-range: cover calc(100% - 68dvh) cover calc(100% - 48dvh);
+  }
+}
+
+/* Positions are a share of the window, so the plateau runs between the
+   shoulders and the fade takes the first and last couple of percent. */
+@keyframes spy-lit {
+  0% { --lit: 0; }
+  3%, 97% { --lit: 1; }
+  100% { --lit: 0; }
+}
+
+@keyframes spy-bar {
+  0% { transform: scaleX(0.4667); background-color: var(--line-strong); }
+  3%, 97% { transform: scaleX(1); background-color: var(--accent); }
+  100% { transform: scaleX(0.4667); background-color: var(--line-strong); }
+}
+
+@keyframes cue-out {
+  from { opacity: 1; visibility: visible; }
+  to   { opacity: 0; visibility: hidden; }
 }
 
 /* ---------- reading pages ---------- */
@@ -1740,15 +1694,25 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
     }
 
     /* A reveal inside a pin would freeze on view(): the pin stops moving while
-       the chapter keeps scrolling. The chapter carries that timeline instead. */
-    .chapter {
-      view-timeline: --chapter block;
+       the chapter keeps scrolling. The chapter carries the timeline instead.
+       Each chapter gets its own name, so the rail and the nav can read them
+       from outside — see the scroll-spy block. inset 0 keeps the timeline in
+       step with the chapter box rather than the scroll padding. */
+    #opening  { view-timeline: --chapter-opening  block; }
+    #projects { view-timeline: --chapter-projects block; }
+    #about    { view-timeline: --chapter-about    block; }
+    #contact  { view-timeline: --chapter-contact  block; }
+
+    #opening, #projects, #about, #contact {
+      view-timeline-inset: 0;
     }
 
     .chapter-full .pin .reveal {
-      animation-timeline: --chapter;
       animation-range: cover 0% cover 22%;
     }
+
+    #opening .pin .reveal { animation-timeline: --chapter-opening; }
+    #contact .pin .reveal { animation-timeline: --chapter-contact; }
   }
 }
 
@@ -1913,12 +1877,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
     transform: none;
   }
 
-  .skeleton-preview,
-  .skeleton-thumb,
-  .skeleton-line {
-    animation: none;
-  }
-
   /* No pinning: the chapters read as ordinary sections. */
   .chapter-full {
     min-height: 0;
@@ -1949,12 +1907,6 @@ html[data-motion="off"] .reveal {
 html[data-motion="off"] .rise-in {
   animation: none !important;
   transform: none;
-}
-
-html[data-motion="off"] .skeleton-preview,
-html[data-motion="off"] .skeleton-thumb,
-html[data-motion="off"] .skeleton-line {
-  animation: none;
 }
 
 /* No pinning either: with motion off the page is a plain document again. */
