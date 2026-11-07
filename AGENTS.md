@@ -15,6 +15,7 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 | Renderer Markdown | `assets/js/markdown.js` |
 | CMS `/admin/` | `admin/config.yml` |
 | Ikon & OG image | `tools/make-icon.swift`, `tools/make-og.swift` |
+| Screenshot proyek (turunan responsif) | `assets/img/*.webp` + `tools/build-images.mjs` |
 | Build & deploy | `tools/build.mjs`, `.github/workflows/build-site.yml` (push = deploy) |
 
 Jangan edit manual (hasil generate): `post/*/index.html`, `project/*/index.html`,
@@ -54,6 +55,7 @@ blok di antara marker `<!-- projects:start -->`/`<!-- projects:end -->` di
 - `content/repos.json` — snapshot daftar repo GitHub, hasil generate
 - `admin/` — Sveltia CMS (editor visual di `/admin/`)
 - `tools/build.mjs` — build: manifest + kartu `index.html` + daftar `blog.html` + halaman artikel/proyek prerender + sitemap + feed
+- `tools/build-images.mjs` — turunan WebP responsif (`-200`…`-1600`) dari screenshot asli; dijalankan manual dengan `cwebp`, hasilnya di-commit, jadi CI tidak butuh encoder
 - `tools/build-repos.mjs` — snapshot `content/repos.json` dari GitHub API (pakai `GITHUB_TOKEN` di CI)
 - `tools/make-og.swift`, `tools/make-icon.swift` — generator gambar OG & ikon (macOS saja)
 
@@ -126,6 +128,7 @@ Isi halaman (Markdown, opsional).
 - **Slug = nama file** (`harga-pangan.md` → `project/harga-pangan/`). Samakan dengan nama repo supaya build bisa mencocokkan kartu ke halaman.
 - `repo` diisi nama repo GitHub; `private: true` menyembunyikan link repo dan status publik.
 - `demo` dan `cover` opsional. Tanpa `cover`, halaman memakai `assets/img/og.jpg` dan kartu memakai `assets/img/<repo>.webp`.
+- Kartu memakai thumb 104px, kartu featured ~500px, dan hero halaman detail ~832px, jadi tiap gambar punya turunan `-200/-400/-800/-1200/-1600` yang dipilih `srcset`. Setelah mengganti screenshot, jalankan `node tools/build-images.mjs` (butuh `cwebp`) lalu `node tools/build.mjs`; turunannya ikut di-commit.
 - `draft: true` menyembunyikan proyek dari kartu, halaman, dan sitemap.
 - Kartu di homepage dirender `tools/build.mjs` dari `content/repos.json` +
   `content/projects.json`: judul dan ringkasan dari file proyek, plus link

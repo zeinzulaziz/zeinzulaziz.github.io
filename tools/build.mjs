@@ -138,6 +138,27 @@ function escapeXml(str) {
   return escapeHtml(str).replace(/'/g, "&apos;");
 }
 
+/* Widths produced by tools/build-images.mjs. Only the files that exist are
+   advertised, so a screenshot added without running that script still works —
+   it just falls back to the original. */
+const IMG_WIDTHS = [200, 400, 800, 1200, 1600];
+
+function srcsetFor(base, widths = IMG_WIDTHS, prefix = "") {
+  const parts = [];
+  for (const width of widths) {
+    const file = `${base}-${width}.webp`;
+    if (existsSync(join(root, file))) parts.push(`${prefix}${file} ${width}w`);
+  }
+  return parts.join(", ");
+}
+
+// srcset is useless without sizes; omit both rather than emit half of the pair.
+function imageAttrs(base, sizes, widths = IMG_WIDTHS) {
+  const set = srcsetFor(base, widths);
+  return set ? ` srcset="${escapeHtml(set)}" sizes="${sizes}"` : "";
+}
+
+
 /* ---------- read posts ---------- */
 const files = (await readdir(postsDir, { withFileTypes: true }))
   .filter((e) => e.isFile() && /\.md$/i.test(e.name) && e.name[0] !== "_")
@@ -423,10 +444,15 @@ function renderProjectPage(project) {
       : "";
 
   // The screenshot sits near the top of the page, so it loads eagerly; the
-  // dimensions still reserve its space.
+  // dimensions still reserve its space. Paths are absolute: this page lives at
+  // /project/<slug>/.
   const coverSize = project.coverSize;
+  const coverPath = project.cover ? project.cover.replace(/^\//, "") : "";
+  const coverAttrs = coverPath
+    ? srcsetFor(coverPath.replace(/\.webp$/i, ""), IMG_WIDTHS, "/")
+    : "";
   const shot = project.cover
-    ? `<figure class="project-shot"><img src="/${project.cover.replace(/^\//, "")}" alt="Screenshot of ${escapeHtml(project.title)}"${coverSize ? ` width="${coverSize.width}" height="${coverSize.height}"` : ""} decoding="async"></figure>`
+    ? `<figure class="project-shot"><img src="/${coverPath}"${coverAttrs ? ` srcset="${escapeHtml(coverAttrs)}" sizes="(min-width: 928px) 832px, 92vw"` : ""} alt="Screenshot of ${escapeHtml(project.title)}"${coverSize ? ` width="${coverSize.width}" height="${coverSize.height}"` : ""} decoding="async"></figure>`
     : "";
 
   const prose = project.body.trim()
@@ -627,9 +653,13 @@ function renderProjectCard(repo, index, pageByName) {
   const shotSrc = page && page.cover
     ? page.cover.replace(/^\//, "")
     : `assets/img/${encodeURIComponent(name)}.webp`;
+  const shotBase = shotSrc.replace(/\.webp$/i, "");
+  /* The featured card draws its media at roughly half the container, the plain
+     rows draw a 104px thumb at every width. */
   const featuredPreview = hasScreenshot
-    ? `<img src="${escapeHtml(shotSrc)}" alt="Preview ${escapeHtml(name)}" loading="lazy" decoding="async" width="640" height="360">`
+    ? `<img src="${escapeHtml(shotSrc)}"${imageAttrs(shotBase, "(min-width: 840px) 500px, 90vw")} alt="Preview ${escapeHtml(name)}" loading="lazy" decoding="async" width="640" height="360">`
     : `<div class="preview-placeholder" aria-hidden="true">${escapeHtml(firstLetter(name))}</div>`;
+  const thumb = `<img src="${escapeHtml(shotSrc)}"${imageAttrs(shotBase, "104px", [200, 400])} alt="" loading="lazy" decoding="async" width="640" height="400">`;
 
   const livePlate = demo ? `<span class="live-plate">LIVE</span>` : "";
 
@@ -670,7 +700,7 @@ function renderProjectCard(repo, index, pageByName) {
     return `<article class="${classes}"><div class="project-media">${featuredPreview}${livePlate}</div>${main}<div class="project-side">${meta}${links}</div></article>`;
   }
   if (hasScreenshot) {
-    return `<article class="${classes}"><div class="project-media"><img src="${escapeHtml(shotSrc)}" alt="" loading="lazy" decoding="async" width="640" height="400"></div>${main}<div class="project-side">${meta}${links}</div></article>`;
+    return `<article class="${classes}"><div class="project-media">${thumb}</div>${main}<div class="project-side">${meta}${links}</div></article>`;
   }
   return `<article class="${classes}">${main}<div class="project-side">${meta}${links}</div></article>`;
 }
