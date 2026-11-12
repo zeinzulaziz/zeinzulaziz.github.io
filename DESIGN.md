@@ -142,14 +142,27 @@ entirely. What is gone: the rings, the pointer parallax, the themed shader, the
 stage-driven choreography, and the disc itself in both its forms. What is left is
 the ground it was sitting on.
 
-Layer order, bottom to top: the paper ground, the dither (`body::before`,
-z-index 0), the vignette (`body::after`, z-index 2), the page content (z-index 3),
-the chapter rail (z-index 40), the header (z-index 50).
+Layer order, bottom to top: the paper ground, the aurora (`html::before`,
+z-index 0), the dither (`body::before`, z-index 0), the vignette (`body::after`,
+z-index 2), the page content (z-index 3), the chapter rail (z-index 40), the
+header (z-index 50), the loading veil (`html::after`, z-index 1000).
+
+Two owner-requested additions, November 2026. The **aurora** (`html::before`) is
+a copper warm wash top-right and a cool slate wash low-left, at 7–10% alpha per
+theme, drifting on a 46s transform-only alternate loop — the page's only ambient
+motion, there so large empty chapters do not read as a void. The **loading
+veil** (`html::after`) is a pure-CSS intro: copper dot, a 180px copper line
+sweeping a hairline track, then the veil clears via a 1.05s timed `forwards`
+animation. No JS knows when load finishes, so it is deliberately short rather
+than accurate. Both read from theme tokens (`--aurora-*`, `--accent`, `--paper`),
+both are `pointer-events: none`, and both collapse under `prefers-reduced-motion`
+and `data-motion="off"`.
 
 ## Motion
 
-- Nothing behind the page drifts, ticks, or rises, and nothing on the page moves
-except in response to scroll.
+- Only the aurora behind the page drifts, very slowly (46s, alternate). Nothing
+on the page moves except in response to scroll, and the loading veil clears on
+its own short timer.
 - Chapter state is CSS. Each chapter declares a `view-timeline` of its own;
   `timeline-scope` on `html` lifts those names to the document; and the rail, the
   nav highlight and the scroll cue each read the chapter they belong to. A

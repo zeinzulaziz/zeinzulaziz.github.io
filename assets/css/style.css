@@ -65,6 +65,10 @@
   --accent-ink: #080d16;
   --rail-ink: var(--ink-faint);
   color-scheme: dark;
+  /* Ambient glow: copper warm light top-right, a cool slate wash low-left.
+     Kept under ~10% so body text never loses contrast against the ground. */
+  --aurora-warm: rgba(216, 165, 121, 0.09);
+  --aurora-cool: rgba(110, 142, 216, 0.07);
 
   --radius: 2px;
 
@@ -96,6 +100,10 @@
   /* The rail sits in the penumbra, where the glow tints the paper; a step
      darker keeps the labels legible there. */
   --rail-ink: var(--ink-soft);
+  /* The light room needs a touch more alpha to read at all; still a wash,
+     never a surface. */
+  --aurora-warm: rgba(111, 66, 24, 0.1);
+  --aurora-cool: rgba(47, 79, 153, 0.08);
   color-scheme: light;
 }
 
@@ -152,6 +160,72 @@ body::after {
     transparent 34%,
     color-mix(in srgb, var(--paper) 82%, transparent) 100%
   );
+}
+
+/* Ambient background: two barely-there radial washes drifting on a slow
+   alternate loop. Transform-only, so it composites and never repaints the
+   gradients. Both themes read from the --aurora-* tokens; the light theme
+   carries slightly more alpha because paper swallows less light. */
+html::before {
+  content: "";
+  position: fixed;
+  inset: -22%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 38% at 74% 12%, var(--aurora-warm), transparent 70%),
+    radial-gradient(46% 44% at 12% 88%, var(--aurora-cool), transparent 70%);
+  animation: aurora-drift 46s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes aurora-drift {
+  from { transform: translate3d(-2.5%, -1.5%, 0) scale(1); }
+  to { transform: translate3d(2.5%, 2%, 0) scale(1.06); }
+}
+
+/* Loading veil: a pure-CSS intro, no JS to know when load finishes, so it
+   plays one short timed sequence and leaves. Copper dot with a halo, a 180px
+   copper line sweeping across a hairline track, then the veil clears. The
+   whole overlay is pointer-events: none, and ends visibility: hidden, so it
+   can never trap a click or a screen reader. */
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle, var(--accent) 0 4px, transparent 5px),
+    radial-gradient(circle, color-mix(in srgb, var(--accent) 38%, transparent) 0 12px, transparent 13px),
+    linear-gradient(90deg, var(--accent), var(--accent)),
+    linear-gradient(90deg, var(--line), var(--line));
+  background-position:
+    50% 44%, 50% 44%, 50% 57%, 50% 57%;
+  background-repeat: no-repeat;
+  background-size:
+    13px 13px, 42px 42px, 0 2px, 180px 2px;
+  animation: loader-done 1.05s var(--ease) forwards;
+}
+
+@keyframes loader-done {
+  0% {
+    background-size: 13px 13px, 42px 42px, 0 2px, 180px 2px;
+    opacity: 1;
+    visibility: visible;
+  }
+  40% {
+    background-size: 13px 13px, 42px 42px, 180px 2px, 180px 2px;
+    opacity: 1;
+    visibility: visible;
+  }
+  60% { opacity: 1; }
+  100% {
+    background-size: 13px 13px, 42px 42px, 180px 2px, 180px 2px;
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 h1, h2, h3, h4 {
@@ -1887,6 +1961,19 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
     min-height: 0;
   }
 
+  /* The ambient wash holds still; the veil clears immediately rather than
+     sweeping. The blanket rule above also squashes durations — this makes the
+     intent explicit. */
+  html::before {
+    animation: none;
+  }
+
+  html::after {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+
   *,
   *::before,
   *::after {
@@ -1925,4 +2012,14 @@ html[data-motion="off"] *::after {
   transition-duration: 0.01ms !important;
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
+}
+
+html[data-motion="off"]::before {
+  animation: none !important;
+}
+
+html[data-motion="off"]::after {
+  animation: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
