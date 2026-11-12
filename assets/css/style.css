@@ -66,9 +66,9 @@
   --rail-ink: var(--ink-faint);
   color-scheme: dark;
   /* Ambient glow: copper warm light top-right, a cool slate wash low-left.
-     Kept under ~10% so body text never loses contrast against the ground. */
-  --aurora-warm: rgba(216, 165, 121, 0.09);
-  --aurora-cool: rgba(110, 142, 216, 0.07);
+     Strong enough to read as a light source, soft enough to stay a wash. */
+  --aurora-warm: rgba(216, 165, 121, 0.16);
+  --aurora-cool: rgba(110, 142, 216, 0.13);
 
   --radius: 2px;
 
@@ -100,10 +100,10 @@
   /* The rail sits in the penumbra, where the glow tints the paper; a step
      darker keeps the labels legible there. */
   --rail-ink: var(--ink-soft);
-  /* The light room needs a touch more alpha to read at all; still a wash,
+  /* The light room needs more alpha than dark to read at all; still a wash,
      never a surface. */
-  --aurora-warm: rgba(111, 66, 24, 0.1);
-  --aurora-cool: rgba(47, 79, 153, 0.08);
+  --aurora-warm: rgba(111, 66, 24, 0.15);
+  --aurora-cool: rgba(47, 79, 153, 0.12);
   color-scheme: light;
 }
 
@@ -173,8 +173,8 @@ html::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(42% 38% at 74% 12%, var(--aurora-warm), transparent 70%),
-    radial-gradient(46% 44% at 12% 88%, var(--aurora-cool), transparent 70%);
+    radial-gradient(34% 30% at 74% 12%, var(--aurora-warm), transparent 70%),
+    radial-gradient(36% 34% at 12% 88%, var(--aurora-cool), transparent 70%);
   animation: aurora-drift 46s ease-in-out infinite alternate;
   will-change: transform;
 }

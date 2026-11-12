@@ -148,9 +148,10 @@ z-index 2), the page content (z-index 3), the chapter rail (z-index 40), the
 header (z-index 50), the loading veil (`html::after`, z-index 1000).
 
 Two owner-requested additions, November 2026. The **aurora** (`html::before`) is
-a copper warm wash top-right and a cool slate wash low-left, at 7–10% alpha per
+a copper warm wash top-right and a cool slate wash low-left, at 12–16% alpha per
 theme, drifting on a 46s transform-only alternate loop — the page's only ambient
-motion, there so large empty chapters do not read as a void. The **loading
+motion, there so large empty chapters do not read as a void. (First shipped at
+7–10%; bumped after the owner found it invisible.) The **loading
 veil** (`html::after`) is a pure-CSS intro: copper dot, a 180px copper line
 sweeping a hairline track, then the veil clears via a 1.05s timed `forwards`
 animation. No JS knows when load finishes, so it is deliberately short rather
