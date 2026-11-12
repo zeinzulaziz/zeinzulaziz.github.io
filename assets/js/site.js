@@ -54,39 +54,6 @@
     });
   }
 
-  /* ---------- motion control ---------- */
-
-  function motionReduced() {
-    return root.getAttribute("data-motion") === "off";
-  }
-
-  function applyMotion(reduced, persist) {
-    root.setAttribute("data-motion", reduced ? "off" : "on");
-    var btn = document.querySelector(".motion-toggle");
-    if (btn) {
-      var label = btn.querySelector(".control-label") || btn;
-      label.textContent = reduced ? "Motion off" : "Motion on";
-      btn.setAttribute("aria-label", reduced ? "Turn motion on" : "Turn motion off");
-    }
-    document.dispatchEvent(new CustomEvent("motionchange", { detail: { reduced: reduced } }));
-    if (persist) {
-      try {
-        window.localStorage.setItem("motion", reduced ? "off" : "on");
-      } catch (err) {
-        /* storage blocked: the choice just will not persist */
-      }
-    }
-  }
-
-  function initMotion() {
-    var btn = document.querySelector(".motion-toggle");
-    if (!btn) return;
-    applyMotion(motionReduced(), false);
-    btn.addEventListener("click", function () {
-      applyMotion(!motionReduced(), true);
-    });
-  }
-
   /* ---------- mobile nav ---------- */
 
   function initNav() {
@@ -127,7 +94,6 @@
 
   function init() {
     initTheme();
-    initMotion();
     initNav();
     setYear();
     initAnalytics();

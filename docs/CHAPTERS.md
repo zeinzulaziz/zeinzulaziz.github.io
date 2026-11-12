@@ -106,9 +106,8 @@ ada satu pun `scroll` event yang membaca posisi halaman di browser modern.
   bukan switch.
 - `aria-current` tidak dikelola di rail — sengaja. Rail adalah penanda posisi,
   bukan kontrol navigasi, dan CSS tidak bisa menulis atribut.
-- Tidak ada event antar modul untuk babak ini. `themechange`/`motionchange` masih
-  dipancarkan `site.js`, tapi sejak `scene.js` dihapus tidak ada yang
-  mendengarkannya.
+- Tidak ada event antar modul untuk babak ini. `themechange` masih
+  dipancarkan `site.js`, tapi tidak ada yang mendengarkannya.
 
 ## Reveal dan animasi scroll lain
 

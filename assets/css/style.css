@@ -164,7 +164,7 @@ body::after {
    drifting on a slow alternate loop. Every edge fades to transparent, so
    there is no blur pass and the layer composites without repainting. The ink
    mist uses color-mix against --ink, so both themes adapt with no extra
-   tokens. Transform-only; stops under reduced motion and data-motion="off". */
+   tokens. Transform-only; stops under reduced motion. */
 html::before {
   content: "";
   position: fixed;
@@ -431,13 +431,6 @@ main,
 .control:hover {
   color: var(--ink);
   border-color: var(--ink);
-}
-
-/* Motion off is the state worth marking, not motion on. */
-[data-motion="off"] .motion-toggle {
-  color: var(--accent-ink);
-  background: var(--accent);
-  border-color: var(--accent);
 }
 
 .control svg,
@@ -1984,43 +1977,3 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   }
 }
 
-/* Motion control off: same promise, from localStorage instead of the OS. The
-   !important is the point of the rule — it has to beat the reveal rules above. */
-html[data-motion="off"] .reveal {
-  animation: none !important;
-  opacity: 1;
-  transform: none;
-}
-
-html[data-motion="off"] .rise-in {
-  animation: none !important;
-  transform: none;
-}
-
-/* No pinning either: with motion off the page is a plain document again. */
-html[data-motion="off"] .chapter-full {
-  min-height: 0;
-}
-
-html[data-motion="off"] .chapter-full .pin {
-  position: static;
-  min-height: 0;
-}
-
-html[data-motion="off"] *,
-html[data-motion="off"] *::before,
-html[data-motion="off"] *::after {
-  transition-duration: 0.01ms !important;
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-}
-
-html[data-motion="off"]::before {
-  animation: none !important;
-}
-
-html[data-motion="off"]::after {
-  animation: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-}

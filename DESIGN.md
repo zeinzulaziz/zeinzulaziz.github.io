@@ -157,8 +157,9 @@ the earlier aurora wash. The **loading veil** (`html::after`) is a pure-CSS
 intro: copper dot, a 180px copper line sweeping a hairline track, then the veil
 clears via a 1.05s timed `forwards` animation. No JS knows when load
 finishes, so it is deliberately short rather than accurate. Both are
-`pointer-events: none`, and both collapse under `prefers-reduced-motion`
-and `data-motion="off"`.
+`pointer-events: none`, and both collapse under `prefers-reduced-motion`.
+(The `data-motion` localStorage toggle was removed in November 2026; motion
+reduction now follows only the OS-level `prefers-reduced-motion`.)
 
 ## Motion
 
@@ -202,8 +203,7 @@ its own short timer.
 - Hover: links fill their underline, buttons step up 1px, cards lift their
   border to `line-strong`.
 
-Every one of these stops under `prefers-reduced-motion: reduce`, and the header
-motion control turns them off on request (stored in localStorage). Scroll
+Every one of these stops under `prefers-reduced-motion: reduce`. Scroll
 progress, focus, and hover feedback are not motion and stay.
 
 ## Accent discipline
