@@ -142,26 +142,27 @@ entirely. What is gone: the rings, the pointer parallax, the themed shader, the
 stage-driven choreography, and the disc itself in both its forms. What is left is
 the ground it was sitting on.
 
-Layer order, bottom to top: the paper ground, the aurora (`html::before`,
+Layer order, bottom to top: the paper ground, the smoke (`html::before`,
 z-index 0), the dither (`body::before`, z-index 0), the vignette (`body::after`,
 z-index 2), the page content (z-index 3), the chapter rail (z-index 40), the
 header (z-index 50), the loading veil (`html::after`, z-index 1000).
 
-Two owner-requested additions, November 2026. The **aurora** (`html::before`) is
-a copper warm wash top-right and a cool slate wash low-left, at 12–16% alpha per
-theme, drifting on a 46s transform-only alternate loop — the page's only ambient
-motion, there so large empty chapters do not read as a void. (First shipped at
-7–10%; bumped after the owner found it invisible.) The **loading
-veil** (`html::after`) is a pure-CSS intro: copper dot, a 180px copper line
-sweeping a hairline track, then the veil clears via a 1.05s timed `forwards`
-animation. No JS knows when load finishes, so it is deliberately short rather
-than accurate. Both read from theme tokens (`--aurora-*`, `--accent`, `--paper`),
-both are `pointer-events: none`, and both collapse under `prefers-reduced-motion`
+Two owner-requested additions, November 2026. The **smoke** (`html::before`) is
+the owner's nod to a favourite CodePen (alexaluthor/pen/bGBjRdp), which is a
+`<video>` from wixstatic.com under a `mix-blend-mode: color` gradient —
+reimplemented as pure CSS: three ink-tinted mist blobs (`color-mix` against
+`--ink`, both themes adapt) plus one warm copper ember (`--smoke-warm`, 15–16%
+alpha), no blur pass, drifting on a 54s transform-only alternate loop. Replaces
+the earlier aurora wash. The **loading veil** (`html::after`) is a pure-CSS
+intro: copper dot, a 180px copper line sweeping a hairline track, then the veil
+clears via a 1.05s timed `forwards` animation. No JS knows when load
+finishes, so it is deliberately short rather than accurate. Both are
+`pointer-events: none`, and both collapse under `prefers-reduced-motion`
 and `data-motion="off"`.
 
 ## Motion
 
-- Only the aurora behind the page drifts, very slowly (46s, alternate). Nothing
+- Only the smoke behind the page drifts, very slowly (54s, alternate). Nothing
 on the page moves except in response to scroll, and the loading veil clears on
 its own short timer.
 - Chapter state is CSS. Each chapter declares a `view-timeline` of its own;
