@@ -65,11 +65,8 @@
   --accent-ink: #080d16;
   --rail-ink: var(--ink-faint);
   color-scheme: dark;
-  /* Ambient smoke: one faint warm ember and a rosier ember (echoes the
-     reference pen's warm grade). The ink-tinted mist comes from color-mix
-     against --ink at the use site, so both themes adapt for free. */
-  --smoke-warm: rgba(216, 165, 121, 0.22);
-  --smoke-ember: rgba(207, 79, 83, 0.15);
+  /* Ambient smoke embers derive from --accent at the use site, so both
+     themes adapt for free. */
 
   --radius: 2px;
 
@@ -101,10 +98,6 @@
   /* The rail sits in the penumbra, where the glow tints the paper; a step
      darker keeps the labels legible there. */
   --rail-ink: var(--ink-soft);
-  /* Same embers, deepened for paper; the ink mist comes from color-mix and
-     needs no per-theme token. */
-  --smoke-warm: rgba(111, 66, 24, 0.19);
-  --smoke-ember: rgba(160, 60, 64, 0.12);
   color-scheme: light;
 }
 
@@ -167,9 +160,9 @@ html::before {
   pointer-events: none;
   background:
     radial-gradient(40% 30% at 66% 18%, color-mix(in srgb, var(--ink) 12%, transparent), transparent 68%),
-    radial-gradient(48% 36% at 88% 34%, var(--smoke-ember), transparent 70%),
+    radial-gradient(48% 36% at 88% 34%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 70%),
     radial-gradient(30% 26% at 40% 30%, color-mix(in srgb, var(--ink) 9%, transparent), transparent 70%);
-  animation: smoke-a 26s ease-in-out infinite alternate;
+  animation: smoke-a 22s ease-in-out infinite alternate;
   will-change: transform;
 }
 
@@ -181,20 +174,20 @@ body::before {
   pointer-events: none;
   background:
     radial-gradient(46% 36% at 18% 74%, color-mix(in srgb, var(--ink) 12%, transparent), transparent 68%),
-    radial-gradient(50% 42% at 72% 82%, var(--smoke-warm), transparent 70%),
-    radial-gradient(32% 28% at 46% 66%, var(--smoke-ember), transparent 72%);
-  animation: smoke-b 38s ease-in-out infinite alternate;
+    radial-gradient(50% 42% at 72% 82%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    radial-gradient(32% 28% at 46% 66%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 72%);
+  animation: smoke-b 32s ease-in-out infinite alternate;
   will-change: transform;
 }
 
 @keyframes smoke-a {
-  from { transform: translate3d(-5.5%, -4%, 0) scale(1); }
-  to { transform: translate3d(6%, 4%, 0) scale(1.1); }
+  from { transform: translate3d(-7.5%, -5.5%, 0) scale(1); }
+  to { transform: translate3d(8%, 5.5%, 0) scale(1.12); }
 }
 
 @keyframes smoke-b {
-  from { transform: translate3d(6%, 4.5%, 0) scale(1.07); }
-  to { transform: translate3d(-6.5%, -5%, 0) scale(1); }
+  from { transform: translate3d(8%, 6%, 0) scale(1.09); }
+  to { transform: translate3d(-9%, -7%, 0) scale(1); }
 }
 
 /* Loading veil: a pure-CSS intro, no JS to know when load finishes, so it
