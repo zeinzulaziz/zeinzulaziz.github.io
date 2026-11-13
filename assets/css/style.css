@@ -643,13 +643,6 @@ main,
   margin-bottom: clamp(1.8rem, 4vw, 3rem);
 }
 
-.chapter-note {
-  color: var(--ink-soft);
-  font-size: 0.97rem;
-  max-width: 34rem;
-  margin-top: 1.4rem;
-}
-
 /* services sit inside the work chapter so the page keeps its four-act structure */
 .services {
   margin-top: clamp(2rem, 5vw, 3.5rem);
