@@ -776,16 +776,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   border-top: 1px solid var(--line);
 }
 
-.project-row.is-featured {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "media" "main" "side";
-  gap: 1.6rem;
-  padding: 1.6rem;
-  margin-bottom: 0.6rem;
-  background: color-mix(in srgb, var(--surface) 80%, transparent);
-  border: 1px solid var(--line-strong);
-}
 
 .project-media {
   position: relative;
@@ -794,11 +784,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   overflow: hidden;
 }
 
-.project-row.is-featured .project-media {
-  grid-area: media;
-  width: 100%;
-  border: 1px solid var(--line);
-}
 
 .project-media img {
   width: 100%;
@@ -813,44 +798,14 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   filter: saturate(1);
 }
 
-.project-row.is-featured .project-media img {
-  aspect-ratio: 16 / 9;
-}
 
-.live-plate {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  padding: 0.28em 0.5em;
-  border-radius: 1px;
-}
 
-.preview-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  color: var(--accent);
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  font-weight: 600;
-}
 
 .project-main {
   flex: 1;
   min-width: 0;
 }
 
-.project-row.is-featured .project-main { grid-area: main; }
 
 .project-title {
   font-size: clamp(1.15rem, 2.2vw, 1.4rem);
@@ -859,9 +814,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   margin-bottom: 0.5rem;
 }
 
-.project-row.is-featured .project-title {
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
-}
 
 .project-title a {
   color: var(--ink);
@@ -883,10 +835,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   max-width: 42rem;
 }
 
-.project-row.is-featured .project-desc {
-  font-size: 1rem;
-  max-width: 36rem;
-}
 
 .project-side {
   flex: none;
@@ -897,7 +845,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   text-align: right;
 }
 
-.project-row.is-featured .project-side { grid-area: side; }
 
 .project-meta {
   display: flex;
@@ -935,19 +882,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
 .project-links a:hover {
   color: var(--accent);
   border-color: var(--accent);
-}
-
-@media (min-width: 840px) {
-  .project-row.is-featured {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas: "main media" "side media";
-    align-items: center;
-    gap: 2.2rem;
-  }
-
-  .project-row.is-featured .project-media {
-    height: 100%;
-  }
 }
 
 @media (max-width: 640px) {

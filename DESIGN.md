@@ -91,7 +91,7 @@ pixels, grain and vignette included:
 - the opening frame is the one to protect: it is the only frame where display
   type, a lede, and the facts panel share one screen. The closing frame repeats
   the same stack on the contact chapter.
-- the chapter rail crosses the featured card at 1280x900, so its labels carry
+- the chapter rail crosses the top project row at 1280x900, so its labels carry
   their own field: a soft paper plate with a backdrop blur, the same idiom as the
   header veil (5.27–8.78 measured in dark, 6.00–11.45 on paper). With the field,
   the ratio barely depends on what is behind it.
@@ -230,7 +230,7 @@ previous filled index plate. One per chapter, nowhere else.
 The chapter rail (wide screens only) repeats those names down the right gutter and
 marks the current one with a longer copper rule, so the state never rests on
 colour alone. The rail crosses whatever sits at the right edge of the container —
-a featured card, on the work chapter — so each label carries its own field: a soft
+a project row, on the work chapter — so each label carries its own field: a soft
 paper plate with a backdrop blur, the same idiom as the header veil. With its own
 field the rail measures 5.27 or better across the four acts. The plate is visible
 over a card in the day theme, and legibility wins.
@@ -240,8 +240,8 @@ over a card in the day theme, and legibility wins.
 - Opening: the display statement, the role line, one lede paragraph, two
   actions, and the real facts panel (base, work, availability, other profiles).
 - 01 Work: curated products first (including private builds with no repo link),
-  then GitHub repos sorted by stars, as ruled rows; the top row is the featured
-  block with its real screenshot and a LIVE plate when a demo exists.
+  then GitHub repos sorted by stars, as ruled rows; every row is the same,
+  with a real screenshot thumb when one exists.
 - 02 About: two paragraphs beside the photo, three real stats, then Experience
   and Certifications as one records band.
 - 03 Contact: the closing band with the display title, the availability

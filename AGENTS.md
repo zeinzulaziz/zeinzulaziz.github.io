@@ -128,7 +128,7 @@ Isi halaman (Markdown, opsional).
 - **Slug = nama file** (`harga-pangan.md` → `project/harga-pangan/`). Samakan dengan nama repo supaya build bisa mencocokkan kartu ke halaman.
 - `repo` diisi nama repo GitHub; `private: true` menyembunyikan link repo dan status publik.
 - `demo` dan `cover` opsional. Tanpa `cover`, halaman memakai `assets/img/og.jpg` dan kartu memakai `assets/img/<repo>.webp`.
-- Kartu memakai thumb 104px, kartu featured ~500px, dan hero halaman detail ~832px, jadi tiap gambar punya turunan `-200/-400/-800/-1200/-1600` yang dipilih `srcset`. Setelah mengganti screenshot, jalankan `node tools/build-images.mjs` (butuh `cwebp`) lalu `node tools/build.mjs`; turunannya ikut di-commit.
+- Kartu memakai thumb 104px dan hero halaman detail ~832px, jadi tiap gambar punya turunan `-200/-400/-800/-1200/-1600` yang dipilih `srcset`. Setelah mengganti screenshot, jalankan `node tools/build-images.mjs` (butuh `cwebp`) lalu `node tools/build.mjs`; turunannya ikut di-commit.
 - `draft: true` menyembunyikan proyek dari kartu, halaman, dan sitemap.
 - Kartu di homepage dirender `tools/build.mjs` dari `content/repos.json` +
   `content/projects.json`: judul dan ringkasan dari file proyek, plus link
@@ -137,7 +137,7 @@ Isi halaman (Markdown, opsional).
 - Proyek privat tanpa repo GitHub dikurasi di `ownedProjects` dalam
   `tools/build.mjs`, jangan taruh di `repos.json` karena ditimpa
   `tools/build-repos.mjs`. Kunci urutan kartu ada di sana: `ownedProjects` di
-  depan, repo GitHub di belakang, dan kartu pertama jadi featured.
+  depan, repo GitHub di belakang. Semua kartu seragam (tanpa perlakuan featured).
 
 Alur: edit `content/projects/<slug>.md` (di `/admin/` atau manual), jalankan
 `node tools/build.mjs`, commit. CI juga otomatis build saat file proyek berubah.

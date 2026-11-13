@@ -617,11 +617,7 @@ function repoUrl(name) {
   return `https://github.com/${GITHUB_USER}/${encodeURIComponent(name)}`;
 }
 
-function firstLetter(name) {
-  return name.charAt(0).toUpperCase();
-}
-
-function renderProjectCard(repo, index, pageByName) {
+function renderProjectCard(repo, pageByName) {
   const name = repo.name;
   const page = pageByName[name] || null;
   const pageHref = page ? `project/${encodeURIComponent(page.slug)}/` : null;
@@ -640,14 +636,8 @@ function renderProjectCard(repo, index, pageByName) {
     ? page.cover.replace(/^\//, "")
     : `assets/img/${encodeURIComponent(name)}.webp`;
   const shotBase = shotSrc.replace(/\.webp$/i, "");
-  /* The featured card draws its media at roughly half the container, the plain
-     rows draw a 104px thumb at every width. */
-  const featuredPreview = hasScreenshot
-    ? `<img src="${escapeHtml(shotSrc)}"${imageAttrs(shotBase, "(min-width: 840px) 500px, 90vw")} alt="Preview ${escapeHtml(name)}" loading="lazy" decoding="async" width="640" height="360">`
-    : `<div class="preview-placeholder" aria-hidden="true">${escapeHtml(firstLetter(name))}</div>`;
+  /* Every row draws the same 104px thumb; no featured treatment. */
   const thumb = `<img src="${escapeHtml(shotSrc)}"${imageAttrs(shotBase, "104px", [200, 400])} alt="" loading="lazy" decoding="async" width="640" height="400">`;
-
-  const livePlate = demo ? `<span class="live-plate">LIVE</span>` : "";
 
   const links = pageHref || repoHref || demo
     ? `<p class="project-links">` +
@@ -680,11 +670,8 @@ function renderProjectCard(repo, index, pageByName) {
     `<p class="project-desc">${escapeHtml(desc)}</p>` +
     `</div>`;
 
-  const classes = `project-row reveal${index === 0 ? " is-featured" : ""}`;
+  const classes = "project-row reveal";
 
-  if (index === 0) {
-    return `<article class="${classes}"><div class="project-media">${featuredPreview}${livePlate}</div>${main}<div class="project-side">${meta}${links}</div></article>`;
-  }
   if (hasScreenshot) {
     return `<article class="${classes}"><div class="project-media">${thumb}</div>${main}<div class="project-side">${meta}${links}</div></article>`;
   }
@@ -703,7 +690,7 @@ function projectCardList(repos) {
   const all = ownedProjects.filter((p) => !names.has(p.name)).concat(repos);
   return {
     count: all.length,
-    cards: all.map((repo, index) => renderProjectCard(repo, index, pageByName)),
+    cards: all.map((repo) => renderProjectCard(repo, pageByName)),
   };
 }
 
