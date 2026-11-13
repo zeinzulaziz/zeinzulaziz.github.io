@@ -129,11 +129,10 @@ veil, not on a shadow.
 ## Texture
 
 The ground is flat paper, and the only things laid on it are a dither and a
-vignette: `body::before` sets a 3px grid of 1px dots at 4% ink, the film-grain
-tooth of the reference, and `body::after` settles the page edges into the ground
-with a `radial-gradient`. Both are drawn, neither is requested — no image, no JS,
-and one implementation for both themes, because both read from `--ink` and
-`--paper`.
+vignette: `body::after` stacks a 3px grid of 1px dots at 4% ink, the film-grain
+tooth of the reference, on top of the radial that settles the page edges into
+the ground. Both are drawn, neither is requested — no image, no JS, and one
+implementation for both themes, because both read from `--ink` and `--paper`.
 
 History. This page carried a hand-built three.js eclipse — sphere, rings, a
 shader-drawn corona, ~187 KB gzip vendored — and replaced it with a CSS stand-in
@@ -142,18 +141,22 @@ entirely. What is gone: the rings, the pointer parallax, the themed shader, the
 stage-driven choreography, and the disc itself in both its forms. What is left is
 the ground it was sitting on.
 
-Layer order, bottom to top: the paper ground, the smoke (`html::before`,
-z-index 0), the dither (`body::before`, z-index 0), the vignette (`body::after`,
-z-index 2), the page content (z-index 3), the chapter rail (z-index 40), the
-header (z-index 50), the loading veil (`html::after`, z-index 1000).
+Layer order, bottom to top: the paper ground, smoke layer A (`html::before`,
+z-index 0), smoke layer B (`body::before`, z-index 0), the vignette with the
+grain dots drawn on top of it (`body::after`, z-index 2 — merged so the
+second smoke layer had a pseudo to live in), the page content (z-index 3), the
+chapter rail (z-index 40), the header (z-index 50), the loading veil
+(`html::after`, z-index 1000).
 
-Two owner-requested additions, November 2026. The **smoke** (`html::before`) is
-the owner's nod to a favourite CodePen (alexaluthor/pen/bGBjRdp), which is a
-`<video>` from wixstatic.com under a `mix-blend-mode: color` gradient —
-reimplemented as pure CSS: three ink-tinted mist blobs (`color-mix` against
-`--ink`, both themes adapt) plus one warm copper ember (`--smoke-warm`, 15–16%
-alpha), no blur pass, drifting on a 54s transform-only alternate loop. Replaces
-the earlier aurora wash. The **loading veil** (`html::after`) is a pure-CSS
+Two owner-requested additions, November 2026. The **smoke** (`html::before` + `body::before`) is the owner's nod to a
+favourite CodePen (alexaluthor/pen/bGBjRdp), which is a `<video>` from
+wixstatic.com under a `mix-blend-mode: color` gradient — reimplemented as
+pure CSS: two counter-drifting layers of big soft blobs, so the motion parallax
+reads as rising smoke rather than a sliding gradient. Ink-tinted mist blobs
+(`color-mix` against `--ink`, both themes adapt) plus two embers — copper
+(`--smoke-warm`, ~19–22%) and a rosier red-brick (`--smoke-ember`, ~12–15%) —
+no blur pass, 46s and 67s transform-only alternate loops. Replaces the earlier
+single-layer aurora/smoke washes. The **loading veil** (`html::after`) is a pure-CSS
 intro: copper dot, a 180px copper line sweeping a hairline track, then the veil
 clears via a 1.05s timed `forwards` animation. No JS knows when load
 finishes, so it is deliberately short rather than accurate. Both are
@@ -163,9 +166,9 @@ reduction now follows only the OS-level `prefers-reduced-motion`.)
 
 ## Motion
 
-- Only the smoke behind the page drifts, very slowly (54s, alternate). Nothing
-on the page moves except in response to scroll, and the loading veil clears on
-its own short timer.
+- Two counter-drifting smoke layers behind the page (46s / 67s, alternate).
+Nothing on the page moves except in response to scroll, and the loading veil
+clears on its own short timer.
 - Chapter state is CSS. Each chapter declares a `view-timeline` of its own;
   `timeline-scope` on `html` lifts those names to the document; and the rail, the
   nav highlight and the scroll cue each read the chapter they belong to. A

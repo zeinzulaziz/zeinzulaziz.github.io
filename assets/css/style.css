@@ -65,9 +65,11 @@
   --accent-ink: #080d16;
   --rail-ink: var(--ink-faint);
   color-scheme: dark;
-  /* Ambient smoke: one faint warm ember (echoes the reference pen's warm
-     grade) plus ink-tinted mist drawn with color-mix below. */
-  --smoke-warm: rgba(216, 165, 121, 0.16);
+  /* Ambient smoke: one faint warm ember and a rosier ember (echoes the
+     reference pen's warm grade). The ink-tinted mist comes from color-mix
+     against --ink at the use site, so both themes adapt for free. */
+  --smoke-warm: rgba(216, 165, 121, 0.22);
+  --smoke-ember: rgba(207, 79, 83, 0.15);
 
   --radius: 2px;
 
@@ -99,9 +101,10 @@
   /* The rail sits in the penumbra, where the glow tints the paper; a step
      darker keeps the labels legible there. */
   --rail-ink: var(--ink-soft);
-  /* Same ember, deepened for paper; the ink mist comes from color-mix and
+  /* Same embers, deepened for paper; the ink mist comes from color-mix and
      needs no per-theme token. */
-  --smoke-warm: rgba(111, 66, 24, 0.15);
+  --smoke-warm: rgba(111, 66, 24, 0.19);
+  --smoke-ember: rgba(160, 60, 64, 0.12);
   color-scheme: light;
 }
 
@@ -132,39 +135,30 @@ body {
   transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 
-/* Film grain: 1px dots of the current ink, so the tooth follows the theme. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--ink) 4%, transparent) 0.5px,
-    transparent 0.5px
-  );
-  background-size: 3px 3px;
-}
-
-/* Vignette: settles the page edges into the ground. */
+/* Vignette + grain, one layer: the tooth (1px dots of the current ink) drawn
+   on top of the radial that settles the edges into the ground. Merged so the
+   other pseudo can carry the second smoke layer. */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: radial-gradient(
-    118% 86% at 50% 42%,
-    transparent 34%,
-    color-mix(in srgb, var(--paper) 82%, transparent) 100%
-  );
+  background:
+    radial-gradient(color-mix(in srgb, var(--ink) 4%, transparent) 0.5px, transparent 0.5px),
+    radial-gradient(
+      118% 86% at 50% 42%,
+      transparent 34%,
+      color-mix(in srgb, var(--paper) 82%, transparent) 100%
+    );
+  background-size: 3px 3px, 100% 100%;
 }
 
-/* Ambient smoke: a few big, soft ink-tinted mist blobs plus one warm ember,
-   drifting on a slow alternate loop. Every edge fades to transparent, so
-   there is no blur pass and the layer composites without repainting. The ink
-   mist uses color-mix against --ink, so both themes adapt with no extra
-   tokens. Transform-only; stops under reduced motion. */
+/* Ambient smoke, layer A (upper half, drifts down-right) and layer B on
+   body::before (lower half, drifts up-left). Two layers at different speeds
+   and directions are what make the mist read as smoke rather than a sliding
+   gradient. Every blob fades to transparent, so there is no blur pass; both
+   layers are transform-only and stop under reduced motion. */
 html::before {
   content: "";
   position: fixed;
@@ -172,17 +166,35 @@ html::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(46% 38% at 70% 22%, color-mix(in srgb, var(--ink) 7%, transparent), transparent 68%),
-    radial-gradient(38% 34% at 28% 36%, color-mix(in srgb, var(--ink) 5%, transparent), transparent 70%),
-    radial-gradient(52% 46% at 72% 78%, var(--smoke-warm), transparent 70%),
-    radial-gradient(42% 38% at 20% 84%, color-mix(in srgb, var(--ink) 6%, transparent), transparent 70%);
-  animation: smoke-drift 54s ease-in-out infinite alternate;
+    radial-gradient(40% 30% at 66% 18%, color-mix(in srgb, var(--ink) 12%, transparent), transparent 68%),
+    radial-gradient(48% 36% at 88% 34%, var(--smoke-ember), transparent 70%),
+    radial-gradient(30% 26% at 40% 30%, color-mix(in srgb, var(--ink) 9%, transparent), transparent 70%);
+  animation: smoke-a 46s ease-in-out infinite alternate;
   will-change: transform;
 }
 
-@keyframes smoke-drift {
-  from { transform: translate3d(-3.5%, -2.5%, 0) scale(1); }
-  to { transform: translate3d(3.5%, 2.5%, 0) scale(1.09); }
+body::before {
+  content: "";
+  position: fixed;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 36% at 18% 74%, color-mix(in srgb, var(--ink) 12%, transparent), transparent 68%),
+    radial-gradient(50% 42% at 72% 82%, var(--smoke-warm), transparent 70%),
+    radial-gradient(32% 28% at 46% 66%, var(--smoke-ember), transparent 72%);
+  animation: smoke-b 67s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes smoke-a {
+  from { transform: translate3d(-4%, -3%, 0) scale(1); }
+  to { transform: translate3d(4.5%, 3%, 0) scale(1.08); }
+}
+
+@keyframes smoke-b {
+  from { transform: translate3d(4.5%, 3%, 0) scale(1.05); }
+  to { transform: translate3d(-5%, -3.5%, 0) scale(1); }
 }
 
 /* Loading veil: a pure-CSS intro, no JS to know when load finishes, so it
@@ -1955,10 +1967,11 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
     min-height: 0;
   }
 
-  /* The ambient wash holds still; the veil clears immediately rather than
+  /* The smoke holds still; the veil clears immediately rather than
      sweeping. The blanket rule above also squashes durations — this makes the
      intent explicit. */
-  html::before {
+  html::before,
+  body::before {
     animation: none;
   }
 
