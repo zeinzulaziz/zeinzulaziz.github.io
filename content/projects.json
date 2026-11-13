@@ -1,9 +1,9 @@
 {
-  "generated": "2026-11-13T16:06:48.383Z",
+  "generated": "2026-11-13T16:07:40.121Z",
   "projects": [
     {
       "slug": "wordpress",
-      "title": "WordPress in production",
+      "title": "WordPress",
       "summary": "An academic publishing platform on Qur'anic studies, six years in production on WordPress. Built to be editable by its authors long after handover.",
       "repo": "",
       "demo": "",

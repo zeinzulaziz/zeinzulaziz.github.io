@@ -583,15 +583,6 @@ const repoDescriptions = {
    appears with the same name. */
 const ownedProjects = [
   {
-    name: "invoice",
-    language: "Firebase web app",
-    stargazers_count: 0,
-    description: null,
-    homepage: null,
-    private: true,
-    screenshot: true,
-  },
-  {
     name: "wordpress",
     language: "WordPress",
     stargazers_count: 0,
@@ -599,6 +590,15 @@ const ownedProjects = [
     homepage: null,
     caseStudy: true,
     screenshot: false,
+  },
+  {
+    name: "invoice",
+    language: "Firebase web app",
+    stargazers_count: 0,
+    description: null,
+    homepage: null,
+    private: true,
+    screenshot: true,
   },
 ];
 

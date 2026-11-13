@@ -1,5 +1,5 @@
 ---
-title: "WordPress in production"
+title: "WordPress"
 summary: "An academic publishing platform on Qur'anic studies, six years in production on WordPress. Built to be editable by its authors long after handover."
 date: 2026-10-29
 language: WordPress
