@@ -169,7 +169,7 @@ html::before {
     radial-gradient(40% 30% at 66% 18%, color-mix(in srgb, var(--ink) 12%, transparent), transparent 68%),
     radial-gradient(48% 36% at 88% 34%, var(--smoke-ember), transparent 70%),
     radial-gradient(30% 26% at 40% 30%, color-mix(in srgb, var(--ink) 9%, transparent), transparent 70%);
-  animation: smoke-a 46s ease-in-out infinite alternate;
+  animation: smoke-a 26s ease-in-out infinite alternate;
   will-change: transform;
 }
 
@@ -183,18 +183,18 @@ body::before {
     radial-gradient(46% 36% at 18% 74%, color-mix(in srgb, var(--ink) 12%, transparent), transparent 68%),
     radial-gradient(50% 42% at 72% 82%, var(--smoke-warm), transparent 70%),
     radial-gradient(32% 28% at 46% 66%, var(--smoke-ember), transparent 72%);
-  animation: smoke-b 67s ease-in-out infinite alternate;
+  animation: smoke-b 38s ease-in-out infinite alternate;
   will-change: transform;
 }
 
 @keyframes smoke-a {
-  from { transform: translate3d(-4%, -3%, 0) scale(1); }
-  to { transform: translate3d(4.5%, 3%, 0) scale(1.08); }
+  from { transform: translate3d(-5.5%, -4%, 0) scale(1); }
+  to { transform: translate3d(6%, 4%, 0) scale(1.1); }
 }
 
 @keyframes smoke-b {
-  from { transform: translate3d(4.5%, 3%, 0) scale(1.05); }
-  to { transform: translate3d(-5%, -3.5%, 0) scale(1); }
+  from { transform: translate3d(6%, 4.5%, 0) scale(1.07); }
+  to { transform: translate3d(-6.5%, -5%, 0) scale(1); }
 }
 
 /* Loading veil: a pure-CSS intro, no JS to know when load finishes, so it

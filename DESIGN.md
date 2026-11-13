@@ -155,7 +155,7 @@ pure CSS: two counter-drifting layers of big soft blobs, so the motion parallax
 reads as rising smoke rather than a sliding gradient. Ink-tinted mist blobs
 (`color-mix` against `--ink`, both themes adapt) plus two embers — copper
 (`--smoke-warm`, ~19–22%) and a rosier red-brick (`--smoke-ember`, ~12–15%) —
-no blur pass, 46s and 67s transform-only alternate loops. Replaces the earlier
+no blur pass, 26s and 38s transform-only alternate loops. Replaces the earlier
 single-layer aurora/smoke washes. The **loading veil** (`html::after`) is a pure-CSS
 intro: copper dot, a 180px copper line sweeping a hairline track, then the veil
 clears via a 1.05s timed `forwards` animation. No JS knows when load
@@ -166,7 +166,7 @@ reduction now follows only the OS-level `prefers-reduced-motion`.)
 
 ## Motion
 
-- Two counter-drifting smoke layers behind the page (46s / 67s, alternate).
+- Two counter-drifting smoke layers behind the page (26s / 38s, alternate).
 Nothing on the page moves except in response to scroll, and the loading veil
 clears on its own short timer.
 - Chapter state is CSS. Each chapter declares a `view-timeline` of its own;
