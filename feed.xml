@@ -8,6 +8,67 @@
   <id>https://zeinzulaziz.github.io/blog.html</id>
   <author><name>Ze.in</name><uri>https://zeinzulaziz.github.io/</uri></author>
   <entry>
+    <title>Panduan Vibe Coding: Aman dan Tidak Salah Arah</title>
+    <link href="https://zeinzulaziz.github.io/post/panduan-vibe-coding/" rel="alternate" type="text/html"/>
+    <id>https://zeinzulaziz.github.io/post/panduan-vibe-coding/</id>
+    <updated>2026-11-24T00:00:00+07:00</updated>
+    <summary>Panduan praktis vibe coding: mulai dari spesifikasi satu halaman, jaga rahasia tidak bocor, batasi ruang lingkup AI, uji tanpa paham kode, dan checklist sebelum rilis.</summary>
+    <content type="html">&lt;h2 id=&quot;a-sebelum-mulai&quot;&gt;&lt;a class=&quot;md-anchor&quot; href=&quot;#a-sebelum-mulai&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;A. Sebelum mulai&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;1. Tulis spesifikasi singkat dulu (satu halaman).&lt;/strong&gt; Jangan langsung bilang &amp;quot;buatkan aplikasi X&amp;quot;. Tulis:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Tujuan aplikasi dalam 2-3 kalimat&lt;/li&gt;&lt;li&gt;Siapa penggunanya&lt;/li&gt;&lt;li&gt;Fitur wajib (maksimal 3-5 untuk versi pertama)&lt;/li&gt;&lt;li&gt;Yang &lt;strong&gt;tidak&lt;/strong&gt; dibuat dulu (ini yang mencegah melebar)&lt;/li&gt;&lt;li&gt;Data apa yang disimpan, dan apakah ada data sensitif (email, nomor HP, pembayaran)&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;Simpan sebagai file &lt;code&gt;SPEC.md&lt;/code&gt; di proyek, lalu minta AI selalu mengacu ke file itu.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Minta rencana sebelum kode.&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;&amp;quot;Jangan tulis kode dulu. Buat rencana: struktur file, teknologi yang dipakai, dan alasannya. Saya bukan programmer, jadi jelaskan sederhana.&amp;quot;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;Baca rencananya. Kalau ada yang tidak masuk akal atau terlalu rumit untuk kebutuhan Anda, koreksi di tahap ini. Mengubah rencana jauh lebih murah daripada mengubah kode.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Pilih teknologi yang umum dan sederhana.&lt;/strong&gt; Stack populer (misalnya Next.js, Supabase, atau PHP/Laravel biasa) punya banyak dokumentasi, jadi AI lebih jarang salah. Hindari teknologi langka atau terlalu baru.&lt;/p&gt;
+&lt;h2 id=&quot;b-mencegah-kebocoran&quot;&gt;&lt;a class=&quot;md-anchor&quot; href=&quot;#b-mencegah-kebocoran&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;B. Mencegah kebocoran&lt;/h2&gt;
+&lt;p&gt;Ini bagian yang paling sering luput karena tidak terlihat di tampilan.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Rahasia tidak boleh ada di kode.&lt;/strong&gt; API key, password database, dan token harus disimpan di file &lt;code&gt;.env&lt;/code&gt;, bukan ditulis langsung di kode. Pastikan &lt;code&gt;.env&lt;/code&gt; masuk ke &lt;code&gt;.gitignore&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Jangan tempel rahasia ke chat AI.&lt;/strong&gt; Kalau perlu menunjukkan konfigurasi, ganti nilainya dengan placeholder (&lt;code&gt;API_KEY=xxxx&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Pahami beda frontend dan backend.&lt;/strong&gt; Apa pun yang ada di sisi frontend (yang berjalan di browser) bisa dilihat siapa saja lewat &amp;quot;Inspect&amp;quot;. API key yang bersifat rahasia &lt;strong&gt;hanya boleh dipakai di backend/server&lt;/strong&gt;. Minta AI memastikan ini.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Cek repository sebelum publik.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Repo GitHub sebaiknya &lt;strong&gt;private&lt;/strong&gt; kecuali memang open source.&lt;/li&gt;&lt;li&gt;Kalau pernah tidak sengaja meng-commit key, &lt;strong&gt;anggap key itu sudah bocor&lt;/strong&gt;: ganti dengan yang baru. Menghapus file saja tidak cukup karena riwayat Git menyimpannya.&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;5. Batasi hak akses key.&lt;/strong&gt; Buat API key dengan izin sekecil mungkin dan pasang batas pengeluaran (spending limit) di layanan berbayar, supaya kalau bocor kerugiannya terbatas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6. Kalau memakai database (misalnya Supabase/Firebase):&lt;/strong&gt; pastikan aturan akses (Row Level Security / security rules) aktif. Database yang terbuka tanpa aturan adalah penyebab kebocoran data yang paling umum di proyek vibe coding.&lt;/p&gt;
+&lt;h2 id=&quot;c-mencegah-salah-arah-selama-pengembangan&quot;&gt;&lt;a class=&quot;md-anchor&quot; href=&quot;#c-mencegah-salah-arah-selama-pengembangan&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;C. Mencegah salah arah selama pengembangan&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;1. Pakai Git dari awal.&lt;/strong&gt; Setiap kali satu fitur berfungsi, simpan (commit) dengan pesan jelas, misalnya &amp;quot;login berhasil&amp;quot;. Ini titik aman untuk kembali kalau perubahan berikutnya merusak. Minta AI mengajari perintah dasarnya.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Satu perubahan per permintaan.&lt;/strong&gt; Jangan minta &amp;quot;tambah login, dashboard, dan pembayaran&amp;quot; sekaligus. Kerjakan satu, uji, simpan, baru lanjut.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Batasi ruang lingkup di setiap permintaan.&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;&amp;quot;Ubah hanya bagian tombol simpan. Jangan ubah file lain dan jangan refactor apa pun.&amp;quot;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;AI cenderung &amp;quot;merapikan&amp;quot; bagian lain yang tidak diminta, dan di situlah bug baru muncul.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Minta ringkasan setelah setiap perubahan.&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;&amp;quot;Sebutkan file mana yang diubah dan apa yang berubah, dalam bahasa sederhana.&amp;quot;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;5. Jangan menumpuk perbaikan di atas perbaikan.&lt;/strong&gt; Kalau AI sudah tiga kali gagal memperbaiki satu bug, berhenti. Kembali ke titik aman terakhir di Git dan ulangi dengan prompt yang lebih jelas, atau mulai percakapan baru dengan ringkasan masalahnya.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6. Jaga konteks tetap bersih.&lt;/strong&gt; Percakapan yang sangat panjang membuat AI lupa keputusan awal. Mulai sesi baru per fitur dan sertakan &lt;code&gt;SPEC.md&lt;/code&gt; di awal.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;7. Waspadai dependensi (library) asing.&lt;/strong&gt; Kalau AI menambah library baru, tanyakan: &amp;quot;Kenapa library ini perlu? Apakah populer dan masih dirawat?&amp;quot; Nama library yang tidak dikenal atau salah ketik kadang jebakan.&lt;/p&gt;
+&lt;h2 id=&quot;d-pengujian-tanpa-perlu-paham-kode&quot;&gt;&lt;a class=&quot;md-anchor&quot; href=&quot;#d-pengujian-tanpa-perlu-paham-kode&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;D. Pengujian tanpa perlu paham kode&lt;/h2&gt;
+&lt;p&gt;Uji bukan hanya jalur normal:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Form dikosongkan, diisi angka negatif, teks sangat panjang, karakter aneh (&lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt;, tanda kutip)&lt;/li&gt;&lt;li&gt;Klik tombol dua kali dengan cepat&lt;/li&gt;&lt;li&gt;Refresh di tengah proses&lt;/li&gt;&lt;li&gt;Buka di HP dan browser lain&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Uji akses antar pengguna:&lt;/strong&gt; login sebagai user A, lalu coba buka data user B (misalnya dengan mengubah ID di URL). Kalau bisa terbuka, itu celah serius.&lt;/li&gt;&lt;li&gt;Coba tanpa login: apakah halaman yang seharusnya tertutup masih bisa dibuka?&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;Lalu minta AI meninjau:&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;&amp;quot;Review kode ini seperti auditor keamanan. Cari: rahasia yang terekspos, input yang tidak divalidasi, halaman tanpa pengecekan login, dan akses data antar pengguna. Urutkan dari yang paling berbahaya.&amp;quot;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;Lakukan ini &lt;strong&gt;di percakapan baru&lt;/strong&gt; supaya AI tidak membela kodenya sendiri.&lt;/p&gt;
+&lt;h2 id=&quot;e-template-prompt-yang-bisa-dipakai&quot;&gt;&lt;a class=&quot;md-anchor&quot; href=&quot;#e-template-prompt-yang-bisa-dipakai&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;E. Template prompt yang bisa dipakai&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Awal proyek:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Saya non-programmer. Baca SPEC.md. Jangan tulis kode dulu.
+Buat rencana: struktur file, teknologi, dan langkah bertahap.
+Jelaskan dengan bahasa sederhana dan sebutkan risiko keamanan
+yang perlu saya perhatikan.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Setiap fitur:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Fitur: [satu fitur saja].
+Ubah hanya file yang diperlukan. Jangan ubah fitur lain.
+Setelah selesai, sebutkan file yang diubah, cara mengujinya,
+dan kasus yang belum ditangani.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Saat bug:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Gejala: [apa yang terjadi]. Seharusnya: [apa yang diharapkan].
+Pesan error: [tempel persis].
+Jelaskan penyebabnya dulu sebelum memperbaiki.
+Perbaiki seminimal mungkin.&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;f-checklist-sebelum-rilis-ke-publik&quot;&gt;&lt;a class=&quot;md-anchor&quot; href=&quot;#f-checklist-sebelum-rilis-ke-publik&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;F. Checklist sebelum rilis ke publik&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Tidak ada API key, password, atau token di kode maupun riwayat Git&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;code&gt;.env&lt;/code&gt; masuk &lt;code&gt;.gitignore&lt;/code&gt;; key rahasia hanya dipakai di backend&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Repo private (atau sengaja publik dan sudah dicek isinya)&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Aturan akses database aktif dan sudah diuji antar pengguna&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Halaman yang tertutup tidak bisa dibuka tanpa login&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Semua input form divalidasi&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Spending limit terpasang di layanan berbayar&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Ada backup data dan titik aman di Git&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Sudah direview keamanan oleh AI di percakapan baru&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;md-task&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Kalau menyimpan data pribadi atau menerima pembayaran: minta orang yang paham kode ikut memeriksa, dan pakai penyedia pembayaran resmi (jangan buat sistem pembayaran sendiri)&lt;/li&gt;&lt;/ul&gt;
+&lt;h2 id=&quot;batasannya&quot;&gt;&lt;a class=&quot;md-anchor&quot; href=&quot;#batasannya&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;Batasannya&lt;/h2&gt;
+&lt;p&gt;Panduan ini mengurangi risiko, tidak menghilangkannya. AI bisa yakin sekali padahal salah, dan review oleh AI bukan pengganti pemeriksaan manusia untuk aplikasi yang menyangkut uang atau data pribadi. Untuk alat pribadi atau prototipe, panduan ini sudah cukup. Untuk produk yang dipakai orang banyak, anggap panduan ini sebagai batas minimum.&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <title>Prompt Engineering 101: Catatan dari Anthropic</title>
     <link href="https://zeinzulaziz.github.io/post/prompt-enginering/" rel="alternate" type="text/html"/>
     <id>https://zeinzulaziz.github.io/post/prompt-enginering/</id>

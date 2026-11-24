@@ -1,6 +1,21 @@
 {
-  "generated": "2026-11-24T03:41:21.503Z",
+  "generated": "2026-11-24T03:59:17.588Z",
   "posts": [
+    {
+      "slug": "panduan-vibe-coding",
+      "title": "Panduan Vibe Coding: Aman dan Tidak Salah Arah",
+      "date": "2026-11-24",
+      "description": "Panduan praktis vibe coding: mulai dari spesifikasi satu halaman, jaga rahasia tidak bocor, batasi ruang lingkup AI, uji tanpa paham kode, dan checklist sebelum rilis.",
+      "tags": [
+        "vibe coding",
+        "keamanan",
+        "panduan"
+      ],
+      "type": "article",
+      "draft": false,
+      "cover": "",
+      "readingTime": 4
+    },
     {
       "slug": "prompt-enginering",
       "title": "Prompt Engineering 101: Catatan dari Anthropic",
