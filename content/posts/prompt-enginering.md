@@ -1,99 +1,60 @@
 ---
-title: Two Anthropic engineers spent 24 minutes exposing every Claude Code feature you didn't know existed.
+title: "Prompt Engineering 101: Catatan dari Anthropic"
 date: 2026-11-24
 type: article
-description: ''
-cover: ''
-tags: []
+description: 'Ringkasan praktik menyusun prompt yang jelas, berkonteks, dan disempurnakan lewat iterasi — dari contoh analisis laporan kecelakaan sampai format output terstruktur.'
+tags:
+  - prompt engineering
+  - AI
 draft: false
 ---
 
-<div class="prose max-w-none prose-neutral prose-headings:scroll-mt-28 prose-h2:text-2xl prose-a:text-red-700 prose-a:decoration-red-200 prose-a:decoration-2 prose-a:underline-offset-4 hover:prose-a:decoration-red-700"><!----><h2><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Ringkasan dari " </font></font><a href="https://www.amazon.com/s?k=Prompting+101&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Pengantar Pemberian Petunjuk 101</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> "</font></font></h2>
-<p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Video ini, yang dipandu oleh Hannah dan Christian dari tim </font><a href="https://www.amazon.com/s?k=Applied+AI&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;">AI Terapan</font></a><font dir="auto" style="vertical-align: inherit;"> Anthropic </font></font><a href="https://www.amazon.com/s?k=Anthropic&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">,</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> memberikan panduan mendalam tentang praktik terbaik untuk </font><a href="https://www.amazon.com/s?k=Prompt+Engineering&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;">Rekayasa Prompt</font></a><font dir="auto" style="vertical-align: inherit;"> saat bekerja dengan model bahasa seperti </font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;">Claude</font></a><font dir="auto" style="vertical-align: inherit;"> . Menggunakan contoh yang terinspirasi dari dunia nyata, yaitu menganalisis laporan kecelakaan mobil Swedia, mereka mendemonstrasikan cara membangun dan menyempurnakan prompt secara iteratif untuk meningkatkan pemahaman model, akurasi, dan kegunaan output.</font></font><a href="https://www.amazon.com/s?k=Applied+AI&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"></font></a><font dir="auto" style="vertical-align: inherit;"></font><a href="https://www.amazon.com/s?k=Prompt+Engineering&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"></font></a><font dir="auto" style="vertical-align: inherit;"></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"></font></a><font dir="auto" style="vertical-align: inherit;"></font></p>
+## Ringkasan
 
-<hr>
+Video ini dibawakan Hannah dan Christian dari tim Applied AI di Anthropic. Mereka membagikan praktik terbaik rekayasa prompt saat bekerja dengan model bahasa seperti Claude. Memakai contoh analisis laporan kecelakaan mobil Swedia, mereka menunjukkan cara membangun dan menyempurnakan prompt secara iteratif agar pemahaman, akurasi, dan kegunaan output meningkat.
 
-<h3><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Ide dan Konsep Utama</font></font></h3>
-<ul>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Apa itu </font></font><a href="https://www.amazon.com/s?k=Prompt+Engineering&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Prompt Engineering</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> ?</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> Prompt Engineering 
-    adalah praktik menulis instruksi dan konteks yang jelas dan terstruktur agar model bahasa dapat menyelesaikan tugas secara efektif. Ini melibatkan pemikiran yang cermat tentang bagaimana mengatur informasi untuk mendapatkan hasil terbaik.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Sifat Iteratif dan Empiris dari Pembuatan </font></font></strong>
-    <a href="https://www.amazon.com/s?k=Prompt+Engineering&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Prompt Rekayasa Prompt</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> adalah proses iteratif di mana prompt disempurnakan berdasarkan output model dan kesalahan untuk meningkatkan kinerja.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Skenario Dunia Nyata</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Contoh ini melibatkan perusahaan asuransi yang memproses klaim kecelakaan mobil menggunakan dua input utama:
-    </font></font><ol>
-      <li><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Formulir </font></font><a href="https://www.amazon.com/s?k=Car+Accident+Report&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Laporan Kecelakaan Mobil</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> (dengan 17 kotak centang yang menunjukkan detail kecelakaan)</font></font></li>
-      <li><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Sketsa yang digambar manusia menggambarkan bagaimana kecelakaan itu terjadi.</font></font></li>
-    </ol>
-  </li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Kesalahan Umum dalam Memberikan</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Petunjuk Awal Petunjuk awal yang naif dapat menyebabkan kesalahpahaman (misalnya, </font></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> salah mengira kecelakaan itu sebagai insiden bermain ski) karena kurangnya konteks yang jelas.
-  </font></font></li>
-</ul>
+---
 
-<h3><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Metodologi / Praktik Terbaik untuk Membangun Prompt yang Efektif</font></font></h3>
-<ol>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Tetapkan Deskripsi Tugas di Awal.</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Definisikan dengan jelas peran model dan tugas spesifik yang perlu diselesaikannya (misalnya, membantu petugas klaim asuransi meninjau laporan kecelakaan mobil).
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Berikan Konten/Konteks yang Relevan.</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Sertakan data input dinamis (formulir, gambar, sketsa) yang perlu dianalisis oleh model.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Tambahkan Instruksi Terperinci</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Berikan panduan langkah demi langkah tentang bagaimana model harus memproses informasi dan melakukan penalaran dalam menyelesaikan tugas.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Sertakan Contoh ( </font></font><a href="https://www.amazon.com/s?k=Few-Shot+Learning&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Pembelajaran dengan Sedikit Data/Few-Shot Learning</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> )</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Berikan contoh konkret dari input dan output yang diharapkan, terutama untuk kasus-kasus yang rumit atau kasus khusus, untuk mengarahkan penalaran model.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Ulangi dan Tekankan Informasi Penting</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Perkuat detail atau batasan penting untuk memastikan model tetap selaras dengan persyaratan tugas.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Gunakan Pemformatan Terstruktur dan Pembatas.</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Atur informasi perintah dengan jelas menggunakan tag XML atau Markdown untuk membantu model mengurai dan merujuk kembali ke bagian-bagian tertentu.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Tambahkan Informasi Latar Belakang dan Statis dalam Prompt Sistem.</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Sertakan detail yang tidak berubah (misalnya, struktur formulir, arti kolom, bahasa) dalam prompt sistem untuk menghindari redundansi dan meningkatkan efisiensi.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Kendalikan Nada Bicara dan Kepercayaan Diri.</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Instruksikan model untuk tetap berpegang pada fakta dan percaya diri, serta menghindari menebak atau berhalusinasi ketika merasa tidak yakin.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Panduan Urutan Pemrosesan Informasi</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    memandu model untuk menganalisis input dalam urutan logis (misalnya, menganalisis formulir terlebih dahulu sebelum menafsirkan sketsa) untuk meniru penalaran manusia.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Berikan Panduan Pemformatan Output.</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Tentukan bagaimana model harus memformat output akhirnya (misalnya, membungkus putusan dalam tag XML atau JSON) untuk memfasilitasi pemrosesan atau integrasi selanjutnya.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Gunakan Pemikiran yang Diperluas / Penalaran Hibrida</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Aktifkan kemampuan penalaran model untuk memungkinkannya "berpikir keras," yang dapat meningkatkan akurasi dan memberikan wawasan tentang proses pengambilan keputusannya.
-  </font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Riwayat Percakapan dan Pengayaan Konteks (Opsional)</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> 
-    Untuk aplikasi interaktif atau yang berinteraksi langsung dengan pengguna, sertakan riwayat percakapan yang relevan untuk memberikan konteks yang lebih kaya.
-  </font></font></li>
-</ol>
+## Ide dan konsep utama
 
-<h3><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Ringkasan Contoh Langkah demi Langkah (Dari Demo)</font></font></h3>
-<ul>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">V1:</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> Petunjuk sederhana dengan konteks minimal → </font></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> salah mengira kecelakaan itu sebagai insiden bermain ski.</font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">V2:</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> Menambahkan konteks tugas dan nada, memperjelas skenario sebagai kecelakaan mobil → </font></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> dengan benar mengidentifikasi kecelakaan mobil tetapi tetap tidak yakin tentang siapa yang bersalah.</font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">V3:</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> Menambahkan informasi latar belakang terperinci tentang struktur formulir dan instruksi dalam perintah sistem → </font></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> lebih memahami formulir dan membuat penilaian kesalahan yang lebih tepat.</font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">V4:</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> Menambahkan instruksi langkah demi langkah yang eksplisit agar </font></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> menganalisis formulir terlebih dahulu, kemudian sketsa → </font></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> dengan cermat memeriksa setiap kotak centang dan memberikan alasan yang rinci.</font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">V5 (Final):</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> Menambahkan panduan format output dan pengingat kepercayaan diri → </font></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> menghasilkan putusan yang jelas, ringkas, dan terstruktur yang dibungkus dalam tag XML yang sesuai untuk penggunaan aplikasi.</font></font></li>
-</ul>
+- **Apa itu prompt engineering?** Praktik menulis instruksi dan konteks yang jelas serta terstruktur agar model bahasa menyelesaikan tugas secara efektif. Perlu pemikiran matang soal cara mengatur informasi.
+- **Sifatnya iteratif dan empiris.** Prompt disempurnakan berdasarkan output dan kesalahan model untuk meningkatkan kinerja.
+- **Skenario dunia nyata.** Perusahaan asuransi memproses klaim kecelakaan mobil dari dua input: formulir laporan kecelakaan dengan 17 kotak centang, dan sketsa buatan manusia yang menggambarkan kejadian.
+- **Kesalahan umum saat memberi petunjuk awal.** Petunjuk yang naif bisa menyesatkan — misalnya Claude mengira kecelakaan itu insiden bermain ski karena kurangnya konteks.
 
-<h3><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Catatan Tambahan</font></font></h3>
-<ul>
-  <li><a href="https://www.amazon.com/s?k=Prompt+Engineering&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Rekayasa Cepat</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> adalah ilmu empiris yang membutuhkan iterasi dan penyempurnaan terus-menerus.</font></font></li>
-  <li><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Petunjuk terstruktur dan instruksi yang jelas mengurangi halusinasi dan meningkatkan keandalan model.</font></font></li>
-  <li><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Memberikan contoh dan informasi latar belakang yang detail membantu model menangani input yang kompleks atau ambigu.</font></font></li>
-  <li><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Pemformatan output sangat penting untuk mengintegrasikan hasil model ke dalam sistem produksi.</font></font></li>
-  <li><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Fitur penalaran yang diperluas dalam versi </font></font><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> yang lebih baru dapat dimanfaatkan untuk meningkatkan transparansi dan akurasi.</font></font></li>
-</ul>
+## Metodologi: praktik terbaik membangun prompt yang efektif
 
-<h2><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Pembicara / Sumber</font></font></h2>
-<ul>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Hannah</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> – </font><font dir="auto" style="vertical-align: inherit;">Anggota tim </font></font><a href="https://www.amazon.com/s?k=Applied+AI&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">AI Terapan di </font></font></a><font dir="auto" style="vertical-align: inherit;"></font><a href="https://www.amazon.com/s?k=Anthropic&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Anthropic</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> , presenter utama.</font></font></li>
-  <li><strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Christian</font></font></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> – </font><font dir="auto" style="vertical-align: inherit;">Anggota tim </font></font><a href="https://www.amazon.com/s?k=Applied+AI&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">AI Terapan di </font></font></a><font dir="auto" style="vertical-align: inherit;"></font><a href="https://www.amazon.com/s?k=Anthropic&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Anthropic</font></font></a><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> , rekan presenter dan penjelas skenario.</font></font></li>
-  <li><strong><a href="https://www.amazon.com/s?k=Claude&amp;tag=dtdgstoreid-20"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">Claude</font></font></a></strong><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;"> – Model bahasa yang digunakan untuk demonstrasi sepanjang video.</font></font></li>
-</ul><!----></div>
+1. **Tetapkan deskripsi tugas di awal.** Definisikan peran model dan tugas spesifik, misalnya membantu petugas klaim asuransi meninjau laporan kecelakaan mobil.
+2. **Berikan konten atau konteks yang relevan.** Sertakan data input dinamis seperti formulir, gambar, dan sketsa.
+3. **Tambahkan instruksi terperinci.** Beri panduan langkah demi langkah cara model memproses informasi dan bernalar.
+4. **Sertakan contoh (few-shot learning).** Beri contoh konkret input dan output yang diharapkan, terutama untuk kasus rumit atau khusus.
+5. **Ulangi dan tekankan informasi penting.** Perkuat detail atau batasan agar model tetap selaras dengan persyaratan tugas.
+6. **Gunakan pemformatan terstruktur dan pembatas.** Atur prompt dengan tag XML atau Markdown agar model mudah mengurai dan merujuk bagian tertentu.
+7. **Tambahkan informasi latar belakang statis di prompt sistem.** Detail yang tidak berubah — struktur formulir, arti kolom, bahasa — menghindari redundansi dan meningkatkan efisiensi.
+8. **Kendalikan nada bicara dan kepercayaan diri.** Instruksikan model berpegang pada fakta dan menghindari tebakan atau halusinasi saat tidak yakin.
+9. **Panduan urutan pemrosesan informasi.** Arahkan model menganalisis formulir lebih dulu, lalu sketsa, untuk meniru penalaran manusia.
+10. **Berikan panduan pemformatan output.** Tentukan format akhir, misalnya membungkus putusan dalam tag XML atau JSON agar mudah diintegrasikan.
+11. **Gunakan pemikiran yang diperluas atau penalaran hibrida.** Aktifkan kemampuan penalaran agar model "berpikir keras" — dapat meningkatkan akurasi dan memberi wawasan soal pengambilan keputusan.
+12. **Riwayat percakapan dan pengayaan konteks (opsional).** Untuk aplikasi interaktif, sertakan riwayat percakapan yang relevan sebagai konteks tambahan.
+
+## Ringkasan contoh langkah demi langkah dari demo
+
+- **V1:** Petunjuk sederhana dengan konteks minimal → Claude salah mengira kecelakaan sebagai insiden bermain ski.
+- **V2:** Menambahkan konteks tugas dan nada, memperjelas skenario kecelakaan mobil → Claude benar mengidentifikasi kecelakaan, tetapi masih ragu soal siapa yang bersalah.
+- **V3:** Menambahkan latar belakang terperinci tentang struktur formulir dan instruksi di prompt sistem → Claude lebih memahami formulir dan menilai kesalahan lebih tepat.
+- **V4:** Instruksi langkah demi langkah eksplisit agar Claude menganalisis formulir lebih dulu, lalu sketsa → Claude memeriksa setiap kotak centang dan memberi alasan rinci.
+- **V5 (final):** Panduan format output dan pengingat kepercayaan diri → Claude menghasilkan putusan yang jelas, ringkas, dan terstruktur dalam tag XML yang siap dipakai aplikasi.
+
+## Catatan tambahan
+
+- Prompt engineering adalah ilmu empiris yang membutuhkan iterasi dan penyempurnaan terus-menerus.
+- Prompt terstruktur dan instruksi yang jelas mengurangi halusinasi serta meningkatkan keandalan model.
+- Contoh dan informasi latar belakang yang detail membantu model menangani input yang kompleks atau ambigu.
+- Pemformatan output penting untuk mengintegrasikan hasil model ke dalam sistem produksi.
+- Fitur penalaran yang diperluas di versi Claude yang lebih baru dapat meningkatkan transparansi dan akurasi.
+
+## Pembicara / sumber
+
+- **Hannah** — anggota tim Applied AI di Anthropic, presenter utama.
+- **Christian** — anggota tim Applied AI di Anthropic, rekan presenter dan penjelas skenario.
+- **Claude** — model bahasa yang dipakai untuk demonstrasi sepanjang video.
