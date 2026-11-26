@@ -267,6 +267,22 @@ Recorded so they are decisions, not accidents:
    thing meant to carry the page. The ground, the vignette and the dither are
    what remains of the idea.
 
+## Homepage: product console (November 2026)
+
+The opening chapter keeps its chapter frame — index `00`, ruled facts panel,
+chapter rail and scroll cue — but its second column now carries a real product
+frame: a small status bar with the copper LED, a 16:10 crop of Harga Pangan on
+the producer price dashboard, and one caption. The picture is the subject's own
+screenshot, not an atmospheric stock photo. It is a still from the thing the
+site is about, and it answers "what does this person build?" on the first
+screen, where the name alone no longer does.
+
+Work rows became filled `surface-2` panels with a wider thumbnail, so the
+project list reads as an instrument drawer rather than a ruled ledger. The
+change is scoped to `body.home` in `assets/css/style.css`; reading pages and
+the generated card markup are untouched. Everything else — the four chapters,
+`48dvh` spy window, `data-chapter` attributes and rail order — stays as above.
+
 ## Scope
 
 index.html (chapter frame), blog.html, post.html, 404.html, the article and

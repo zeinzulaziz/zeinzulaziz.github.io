@@ -556,12 +556,14 @@ const GITHUB_USER = "zeinzulaziz";
 // Repositories do not carry a live URL or a nicer label, so both are curated.
 const liveDemo = {
   "harga-pangan": "https://zeinzulaziz.github.io/harga-pangan/",
+  "diri-insight": "https://zeinzulaziz.github.io/diri-insight/",
   "convert-gold": "https://zeinzulaziz.github.io/convert-gold/",
   "broken-link-checker": "https://broken-link-checker-sepia.vercel.app",
 };
 
 const repoLabels = {
   "harga-pangan": "Food Prices",
+  "diri-insight": "Diri Insight",
   "convert-gold": "Convert Gold",
   "broken-link-checker": "Broken Link Checker",
   invoice: "Invoice Generator",
@@ -570,6 +572,8 @@ const repoLabels = {
 const repoDescriptions = {
   "harga-pangan":
     "Food Prices: producer price dashboard for East Java, built on SISKAPERBAPO data.",
+  "diri-insight":
+    "A private, offline self-reflection tool: 70 questions across eight dimensions, with a radar map, narrative report, and downloadable summary card.",
   "convert-gold": "Gold price calculator to run quick numbers before trading.",
   invoice:
     "An invoice workspace for small businesses: build and manage invoices, " +

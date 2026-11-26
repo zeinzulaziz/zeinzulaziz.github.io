@@ -27,6 +27,7 @@ const WIDTHS = [200, 400, 800, 1200, 1600];
 const JOBS = [
   { name: "invoice" },
   { name: "harga-pangan" },
+  { name: "diri-insight" },
   { name: "convert-gold" },
   { name: "broken-link-checker" },
   // Shown at 15rem (240px) at most, so one small step is enough.

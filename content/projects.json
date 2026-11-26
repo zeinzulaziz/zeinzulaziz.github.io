@@ -1,6 +1,23 @@
 {
-  "generated": "2026-11-13T16:07:40.121Z",
+  "generated": "2026-11-26T12:27:00.633Z",
   "projects": [
+    {
+      "slug": "diri-insight",
+      "title": "Diri Insight",
+      "summary": "A private, offline self-reflection tool: 70 questions across eight dimensions, with a radar map, narrative report, and downloadable summary card.",
+      "repo": "diri-insight",
+      "demo": "https://zeinzulaziz.github.io/diri-insight/",
+      "language": "JavaScript",
+      "cover": "assets/img/diri-insight.webp",
+      "private": false,
+      "tags": [
+        "reflection",
+        "psychology",
+        "static-site"
+      ],
+      "date": "2026-11-26",
+      "draft": false
+    },
     {
       "slug": "wordpress",
       "title": "WordPress",

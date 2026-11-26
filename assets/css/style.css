@@ -1910,3 +1910,106 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   }
 }
 
+
+/* ---------- 2026 redesign: product console on the opening frame ---------- */
+/* Scoped to the homepage so reading pages keep their quieter treatment. */
+
+body.home #opening .pin .opening-grid {
+  width: 100%;
+}
+@media (min-width: 1100px) {
+  body.home #opening .pin .opening-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(2rem, 4vw, 4.5rem);
+    align-items: center;
+  }
+  body.home #opening .opening-copy .spec {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.opening-screen {
+  margin: 2rem 0 0;
+  min-width: 0;
+}
+.screen-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--surface-2);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.screen-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(216, 165, 121, 0.55);
+  flex: none;
+}
+.screen-frame {
+  background: var(--surface);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.screen-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.opening-screen figcaption {
+  margin-top: 0.7rem;
+  color: var(--ink-faint);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+@media (max-width: 1099px) {
+  .opening-screen { max-width: 760px; }
+}
+
+/* Work reads as a set of filled panels rather than ruled lines. */
+body.home #projects .projects-list {
+  display: grid;
+  gap: 0.75rem;
+}
+body.home #projects .project-row {
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.4rem 1.5rem;
+  background: var(--surface-2);
+  border-radius: 4px;
+}
+body.home #projects .project-row + .project-row {
+  border-top: 0;
+}
+body.home #projects .project-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+}
+body.home #projects .project-desc {
+  font-size: 1rem;
+}
+body.home #projects .project-media {
+  width: 160px;
+}
+body.home #projects .project-media img {
+  aspect-ratio: 16 / 10;
+}
+@media (max-width: 640px) {
+  body.home #projects .project-media { width: 120px; }
+}
+
+/* The published numbers carry the one accent. */
+body.home #about .stat-num {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening-screen { animation: none !important; }
+}
