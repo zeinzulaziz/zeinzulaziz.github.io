@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Engineering 101: Catatan dari Anthropic · Ze.in</title>
+  <meta name="description" content="Ringkasan praktik menyusun prompt yang jelas, berkonteks, dan disempurnakan lewat iterasi — dari contoh analisis laporan kecelakaan sampai format output terstruktur.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#080d16">
+  <link rel="canonical" href="https://zeinzulaziz.github.io/post/prompt-enginering/">
+  <meta property="og:title" content="Prompt Engineering 101: Catatan dari Anthropic">
+  <meta property="og:description" content="Ringkasan praktik menyusun prompt yang jelas, berkonteks, dan disempurnakan lewat iterasi — dari contoh analisis laporan kecelakaan sampai format output terstruktur.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://zeinzulaziz.github.io/post/prompt-enginering/">
+  <meta property="og:image" content="https://zeinzulaziz.github.io/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-11-24T00:00:00+07:00">
+  <meta property="article:tag" content="prompt engineering">
+  <meta property="article:tag" content="AI">
+  <link rel="alternate" type="application/atom+xml" title="Blog · Ze.in" href="/feed.xml">
+  <link rel="preload" href="/assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080d16'/%3E%3Ctext x='32' y='46' font-family='Helvetica,Arial,sans-serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23ede6d9'%3EZ%3C/text%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script>
+    (function () {
+      try {
+        var t = window.localStorage.getItem("theme");
+        document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+      } catch (e) {}
+    })();
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Prompt Engineering 101: Catatan dari Anthropic","description":"Ringkasan praktik menyusun prompt yang jelas, berkonteks, dan disempurnakan lewat iterasi — dari contoh analisis laporan kecelakaan sampai format output terstruktur.","datePublished":"2026-11-24T00:00:00+07:00","author":{"@type":"Person","name":"Ze.in","url":"https://zeinzulaziz.github.io/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://zeinzulaziz.github.io/post/prompt-enginering/"},"image":"https://zeinzulaziz.github.io/assets/img/og.jpg","keywords":"prompt engineering, AI"}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="container nav" aria-label="Primary">
+      <a class="nav-brand" href="/"><span class="mark" aria-hidden="true"></span>Ze.in</a>
+      <div class="nav-right">
+        <div class="nav-links" id="nav-menu">
+          <a href="/#projects">Projects</a>
+          <a href="/#about">About</a>
+          <a href="/blog.html" class="is-active" aria-current="page">Blog</a>
+          <a href="/#contact">Contact</a>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3.5 7h17M3.5 12h17M3.5 17h17"/></svg><span class="control-label">Menu</span></button>
+        <button class="control theme-toggle" type="button" aria-label="Switch to light theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div class="progress" aria-hidden="true"><span></span></div>
+  </header>
+
+  <main class="post-page" id="main">
+    <div class="container post-container">
+      <a class="post-back" href="/blog.html">&larr; All posts</a>
+      <article>
+        <h1 class="post-title">Prompt Engineering 101: Catatan dari Anthropic</h1>
+        <div class="post-meta"><span>Nov 24, 2026</span><span>3 min read</span></div>
+        <div class="post-tags"><span>prompt engineering</span><span>AI</span></div>
+        <div class="prose"><h2 id="ringkasan"><a class="md-anchor" href="#ringkasan" aria-hidden="true" tabindex="-1">#</a>Ringkasan</h2>
+<p>Video ini dibawakan Hannah dan Christian dari tim Applied AI di Anthropic. Mereka membagikan praktik terbaik rekayasa prompt saat bekerja dengan model bahasa seperti Claude. Memakai contoh analisis laporan kecelakaan mobil Swedia, mereka menunjukkan cara membangun dan menyempurnakan prompt secara iteratif agar pemahaman, akurasi, dan kegunaan output meningkat.</p>
+<hr>
+<h2 id="ide-dan-konsep-utama"><a class="md-anchor" href="#ide-dan-konsep-utama" aria-hidden="true" tabindex="-1">#</a>Ide dan konsep utama</h2>
+<ul><li><strong>Apa itu prompt engineering?</strong> Praktik menulis instruksi dan konteks yang jelas serta terstruktur agar model bahasa menyelesaikan tugas secara efektif. Perlu pemikiran matang soal cara mengatur informasi.</li><li><strong>Sifatnya iteratif dan empiris.</strong> Prompt disempurnakan berdasarkan output dan kesalahan model untuk meningkatkan kinerja.</li><li><strong>Skenario dunia nyata.</strong> Perusahaan asuransi memproses klaim kecelakaan mobil dari dua input: formulir laporan kecelakaan dengan 17 kotak centang, dan sketsa buatan manusia yang menggambarkan kejadian.</li><li><strong>Kesalahan umum saat memberi petunjuk awal.</strong> Petunjuk yang naif bisa menyesatkan — misalnya Claude mengira kecelakaan itu insiden bermain ski karena kurangnya konteks.</li></ul>
+<h2 id="metodologi-praktik-terbaik-membangun-prompt-yang-efektif"><a class="md-anchor" href="#metodologi-praktik-terbaik-membangun-prompt-yang-efektif" aria-hidden="true" tabindex="-1">#</a>Metodologi: praktik terbaik membangun prompt yang efektif</h2>
+<ol><li><strong>Tetapkan deskripsi tugas di awal.</strong> Definisikan peran model dan tugas spesifik, misalnya membantu petugas klaim asuransi meninjau laporan kecelakaan mobil.</li><li><strong>Berikan konten atau konteks yang relevan.</strong> Sertakan data input dinamis seperti formulir, gambar, dan sketsa.</li><li><strong>Tambahkan instruksi terperinci.</strong> Beri panduan langkah demi langkah cara model memproses informasi dan bernalar.</li><li><strong>Sertakan contoh (few-shot learning).</strong> Beri contoh konkret input dan output yang diharapkan, terutama untuk kasus rumit atau khusus.</li><li><strong>Ulangi dan tekankan informasi penting.</strong> Perkuat detail atau batasan agar model tetap selaras dengan persyaratan tugas.</li><li><strong>Gunakan pemformatan terstruktur dan pembatas.</strong> Atur prompt dengan tag XML atau Markdown agar model mudah mengurai dan merujuk bagian tertentu.</li><li><strong>Tambahkan informasi latar belakang statis di prompt sistem.</strong> Detail yang tidak berubah — struktur formulir, arti kolom, bahasa — menghindari redundansi dan meningkatkan efisiensi.</li><li><strong>Kendalikan nada bicara dan kepercayaan diri.</strong> Instruksikan model berpegang pada fakta dan menghindari tebakan atau halusinasi saat tidak yakin.</li><li><strong>Panduan urutan pemrosesan informasi.</strong> Arahkan model menganalisis formulir lebih dulu, lalu sketsa, untuk meniru penalaran manusia.</li><li><strong>Berikan panduan pemformatan output.</strong> Tentukan format akhir, misalnya membungkus putusan dalam tag XML atau JSON agar mudah diintegrasikan.</li><li><strong>Gunakan pemikiran yang diperluas atau penalaran hibrida.</strong> Aktifkan kemampuan penalaran agar model &quot;berpikir keras&quot; — dapat meningkatkan akurasi dan memberi wawasan soal pengambilan keputusan.</li><li><strong>Riwayat percakapan dan pengayaan konteks (opsional).</strong> Untuk aplikasi interaktif, sertakan riwayat percakapan yang relevan sebagai konteks tambahan.</li></ol>
+<h2 id="ringkasan-contoh-langkah-demi-langkah-dari-demo"><a class="md-anchor" href="#ringkasan-contoh-langkah-demi-langkah-dari-demo" aria-hidden="true" tabindex="-1">#</a>Ringkasan contoh langkah demi langkah dari demo</h2>
+<ul><li><strong>V1:</strong> Petunjuk sederhana dengan konteks minimal → Claude salah mengira kecelakaan sebagai insiden bermain ski.</li><li><strong>V2:</strong> Menambahkan konteks tugas dan nada, memperjelas skenario kecelakaan mobil → Claude benar mengidentifikasi kecelakaan, tetapi masih ragu soal siapa yang bersalah.</li><li><strong>V3:</strong> Menambahkan latar belakang terperinci tentang struktur formulir dan instruksi di prompt sistem → Claude lebih memahami formulir dan menilai kesalahan lebih tepat.</li><li><strong>V4:</strong> Instruksi langkah demi langkah eksplisit agar Claude menganalisis formulir lebih dulu, lalu sketsa → Claude memeriksa setiap kotak centang dan memberi alasan rinci.</li><li><strong>V5 (final):</strong> Panduan format output dan pengingat kepercayaan diri → Claude menghasilkan putusan yang jelas, ringkas, dan terstruktur dalam tag XML yang siap dipakai aplikasi.</li></ul>
+<h2 id="catatan-tambahan"><a class="md-anchor" href="#catatan-tambahan" aria-hidden="true" tabindex="-1">#</a>Catatan tambahan</h2>
+<ul><li>Prompt engineering adalah ilmu empiris yang membutuhkan iterasi dan penyempurnaan terus-menerus.</li><li>Prompt terstruktur dan instruksi yang jelas mengurangi halusinasi serta meningkatkan keandalan model.</li><li>Contoh dan informasi latar belakang yang detail membantu model menangani input yang kompleks atau ambigu.</li><li>Pemformatan output penting untuk mengintegrasikan hasil model ke dalam sistem produksi.</li><li>Fitur penalaran yang diperluas di versi Claude yang lebih baru dapat meningkatkan transparansi dan akurasi.</li></ul>
+<h2 id="pembicara-sumber"><a class="md-anchor" href="#pembicara-sumber" aria-hidden="true" tabindex="-1">#</a>Pembicara / sumber</h2>
+<ul><li><strong>Hannah</strong> — anggota tim Applied AI di Anthropic, presenter utama.</li><li><strong>Christian</strong> — anggota tim Applied AI di Anthropic, rekan presenter dan penjelas skenario.</li><li><strong>Claude</strong> — model bahasa yang dipakai untuk demonstrasi sepanjang video.</li></ul></div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Ze.in</p>
+      <p><a href="https://github.com/zeinzulaziz/zeinzulaziz.github.io" target="_blank" rel="noopener">Source on GitHub</a></p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/site.js" defer></script>
+</body>
+</html>
