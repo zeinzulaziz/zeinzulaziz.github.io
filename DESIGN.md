@@ -74,7 +74,6 @@ Light, "day":
 | line-strong | #4f5964 | interactive boundaries |
 | accent | #6f4218 | copper, deepened for paper so it can carry text |
 | accent-ink | #ede6d9 | text on copper |
-| rail-ink | #3b4450 (= ink-soft) | chapter rail labels, which sit in the glow's penumbra |
 
 Measured ratios (WCAG 2.x). Token pairs, then the same pairs measured on rendered
 pixels, grain and vignette included:
@@ -91,10 +90,6 @@ pixels, grain and vignette included:
 - the opening frame is the one to protect: it is the only frame where display
   type, a lede, and the facts panel share one screen. The closing frame repeats
   the same stack on the contact chapter.
-- the chapter rail crosses the top project row at 1280x900, so its labels carry
-  their own field: a soft paper plate with a backdrop blur, the same idiom as the
-  header veil (5.27–8.78 measured in dark, 6.00–11.45 on paper). With the field,
-  the ratio barely depends on what is behind it.
 - `line` is decorative and never carries text or state on its own;
   `line-strong` is the boundary value that must stay visible (6.48 dark,
   5.75 light, both well above the 3:1 rule for non-text UI).
@@ -120,8 +115,8 @@ one word per line where the copy allows. Mono labels sit at 0.7–0.75rem with
 
 ## Shape
 
-Radius 0 on the chrome and on images inside prose; the only rounded things are
-the rail's label plate and the `--radius` on controls. Hairlines carry structure.
+Radius 0 on the chrome and on images inside prose; the only rounded thing is the
+`--radius` on controls. Hairlines carry structure.
 There is no drop shadow in the system: depth comes from the ground/surface steps
 and the copper accent. The sticky header lifts on a 1px `line` and a `color-mix`
 veil, not on a shadow.
@@ -145,8 +140,7 @@ Layer order, bottom to top: the paper ground, smoke layer A (`html::before`,
 z-index 0), smoke layer B (`body::before`, z-index 0), the vignette with the
 grain dots drawn on top of it (`body::after`, z-index 2 — merged so the
 second smoke layer had a pseudo to live in), the page content (z-index 3), the
-chapter rail (z-index 40), the header (z-index 50), the loading veil
-(`html::after`, z-index 1000).
+header (z-index 50), the loading veil (`html::after`, z-index 1000).
 
 Two owner-requested additions, November 2026. The **smoke** (`html::before` + `body::before`) is the owner's nod to a
 favourite CodePen (alexaluthor/pen/bGBjRdp), which is a `<video>` from
@@ -169,28 +163,23 @@ reduction now follows only the OS-level `prefers-reduced-motion`.)
 Nothing on the page moves except in response to scroll, and the loading veil
 clears on its own short timer.
 - Chapter state is CSS. Each chapter declares a `view-timeline` of its own;
-  `timeline-scope` on `html` lifts those names to the document; and the rail, the
-  nav highlight and the scroll cue each read the chapter they belong to. A
-  registered `--lit` property carries that state into the label colour, so
-  `:hover` and the `.is-current` fallback are not fought over. The window is a
-  fixed distance in viewport units — half a viewport after a chapter starts to
-  enter, to half a viewport before it finishes leaving — which is exactly the
-  stretch where the chapter's box holds the middle of the screen, and which
-  needs no per-chapter tuning.
-- No JavaScript runs for any of it. `index.html` loads `journey.js` only when
-  `CSS.supports()` reports the timelines missing, and that script is the old
-  scroll-position read.
-- The visible scroll work — progress line, header, reveals, the masked
-  word-rise in the display type, the rail, the cue — is CSS scroll timelines,
-  not JavaScript.
-- Chapters: `#opening` and `#contact` pin for one viewport of scroll; the work
-  and about chapters keep their label column sticky while the body scrolls. The
-  pin is `calc(100svh - var(--header-h) - 1px)`, because the sticky header is in
-  flow above it: the first screen is the header plus the pin, exactly one viewport.
-- The scroll cue closes the hero rather than floating over it. A fixed cue would
-  sit on top of whatever else is on screen at short heights, and on a phone the
-  hero is taller than the screen by design, so there it is simply not shown.
-
+  `timeline-scope` on `html` lifts those names to the document; and the nav
+  highlight reads the chapter it belongs to. A registered `--lit` property
+  carries that state into the label colour, so `:hover` is not fought over.
+  The window is a fixed distance in viewport units
+  — half a viewport after a chapter starts to enter, to half a viewport before
+  it finishes leaving — which is exactly the stretch where the chapter's box
+  holds the middle of the screen, and which needs no per-chapter tuning.
+- No JavaScript runs for any of it, including the chapter state: there is no
+  scroll-position read and no fallback script.
+- The visible scroll work — progress line, header, reveals and the masked
+  word-rise in the display type — is CSS scroll timelines, not JavaScript.
+- Chapters: `#opening` and `#contact` fill one viewport; the work and about
+  chapters keep their label column sticky while the body scrolls. Their frame is
+  `calc(100svh - var(--header-h) - 1px)`, because the sticky header is in flow
+  above it: the first screen is the header plus the frame, exactly one viewport.
+  The section is not taller than that frame, so there is no sticky hold — the
+  page moves on the first scroll.
 - Display type: the `.display` headings rise a word at a time out of a `.rise`
   mask as the heading crosses the fold, driven by the mask's own `view()`
   timeline (each mask carries `view-timeline: --rise block`; the inner element
@@ -227,18 +216,10 @@ The chapter index: a two-digit mono numeral in copper, followed by a hairline an
 the chapter name in mono, opening every chapter on the home page. It replaces the
 previous filled index plate. One per chapter, nowhere else.
 
-The chapter rail (wide screens only) repeats those names down the right gutter and
-marks the current one with a longer copper rule, so the state never rests on
-colour alone. The rail crosses whatever sits at the right edge of the container —
-a project row, on the work chapter — so each label carries its own field: a soft
-paper plate with a backdrop blur, the same idiom as the header veil. With its own
-field the rail measures 5.27 or better across the four acts. The plate is visible
-over a card in the day theme, and legibility wins.
-
 ## Content structure
 
-- Opening: the display statement, the role line, one lede paragraph, two
-  actions, and the real facts panel (base, work, availability, other profiles).
+- Opening: the display statement, two actions, and a short facts panel (base
+  and work).
 - 01 Work: curated products first (including private builds with no repo link),
   then GitHub repos sorted by stars, as ruled rows; every row is the same,
   with a real screenshot thumb when one exists.
@@ -247,7 +228,7 @@ over a card in the day theme, and legibility wins.
 - 03 Contact: the closing band with the display title, the availability
   sentence, and the actions.
 - Reading pages: the blog list and the article page share the tokens, the header,
-  and the footer, and nothing else — no chapters, no rail.
+  and the footer, and nothing else — no chapters.
 
 ## Deliberate departures from the reference
 
@@ -267,27 +248,20 @@ Recorded so they are decisions, not accidents:
    thing meant to carry the page. The ground, the vignette and the dither are
    what remains of the idea.
 
-## Homepage: product console (November 2026)
+## Homepage: work panels (November 2026)
 
-The opening chapter keeps its chapter frame — index `00`, ruled facts panel,
-chapter rail and scroll cue — but its second column now carries a real product
-frame: a small status bar with the copper LED, a 16:10 crop of Harga Pangan on
-the producer price dashboard, and one caption. The picture is the subject's own
-screenshot, not an atmospheric stock photo. It is a still from the thing the
-site is about, and it answers "what does this person build?" on the first
-screen, where the name alone no longer does.
+The opening chapter keeps its chapter frame — index `00` and a ruled facts
+panel — with no product screenshot competing with the display type.
 
 Work rows became filled `surface-2` panels with a wider thumbnail, so the
 project list reads as an instrument drawer rather than a ruled ledger. The
 change is scoped to `body.home` in `assets/css/style.css`; reading pages and
 the generated card markup are untouched. Everything else — the four chapters,
-`48dvh` spy window, `data-chapter` attributes and rail order — stays as above.
+`48dvh` spy window and `data-chapter` attributes — stays as above.
 
 ## Scope
 
 index.html (chapter frame), blog.html, post.html, 404.html, the article and
 project templates plus the card renderers in tools/build.mjs,
 assets/css/style.css, assets/js/site.js, assets/js/markdown.js and
-assets/js/blog.js (the ?slug= fallback), plus assets/js/journey.js (home page
-only, and only loaded where CSS scroll timelines are missing). The admin CMS is
-untouched.
+assets/js/blog.js (the ?slug= fallback). The admin CMS is untouched.

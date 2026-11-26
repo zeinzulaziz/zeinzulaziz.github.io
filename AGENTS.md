@@ -6,7 +6,7 @@ Landing page portofolio statis yang di-deploy ke GitHub Pages: https://zeinzulaz
 ## Peta Cepat
 | Kalau mengerjakan | Baca/edit |
 |---|---|
-| Chapter, rail, scroll-spy, animasi scroll | `assets/css/style.css` (+ `docs/CHAPTERS.md`) |
+| Chapter, scroll-spy, animasi scroll | `assets/css/style.css` (+ `docs/CHAPTERS.md`) |
 | Tema gelap/terang, nav, analytics | `assets/js/site.js`, `assets/css/style.css` |
 | Token desain & palet | `DESIGN.md`, `:root` di `assets/css/style.css` |
 | Kartu proyek & data repo | `tools/build.mjs`, `content/repos.json` (generate: `tools/build-repos.mjs`) |
@@ -46,7 +46,6 @@ blok di antara marker `<!-- projects:start -->`/`<!-- projects:end -->` di
 - `assets/css/style.css` — styling (token tema via `:root` gelap default + `[data-theme="light"]`, termasuk `@font-face` self-hosted)
 - `assets/fonts/` — woff2 self-hosted (Space Grotesk, IBM Plex Sans/Mono), lisensi SIL OFL
 - `assets/js/site.js` — tema (gelap default/terang + localStorage), nav mobile, tahun footer, opt-in GoatCounter
-- `assets/js/journey.js` — chapter aktif untuk rail `#opening…#contact` (hanya halaman utama), menulis `data-chapter-active` + kelas `is-current`; bukan animasi, dan hanya dimuat kalau browser tidak punya CSS scroll timeline
 - `assets/js/blog.js` — pemuat satu artikel untuk `post.html?slug=` (fallback link lama); daftar artikel sudah jadi HTML di `blog.html`
 - `assets/js/markdown.js` — renderer Markdown sendiri, tanpa library (dipakai blog.js & build)
 - `assets/img/` — avatar (`avatar.svg`, `avatar-anime.webp`) & screenshot preview proyek (`<nama-repo>.webp`)
@@ -142,12 +141,12 @@ Isi halaman (Markdown, opsional).
 Alur: edit `content/projects/<slug>.md` (di `/admin/` atau manual), jalankan
 `node tools/build.mjs`, commit. CI juga otomatis build saat file proyek berubah.
 
-## Halaman utama: chapter, rail, dan scroll-spy
-Empat chapter (`#opening`, `#projects`, `#about`, `#contact`) plus rail di gutter
-kanan. Rail, highlight nav, dan scroll cue dikerjakan CSS scroll timeline: tiap
-chapter mendeklarasikan `view-timeline` sendiri, `timeline-scope` di `html`
-mengangkat namanya ke dokumen, dan tiap link membaca jendela `48dvh` →
-`calc(100% - 48dvh)` dari chapter-nya. Tidak ada `scroll` event.
+## Halaman utama: chapter dan scroll-spy
+Empat chapter (`#opening`, `#projects`, `#about`, `#contact`). Highlight nav
+dikerjakan CSS scroll timeline: tiap chapter mendeklarasikan
+`view-timeline` sendiri, `timeline-scope` di `html` mengangkat namanya ke dokumen,
+dan tiap link membaca jendela `48dvh` → `calc(100% - 48dvh)` dari chapter-nya.
+Tidak ada `scroll` event.
 
 Detail lengkap (rumus jendela, `@property --lit`, jebakan spesifisitas, dan apa
 saja yang harus diubah saat menambah chapter) ada di `docs/CHAPTERS.md`. Baca hanya
@@ -155,7 +154,7 @@ saat menyentuh blok scroll-spy/reveal di `assets/css/style.css` atau mengubah
 chapter di `index.html`.
 
 ## Animasi scroll
-Progres halaman, reveal, word-rise tipe `.display`, chapter rail, dan scroll cue → CSS native (`animation-timeline: scroll()/view()`), bukan `scroll` event atau `IntersectionObserver`. Wajib `@supports`, `prefers-reduced-motion`, `animation-duration: 1ms`. Tidak ada JS untuk animasi; `journey.js` hanya state chapter dan hanya dimuat di browser tanpa scroll timeline. Pola: skill `scroll-driven-animations`.
+Progres halaman, reveal, word-rise tipe `.display`, dan highlight nav → CSS native (`animation-timeline: scroll()/view()`), bukan `scroll` event atau `IntersectionObserver`. Wajib `@supports`, `prefers-reduced-motion`, `animation-duration: 1ms`. Tidak ada JS untuk animasi maupun state chapter. Pola: skill `scroll-driven-animations`.
 
 ## Komunikasi
 - Bahasa Indonesia untuk komunikasi dengan user

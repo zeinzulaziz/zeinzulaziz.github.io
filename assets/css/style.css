@@ -63,7 +63,6 @@
   --line-strong: #8f978f;
   --accent: #d8a579;
   --accent-ink: #080d16;
-  --rail-ink: var(--ink-faint);
   color-scheme: dark;
   /* Ambient smoke embers derive from --accent at the use site, so both
      themes adapt for free. */
@@ -95,9 +94,6 @@
      the margin, and the same value reads as the same hue. */
   --accent: #6f4218;
   --accent-ink: #ede6d9;
-  /* The rail sits in the penumbra, where the glow tints the paper; a step
-     darker keeps the labels legible there. */
-  --rail-ink: var(--ink-soft);
   color-scheme: light;
 }
 
@@ -265,8 +261,7 @@ a {
 /* Content sits above the grain and the vignette. */
 .site-header,
 main,
-.site-footer,
-.chapter-rail {
+.site-footer {
   position: relative;
   z-index: 3;
 }
@@ -584,15 +579,6 @@ main,
   background: var(--line-strong);
 }
 
-.role {
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin: clamp(1.4rem, 3vw, 2rem) 0 1.2rem;
-}
-
 .display {
   font-size: var(--display);
   font-weight: 600;
@@ -617,18 +603,15 @@ main,
   scroll-margin-top: var(--header-h);
 }
 
-/* The two chapters whose copy fits a screen hold the viewport. The section is
-   a little taller than the pin, so the pin advances for ~18svh of scroll and
-   releases — a held frame, not a scroll trap. */
+/* The two chapters whose copy fits a screen fill one viewport. The section is
+   exactly as tall as its pin, so there is no sticky hold: the page moves on the
+   first scroll instead of freezing until a pin releases. */
 .chapter-full {
-  min-height: max(118svh, 760px);
   padding: 0;
   scroll-margin-top: 0;
 }
 
 .chapter-full .pin {
-  position: sticky;
-  top: 0;
   /* The header is sticky and in flow above this, so the pin fills what is left
      of the first screen, not the whole of it. The extra pixel is the header's
      bottom rule, which is outside its --header-h box. */
@@ -677,35 +660,6 @@ main,
 }
 
 .service-cta { min-height: 40px; }
-
-/* The cue closes the hero: it says the page is read by scrolling, and it is
-   the last thing the first screen shows. A phone hero is meant to be taller
-   than the screen, so there the cut-off carries the hint instead. */
-.scroll-cue {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin-top: clamp(0.9rem, 1.8vh, 1.6rem);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  transition: opacity 0.35s var(--ease), visibility 0.35s;
-}
-
-/* Fallback for browsers without scroll timelines: journey.js sets the state.
-   Where timelines exist, the cue-out animation wins over this. */
-html:not([data-chapter-active="opening"]) .scroll-cue {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.scroll-cue .line {
-  width: 3rem;
-  height: 1px;
-  background: linear-gradient(to right, var(--accent), transparent);
-}
 
 /* Facts panel: real data, ruled like an instrument readout. */
 .spec {
@@ -1101,87 +1055,12 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   line-height: 1.55;
 }
 
-/* ---------- chapter rail (home, wide screens) ---------- */
-
-.chapter-rail {
-  display: none;
-}
-
-@media (min-width: 1240px) {
-  .chapter-rail {
-    display: flex;
-    position: fixed;
-    right: 1.4rem;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 40;
-    flex-direction: column;
-    gap: 1.1rem;
-    align-items: flex-end;
-  }
-
-  .chapter-rail a {
-    position: relative;
-    z-index: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    min-height: 24px;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    /* --lit rides from 0 to 1 with the chapter in view (see the spy block). */
-    color: color-mix(in srgb, var(--accent) calc(var(--lit) * 100%), var(--rail-ink));
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  /* The ground shifts as the page is read, so the labels carry their own field
-     rather than trusting what is behind them. */
-  .chapter-rail a::before {
-    content: "";
-    position: absolute;
-    inset: -0.18rem -0.45rem -0.18rem -0.5rem;
-    z-index: -1;
-    border-radius: 0.4rem;
-    background: color-mix(in srgb, var(--paper) 82%, transparent);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
-
-  /* 3rem wide, scaled down to 1.4rem when its chapter is not current:
-     transform composites, width would re-layout on every scroll frame. */
-  .chapter-rail a::after {
-    content: "";
-    width: 3rem;
-    height: 1px;
-    background: var(--line-strong);
-    transform: scaleX(0.4667);
-    transform-origin: 100% 50%;
-    transition: background-color 0.2s;
-  }
-
-  .chapter-rail a:hover { color: var(--ink); }
-
-  /* Fallback for browsers without scroll timelines: journey.js adds the class.
-     Where the timelines exist, the animation wins over these declarations. */
-  .chapter-rail a.is-current {
-    color: var(--accent);
-  }
-
-  .chapter-rail a.is-current::after {
-    transform: scaleX(1);
-    background: var(--accent);
-  }
-}
-
 /* ---------- scroll-spy (CSS only) ---------- */
 /* Each chapter carries a named view timeline (declared with the reveal block).
-   timeline-scope lifts those names to the document so the rail and the nav,
-   which sit outside the chapters, can read them. A chapter is current across
-   the stretch where its centre is the nearest one to the middle of the viewport
-   — the same rule the old scroll handler applied.
+   timeline-scope lifts those names to the document so the nav and the scroll
+   cue, which sit outside the chapters, can read them. A chapter is current
+   across the stretch where its centre is the nearest one to the middle of the
+   viewport.
 
    That stretch needs no per-chapter tuning, because it is a fixed distance in
    pixels, not a share of the chapter: a chapter becomes current half a viewport
@@ -1196,18 +1075,9 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
       --chapter-contact;
   }
 
-  body.home .chapter-rail a,
-  body.home .chapter-rail a::after,
   body.home .nav-links a[href^="#"] {
     animation: spy-lit linear 1ms both;
     animation-range: cover 48dvh cover calc(100% - 48dvh);
-  }
-
-  body.home .chapter-rail a::after {
-    animation-name: spy-bar;
-  }
-
-  body.home .nav-links a[href^="#"] {
     color: color-mix(in srgb, var(--accent) calc(var(--lit) * 100%), var(--ink-soft));
   }
 
@@ -1219,30 +1089,11 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   /* One chapter per link, read by name. Every selector here has to outrank the
      `animation` shorthand above: that shorthand resets animation-timeline to
      auto, and specificity decides which wins. */
-  body.home .chapter-rail a[href="#opening"],
-  body.home .chapter-rail a[href="#opening"]::after,
   body.home .nav-links a[href$="#opening"] { animation-timeline: --chapter-opening; }
-
-  body.home .chapter-rail a[href="#projects"],
-  body.home .chapter-rail a[href="#projects"]::after,
   body.home .nav-links a[href$="#projects"] { animation-timeline: --chapter-projects; }
-
-  body.home .chapter-rail a[href="#about"],
-  body.home .chapter-rail a[href="#about"]::after,
   body.home .nav-links a[href$="#about"] { animation-timeline: --chapter-about; }
-
-  body.home .chapter-rail a[href="#contact"],
-  body.home .chapter-rail a[href="#contact"]::after,
   body.home .nav-links a[href$="#contact"] { animation-timeline: --chapter-contact; }
 
-  /* The cue belongs to the opening chapter, which has no nav link of its own.
-     It fades over the last fifth of a viewport before that chapter stops being
-     current — the point where the pin has released and the page is moving. */
-  body.home .scroll-cue {
-    animation: cue-out linear 1ms both;
-    animation-timeline: --chapter-opening;
-    animation-range: cover calc(100% - 68dvh) cover calc(100% - 48dvh);
-  }
 }
 
 /* Positions are a share of the window, so the plateau runs between the
@@ -1251,17 +1102,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   0% { --lit: 0; }
   3%, 97% { --lit: 1; }
   100% { --lit: 0; }
-}
-
-@keyframes spy-bar {
-  0% { transform: scaleX(0.4667); background-color: var(--line-strong); }
-  3%, 97% { transform: scaleX(1); background-color: var(--accent); }
-  100% { transform: scaleX(0.4667); background-color: var(--line-strong); }
-}
-
-@keyframes cue-out {
-  from { opacity: 1; visibility: visible; }
-  to   { opacity: 0; visibility: hidden; }
 }
 
 /* ---------- reading pages ---------- */
@@ -1693,11 +1533,10 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
       animation-range: entry 0% cover 32%;
     }
 
-    /* A reveal inside a pin would freeze on view(): the pin stops moving while
-       the chapter keeps scrolling. The chapter carries the timeline instead.
-       Each chapter gets its own name, so the rail and the nav can read them
-       from outside — see the scroll-spy block. inset 0 keeps the timeline in
-       step with the chapter box rather than the scroll padding. */
+    /* Each chapter carries its own named timeline so the nav, which sits
+       outside the chapters, can read it — see the scroll-spy block. inset 0
+       keeps the timeline in step with the chapter box rather than the scroll
+       padding. Reveals themselves use view() like everywhere else. */
     #opening  { view-timeline: --chapter-opening  block; }
     #projects { view-timeline: --chapter-projects block; }
     #about    { view-timeline: --chapter-about    block; }
@@ -1706,13 +1545,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
     #opening, #projects, #about, #contact {
       view-timeline-inset: 0;
     }
-
-    .chapter-full .pin .reveal {
-      animation-range: cover 0% cover 22%;
-    }
-
-    #opening .pin .reveal { animation-timeline: --chapter-opening; }
-    #contact .pin .reveal { animation-timeline: --chapter-contact; }
   }
 }
 
@@ -1833,8 +1665,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
 
   .spec-item { grid-template-columns: 1fr; gap: 0.2rem; }
 
-  .scroll-cue { display: none; }
-
   .stats {
     grid-template-columns: 1fr;
     border-top: 0;
@@ -1883,7 +1713,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   }
 
   .chapter-full .pin {
-    position: static;
     min-height: 0;
   }
 
@@ -1910,69 +1739,6 @@ html:not([data-chapter-active="opening"]) .scroll-cue {
   }
 }
 
-
-/* ---------- 2026 redesign: product console on the opening frame ---------- */
-/* Scoped to the homepage so reading pages keep their quieter treatment. */
-
-body.home #opening .pin .opening-grid {
-  width: 100%;
-}
-@media (min-width: 1100px) {
-  body.home #opening .pin .opening-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    gap: clamp(2rem, 4vw, 4.5rem);
-    align-items: center;
-  }
-  body.home #opening .opening-copy .spec {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.opening-screen {
-  margin: 2rem 0 0;
-  min-width: 0;
-}
-.screen-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.7rem 0.9rem;
-  background: var(--surface-2);
-  font-family: var(--font-sans);
-  font-size: 0.82rem;
-  color: var(--ink-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.screen-led {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(216, 165, 121, 0.55);
-  flex: none;
-}
-.screen-frame {
-  background: var(--surface);
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-}
-.screen-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.opening-screen figcaption {
-  margin-top: 0.7rem;
-  color: var(--ink-faint);
-  font-size: 0.84rem;
-  line-height: 1.5;
-}
-@media (max-width: 1099px) {
-  .opening-screen { max-width: 760px; }
-}
 
 /* Work reads as a set of filled panels rather than ruled lines. */
 body.home #projects .projects-list {
@@ -2008,8 +1774,4 @@ body.home #projects .project-media img {
 /* The published numbers carry the one accent. */
 body.home #about .stat-num {
   color: var(--accent);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .opening-screen { animation: none !important; }
 }

@@ -34,8 +34,6 @@
         theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
       );
     }
-    // The scene paints from the CSS tokens, so it needs a repaint on switch.
-    document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
     if (persist) {
       try {
         window.localStorage.setItem("theme", theme);
