@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-27T23:34:36.439Z",
+  "generated": "2026-11-28T08:01:37.580Z",
   "repos": [
     {
       "name": "harga-pangan",
@@ -9,18 +9,18 @@
       "homepage": "https://zeinzulaziz.github.io/harga-pangan/"
     },
     {
-      "name": "diri-insight",
-      "language": "JavaScript",
-      "stargazers_count": 0,
-      "description": "Alat refleksi diri berbahasa Indonesia: 70 pertanyaan, 8 dimensi, narasi hasil.",
-      "homepage": null
-    },
-    {
       "name": "convert-gold",
       "language": "HTML",
       "stargazers_count": 0,
       "description": "USD/oz to Rp/gram gold calculator with entry, target, and stop-loss — live FX and Indonesian retail prices.",
       "homepage": "https://zeinzulaziz.github.io/convert-gold/"
+    },
+    {
+      "name": "diri-insight",
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "description": "Alat refleksi diri berbahasa Indonesia: 70 pertanyaan, 8 dimensi, narasi hasil.",
+      "homepage": null
     },
     {
       "name": "broken-link-checker",
