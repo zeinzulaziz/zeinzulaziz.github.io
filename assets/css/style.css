@@ -622,6 +622,38 @@ main,
   padding: clamp(1.6rem, 3.4vh, 3.6rem) 0;
 }
 
+/* The name is the hero image. Type carries the first screen; the role and the
+   two links sit in the space under it, so nothing repeats the project cards. */
+#opening .opening-title {
+  font-size: clamp(5.5rem, 21vw, 19rem);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+}
+
+#opening .opening-tail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(2rem, 5vw, 4rem);
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+}
+
+#opening .opening-tail .lede {
+  max-width: 34rem;
+}
+
+#opening .opening-side .spec {
+  margin-top: clamp(1.2rem, 3vh, 2rem);
+}
+
+@media (max-width: 900px) {
+  #opening .opening-tail {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+}
+
 .chapter-head {
   margin-bottom: clamp(1.8rem, 4vw, 3rem);
 }
